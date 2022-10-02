@@ -1,1 +1,1 @@
-frontend
+osam_web_front_end
