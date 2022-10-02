@@ -7,7 +7,7 @@
     "dev": "next -p 3000",
     "export": "next export"
   },
-  "author": "",
+  "author": "gnncjegrgr",
   "license": "ISC",
   "dependencies": {
     "@ant-design/icons": "^4.3.0",
