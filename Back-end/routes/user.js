@@ -8,6 +8,7 @@ const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
 
+
 router.get('/', async (req, res, next) => { 
   try {
     if (req.user) {
@@ -219,6 +220,7 @@ router.get('/:userId', async (req, res, next) => { // GET /user/1
 router.get('/:userId/posts', async (req, res, next) => { // GET /user/1/posts
   try {
     const where = { UserId: req.params.userId };
+
     if (parseInt(req.query.lastId, 10)) { 
       where.id = { [Op.lt]: parseInt(req.query.lastId, 10)}
     } 

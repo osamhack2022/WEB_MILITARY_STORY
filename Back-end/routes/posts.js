@@ -63,6 +63,7 @@ router.get('/related', async (req, res, next) => {
     const where = {
       UserId: { [Op.in]: followings.map((v) => v.id) }
     };
+
     if (parseInt(req.query.lastId, 10)) { 
       where.id = { [Op.lt]: parseInt(req.query.lastId, 10)}
     } 
@@ -114,6 +115,7 @@ router.get('/unrelated', async (req, res, next) => {
     const where = {
       UserId: { [Op.notIn]: followings.map((v) => v.id).concat(req.user.id) }
     };
+
     if (parseInt(req.query.lastId, 10)) { 
       where.id = { [Op.lt]: parseInt(req.query.lastId, 10)}
     }

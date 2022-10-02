@@ -43,6 +43,7 @@ import {
 } from '../actions/post';
 import FollowButton from './FollowButton';
 
+const noname = '익명'
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -86,6 +87,7 @@ const PostCard = ({ post }) => {
   const onZoomPost = useCallback(() => {
     Router.push(`/post/${post.id}`).then();
   }, []);
+	
 
   const onLike = useCallback(() => {
     if (!id) {
@@ -147,6 +149,39 @@ const PostCard = ({ post }) => {
 		
   }, [id]);
 	
+	const avatar = () =>{
+		if (!post.private_mode){
+			return(
+				<Link
+          href={{ pathname: '/user', query: { id: post.User.id } }}
+          as={`/user/${post.User.id}`}
+        >
+          <a>
+            <Avatar sx={{ bgcolor: '#ddd' }}>{post.User.nickname[0]}</Avatar>
+          </a>
+        </Link>
+			)
+		}
+		else{
+			return (
+				<Avatar sx={{bgcolor:"#ddd"}}>?</Avatar>
+			)
+		}
+	}
+	
+	const name = () => {
+		if(!post.private_mode) {
+			return(
+			post.User.nickname
+			)
+		}
+		else{
+			return(
+				noname
+			)
+		}
+	}
+	
 
 
   const liked = post.Likers.find((v) => v.id === id);
@@ -156,14 +191,7 @@ const PostCard = ({ post }) => {
     <Card sx={{ width: '100%', marginBottom: '5%', marginTop: '1%' }}>
       <CardHeader
         avatar={
-          <Link
-            href={{ pathname: '/user', query: { id: post.User.id } }}
-            as={`/user/${post.User.id}`}
-          >
-            <a>
-              <Avatar sx={{ bgcolor: '#ddd' }}>{post.User.nickname[0]}</Avatar>
-            </a>
-          </Link>
+          avatar()
         }
         action={
           <>
@@ -192,7 +220,7 @@ const PostCard = ({ post }) => {
             </IconButton>
           </>
         }
-        title={post.User.nickname}
+        title={name()}
         subheader={moment(post.createdAt).fromNow()}
       />
       <CardMedia>
@@ -255,7 +283,7 @@ const PostCard = ({ post }) => {
           )}
 
           {post.Comments?.map((el, idx) => (
-            <List sx={{ width: '100%', bgcolor: 'background.paper' }} key={idx}>
+            <List sx={{ width: '100%', bgcolor: 'background.paper' }} key={el.id}>
               <ListItem alignItems="flex-start">
                 <ListItemAvatar>
                   <Link

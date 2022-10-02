@@ -19,6 +19,7 @@ import {
   uploadImages,
 	loadUserComments,
 	loadUserScraps,
+	loadMyPosts,
 } from '../actions/post';
 
 // 기본 state
@@ -136,6 +137,21 @@ const postSlice = createSlice({
         state.hasMorePosts = action.payload.length === 10;
       })
       .addCase(loadUserPosts.rejected, (state, action) => {
+        state.loadPostsLoading = false;
+        state.loadPostsError = action.error.message;
+      })
+			.addCase(loadMyPosts.pending, (state) => {
+        state.loadPostsLoading = true;
+        state.loadPostsDone = false;
+        state.loadPostsError = null;
+      })
+      .addCase(loadMyPosts.fulfilled, (state, action) => {
+        state.loadPostsLoading = false;
+        state.loadPostsDone = true;
+        state.mainPosts = _concat(state.mainPosts, action.payload);
+        state.hasMorePosts = action.payload.length === 10;
+      })
+      .addCase(loadMyPosts.rejected, (state, action) => {
         state.loadPostsLoading = false;
         state.loadPostsError = action.error.message;
       })

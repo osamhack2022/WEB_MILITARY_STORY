@@ -17,7 +17,6 @@ export const loadPosts = createAsyncThunk(
       const { post } = getState();
 
       if (post.loadPostsLoading) {
-        // console.warn('중복 요청 취소');
         return false;
       }
       return true;
@@ -36,7 +35,6 @@ export const loadIndexPosts = createAsyncThunk(
       const { post } = getState();
 
       if (post.loadIndexPostsLoading) {
-        // console.warn('중복 요청 취소');
         return false;
       }
       return true;
@@ -220,3 +218,17 @@ export const loadUserPosts = createAsyncThunk(
     }
   }
 );
+
+export const loadMyPosts = createAsyncThunk(
+	'user/loadMyPosts',
+	async(data, { rejectWithValue }) => {
+		try{
+			const response = await axios.get(
+				`/user/me/posts?last=${data?.lastId || 0}`
+			);
+			return response.data;
+		}catch(error) {
+			return rejectWithValue(error.response.data);
+		}
+	}
+)
