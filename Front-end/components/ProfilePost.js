@@ -58,7 +58,7 @@ export default function ProfilePost(){
 	
 	return (
 		<StyledDiv>
-			<Link href={`/user/${me.id}`}>
+			<Link href={"/me/posts"}>
 				<StyledButton>
 					<FormatListBulletedIcon sx={{color:"#cdd0ff"}}/>
 					{' '}
