@@ -8,7 +8,8 @@ const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
 
-router.get('/', async (req, res, next) => { // GET /user
+
+router.get('/', async (req, res, next) => { 
   try {
     if (req.user) {
       const fullUserWithoutPassword = await User.findOne({
@@ -203,7 +204,7 @@ router.get('/:userId', async (req, res, next) => { // GET /user/1
     })
     if (fullUserWithoutPassword) {
       const data = fullUserWithoutPassword.toJSON();
-      data.Posts = data.Posts.length; // 개인정보 침해 예방
+      data.Posts = data.Posts.length;
       data.Followers = data.Followers.length;
       data.Followings = data.Followings.length;
       res.status(200).json(data);
@@ -219,9 +220,10 @@ router.get('/:userId', async (req, res, next) => { // GET /user/1
 router.get('/:userId/posts', async (req, res, next) => { // GET /user/1/posts
   try {
     const where = { UserId: req.params.userId };
-    if (parseInt(req.query.lastId, 10)) { // 초기 로딩이 아닐 때
+
+    if (parseInt(req.query.lastId, 10)) { 
       where.id = { [Op.lt]: parseInt(req.query.lastId, 10)}
-    } // 21 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1
+    } 
     const posts = await Post.findAll({
       where,
       limit: 10,
@@ -239,7 +241,7 @@ router.get('/:userId/posts', async (req, res, next) => { // GET /user/1/posts
           order: [['createdAt', 'DESC']],
         }],
       }, {
-        model: User, // 좋아요 누른 사람
+        model: User, 
         as: 'Likers',
         attributes: ['id'],
       }, {
