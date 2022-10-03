@@ -20,14 +20,16 @@ import {
 	loadUserComments,
 	loadUserScraps,
 	loadMyPosts,
+	loadPopularPosts,
 } from '../actions/post';
 
 // 기본 state
 export const initialState = {
   mainPosts: [],
 	indexPosts: [],
+	popularPosts: [],
 	userComments: [],
-  hasMorePosts: true, // 다음 posts 여부
+  hasMorePosts: true,
   singlePost: null,
   imagePaths: [],
   loadPostsLoading: false,
@@ -63,6 +65,9 @@ export const initialState = {
 	loadIndexPostsLoading: false,
 	loadIndexPostsDone: false,
 	loadIndexPostsError: null,
+	loadPopularPostsLoading: false,
+	loadPopularPostsDone: false,
+	loadPopularPostsError: null,
 };
 
 // toolkit 사용방법
@@ -93,6 +98,21 @@ const postSlice = createSlice({
         state.loadIndexPostsLoading = false;
         state.loadIndexPostsError = action.error.message;
       })
+			.addCase(loadPopularPosts.pending, (state) => {
+				state.loadPopularPostsLoading = true;
+				state.loadPopularPostsDone = false;
+				state.loadPopularPostsError = null;
+			})
+			.addCase(loadPopularPosts.fulfilled, (state, action) => {
+				state.loadPopularPostsLoading = false;
+				state.loadPopularPostsDone = true;
+				state.popularPosts = _concat(state.popularPostsular, action.payload);
+				state.hasMorePosts = action.payload.length;
+			})
+			.addCase(loadPopularPosts.rejected, (state, action) => {
+				state.loadPopularPostsLoading = false;
+				state.loadPopularPostsError = action.error.message;
+			})
       .addCase(loadPosts.pending, (state) => {
         state.loadPostsLoading = true;
         state.loadPostsDone = false;

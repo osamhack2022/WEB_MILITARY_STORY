@@ -35,6 +35,7 @@ import PropTypes from 'prop-types';
 import LoginForm from './LoginForm';
 import UserProfile from './UserProfile';
 import ProfilePost from "./ProfilePost";
+import PopularPosts from "./PopularPosts"
 
 const drawerWidth = 240;
 const navItems = ['자유 게시판', '고민상담 게시판', '정보 게시판', '취미 게시판', '질문 답변 게시판', '감사 게시판'];
@@ -288,6 +289,7 @@ function Home({ children }) {
                   />
                 </Search>
               </form>
+							<PopularPosts />
             </Grid>
           </Grid>
         </Box>
