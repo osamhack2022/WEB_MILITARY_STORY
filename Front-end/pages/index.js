@@ -9,6 +9,8 @@ import { loadMyInfo } from '../actions/user';
 import { loadPosts, loadIndexPosts, loadPopularPosts } from '../actions/post';
 import wrapper from '../store/configureStore';
 import MainCard from "../components/MainCard"
+import {useRouter} from "next/router"
+
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -16,6 +18,8 @@ const Home = () => {
   const { mainPosts, hasMorePosts, loadPostsLoading, indexPosts } = useSelector(
     (state) => state.post
   );
+	
+	const { asPath } = useRouter();
 	
   const post = useSelector((state)=>state.post)
 
@@ -44,7 +48,7 @@ const Home = () => {
   useEffect(() => {
     dispatch(loadMyInfo());
 		dispatch(loadPopularPosts());
-  }, []);
+  }, [asPath]);
 	
 	
 

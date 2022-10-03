@@ -208,7 +208,7 @@ const PostCard = ({ post }) => {
         }
         action={
           <>
-            {me && <FollowButton post={post} />}
+            {(me && !post.private_mode) && <FollowButton post={post} />}
             <IconButton aria-label="settings">
               <IconButton onClick={handleClick}>
                 <MoreVertIcon />

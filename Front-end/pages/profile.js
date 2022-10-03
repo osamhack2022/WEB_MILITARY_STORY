@@ -21,11 +21,6 @@ const Profile = () => {
   const [followingsLimit, setFollowingsLimit] = useState(4);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (!(me && me.id)) {
-      Router.push('/').then();
-    }
-  }, [me && me.id]);
 
   const { data: followersData, error: followerError } = useSWR(
     me && me.id ? `/user/followers?limit=${followersLimit}` : null,
@@ -35,6 +30,10 @@ const Profile = () => {
     me && me.id ? `/user/followings?limit=${followingsLimit}` : null,
     fetcher
   );
+	
+	useEffect(()=>{
+		dispatch(loadMyInfo())
+	}, [])
 
   const loadMoreFollowings = useCallback(() => {
     setFollowingsLimit((prev) => prev + 4);
@@ -56,7 +55,7 @@ const Profile = () => {
   return (
     <AppLayout>
       <Head>
-        <title>내 프로필 | NodeBird</title>
+        <title>내 프로필 | Military Story</title>
       </Head>
       <NicknameEditForm />
       {followingsData && (
@@ -82,13 +81,7 @@ const Profile = () => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
-    const cookie = context.req ? context.req.headers.cookie : '';
-    axios.defaults.headers.Cookie = '';
-    // 쿠키가 브라우저에 있는경우만 넣어서 실행
-    // (주의, 아래 조건이 없다면 다른 사람으로 로그인 될 수도 있음)
-    if (context.req && cookie) {
-      axios.defaults.headers.Cookie = cookie;
-    }
+    
 		await context.store.dispatch(loadPopularPosts({
 			limit: 3,
 		}))

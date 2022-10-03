@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Card from "@mui/material/Card";
 import Avatar from "@mui/material/Avatar";
@@ -27,15 +27,21 @@ const User = () => {
   const { mainPosts, hasMorePosts, loadPostsLoading } = useSelector(
     (state) => state.post
   );
+	
+	const[info, setInfo] = useState(null);
+	
   const { userInfo, me } = useSelector((state) => state.user);
 
   useEffect(() => {
+		const path_arr = router.asPath.split('/')
+		
     dispatch(loadMyInfo());
+		dispatch(loadUser({ userId: path_arr[2] }));
   }, [router.asPath]);
 	
 	useEffect(()=>{
-		console.log(userInfo)
-	},[]);
+		setInfo(userInfo)
+	},[router.asPath]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -62,42 +68,41 @@ const User = () => {
 
   return (
     <AppLayout>
-      {userInfo && (
+      {info && (
+				<>
         <Head>
           <title>
-            {userInfo.nickname}
+            {info.nickname}
             님의 글
           </title>
           <meta
             name="description"
-            content={`${userInfo.nickname}님의 게시글`}
+            content={`${info.nickname}님의 게시글`}
           />
           <meta
             property="og:title"
-            content={`${userInfo.nickname}님의 게시글`}
+            content={`${info.nickname}님의 게시글`}
           />
           <meta
             property="og:description"
-            content={`${userInfo.nickname}님의 게시글`}
+            content={`${info.nickname}님의 게시글`}
           />
         </Head>
-      )}
-      
-			<Card sx={{ width:"100%", backgroundColor:"#fefefe", border:"3px solid #ddd", marginTop:1.5 }}>
+				<Card sx={{ width:"100%", backgroundColor:"#fefefe", border:"3px solid #ddd", marginTop:1.5 }}>
       <CardHeader
         avatar={
-          <Link href={`/user/${userInfo.id}`}>
+          <Link href={`/user/${info.id}`}>
             <a>
               <Avatar sx={{ bgcolor: 'grey' }} aria-label="recipe">
-                {userInfo.nickname[0]}
+                {info.nickname[0]}
               </Avatar>
             </a>
           </Link>
         }
         title={
-          <Link href={`/user/${userInfo.id}`}>
+          <Link href={`/user/${info.id}`}>
             <a>
-              <span style={{ color: 'black' }}>{userInfo.nickname}</span>
+              <span style={{ color: 'black' }}>{info.nickname}</span>
             </a>
           </Link>
         }
@@ -108,25 +113,29 @@ const User = () => {
         <Grid container>
           <Grid item xs={3.8}>
               <span style={{display:'flex', justifyContent:'center' }}>게시글 : 
-							{userInfo.Posts}</span>
+							{info.Posts}</span>
           </Grid>
 					<Divider orientation="vertical" flexItem />
           <Grid item xs={3.8}>
             <span style={{display:'flex', justifyContent:'center' }}>
 							팔로잉 : 
-              {userInfo.Followings}
+              {info.Followings}
 						</span>
           </Grid>
 					<Divider orientation="vertical" flexItem />
           <Grid item xs={3.8}>
             <span style={{display:'flex', justifyContent:'center' }}>
 							팔로워 : 
-              {userInfo.Followers}
+              {info.Followers}
 						</span>
           </Grid>
         </Grid>
       </CardActions>
     </Card>
+				</>
+      )}
+      
+			
         
      
       {mainPosts.map((post) => (
