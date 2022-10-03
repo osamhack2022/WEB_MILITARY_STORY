@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import Head from 'next/head';
 import { loadMyInfo } from '../../actions/user';
-import { loadPost } from '../../actions/post';
+import { loadPost, loadPopularPosts } from '../../actions/post';
 import AppLayout from '../../components/AppLayout';
 import PostCard from '../../components/PostCard';
 import wrapper from '../../store/configureStore';
@@ -53,7 +53,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
     }
     await context.store.dispatch(loadPost({ postId: context.params.id }));
     // await context.store.dispatch(loadMyInfo());
-
+		await context.store.dispatch(loadPopularPosts({
+			limit: 3,
+		}))
     return {
       props: {},
     };

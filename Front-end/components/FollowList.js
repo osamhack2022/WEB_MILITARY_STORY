@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import Avatar from "@mui/material/Avatar"
 import Button from "@mui/material/Button"
 import IconButton from "@mui/material/IconButton"
 import Card from "@mui/material/Card"
@@ -12,6 +13,7 @@ import Grid from "@mui/material/Grid"
 import LoadingButton from "@mui/lab/LoadingButton"
 
 import { styled } from '@mui/material/styles'
+import Link from "next/link"
 
 import ProTypes from 'prop-types';
 import DoDisturbIcon from "@mui/icons-material/DoDisturb"
@@ -69,9 +71,16 @@ const FollowList = ({ header, data, onClickMore, loading }) => {
         <ListItem>
           <Grid container spacing={2}>
             {data?.map((v, idx) => (
-              <Grid item xs={3} key={idx} >
-                <Item sx={{border: '2px solid #dddddd'}}>
-                  <span style={{ fontSize: '15px' }}>{v.nickname}</span>
+              <Grid item xs={3} key={v.id} >
+                <Item sx={{border: '2px solid #dddddd', display:'flex', justifyContent:'center'}}>
+									<Link href={`/user/${v.id}`}>
+										<a>
+										<div style={{display:"flex", marginTop: 11}}>
+											<Avatar>{v.nickname[0]}</Avatar>
+                  		<span style={{ fontSize: '20px', marginTop:6, marginLeft:7 }}>{v.nickname}</span>
+										</div>
+										</a>
+									</Link>
                   {header==='팔로잉' && 
 										<>
                   	  <br />

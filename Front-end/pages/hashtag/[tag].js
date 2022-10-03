@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import PostCard from '../../components/PostCard';
 import { loadMyInfo } from '../../actions/user';
-import { loadHashtagPosts } from '../../actions/post';
+import { loadHashtagPosts, loadPopularPosts } from '../../actions/post';
 import AppLayout from '../../components/AppLayout';
 import wrapper from '../../store/configureStore';
 
@@ -66,7 +66,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       loadHashtagPosts({ hashtag: context.params.tag })
     );
     // await context.store.dispatch(loadMyInfo());
-
+		await context.store.dispatch(loadPopularPosts({
+			limit: 3,
+		}))
     return {
       props: {},
     };

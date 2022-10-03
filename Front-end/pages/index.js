@@ -6,9 +6,11 @@ import AppLayout from '../components/AppLayout';
 import PostForm from '../components/PostForm';
 import PostCard from '../components/PostCard';
 import { loadMyInfo } from '../actions/user';
-import { loadPosts, loadIndexPosts } from '../actions/post';
+import { loadPosts, loadIndexPosts, loadPopularPosts } from '../actions/post';
 import wrapper from '../store/configureStore';
 import MainCard from "../components/MainCard"
+import {useRouter} from "next/router"
+
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -16,6 +18,8 @@ const Home = () => {
   const { mainPosts, hasMorePosts, loadPostsLoading, indexPosts } = useSelector(
     (state) => state.post
   );
+	
+	const { asPath } = useRouter();
 	
   const post = useSelector((state)=>state.post)
 
@@ -43,8 +47,8 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(loadMyInfo());
-		
-  }, []);
+		dispatch(loadPopularPosts());
+  }, [asPath]);
 	
 	
 
@@ -106,6 +110,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
 		await context.store.dispatch(loadIndexPosts({
 			limit: 3,
 			category: '5'
+		}))
+		
+		await context.store.dispatch(loadPopularPosts({
+			limit: 3,
 		}))
 
     return {

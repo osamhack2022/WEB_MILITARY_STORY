@@ -6,7 +6,7 @@ import PostForm from "../../components/PostForm"
 import PostCard from "../../components/PostCard"
 import MyScraps from "../../components/MyScraps"
 import { loadMyInfo } from "../../actions/user"
-import { loadPosts, loadUserScraps } from "../../actions/post"
+import { loadPosts, loadUserScraps, loadPopularPosts } from "../../actions/post"
 import wrapper from "../../store/configureStore"
 
 
@@ -41,7 +41,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
     }
 		
 		// await context.store.dispatch(loadUserComments);
-
+		await context.store.dispatch(loadPopularPosts({
+			limit: 3,
+		}))
     return {
       props: {},
     };

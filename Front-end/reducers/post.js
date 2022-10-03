@@ -20,14 +20,17 @@ import {
 	loadUserComments,
 	loadUserScraps,
 	loadMyPosts,
+	loadPopularPosts,
+	reportPost
 } from '../actions/post';
 
 // 기본 state
 export const initialState = {
   mainPosts: [],
 	indexPosts: [],
+	popularPosts: [],
 	userComments: [],
-  hasMorePosts: true, // 다음 posts 여부
+  hasMorePosts: true,
   singlePost: null,
   imagePaths: [],
   loadPostsLoading: false,
@@ -63,6 +66,12 @@ export const initialState = {
 	loadIndexPostsLoading: false,
 	loadIndexPostsDone: false,
 	loadIndexPostsError: null,
+	loadPopularPostsLoading: false,
+	loadPopularPostsDone: false,
+	loadPopularPostsError: null,
+	reportPostLoading: false,
+	reportPostDone: false,
+	reportPostError: null,
 };
 
 // toolkit 사용방법
@@ -92,6 +101,20 @@ const postSlice = createSlice({
       .addCase(loadIndexPosts.rejected, (state, action) => {
         state.loadIndexPostsLoading = false;
         state.loadIndexPostsError = action.error.message;
+      })
+			.addCase(loadPopularPosts.pending, (state) => {
+        state.loadPopularPostsLoading = true;
+        state.loadPopularPostsDone = false;
+        state.loadPopularPostsError = null;
+      })
+      .addCase(loadPopularPosts.fulfilled, (state, action) => {
+        state.loadPopularPostsLoading = false;
+        state.loadPopularPostsDone = true;
+        state.popularPosts = _concat([], action.payload);
+      })
+      .addCase(loadPopularPosts.rejected, (state, action) => {
+        state.loadPopularPostsLoading = false;
+        state.loadPopularPostsError = action.error.message;
       })
       .addCase(loadPosts.pending, (state) => {
         state.loadPostsLoading = true;
@@ -220,6 +243,25 @@ const postSlice = createSlice({
         state.removePostLoading = false;
         state.removePostError = action.error.message;
       })
+	    .addCase(reportPost.pending, (state) => {
+				state.reportPostLoading = true;
+				state.reportPostDone = false;
+				state.reportPostError = null;
+			})
+			.addCase(reportPost.fulfilled, (state, action) => {
+				state.reportPostLoading = false;
+				state.reportPostDone = true;
+				if(action.payload.hidden_mode) {
+					_remove(state.mainPosts, {id: action.payload.PostId});
+					_remove(state.indexPosts, {id:action.payload.PostId});
+					_remove(state.singlePost, {id :action.payload.PostId});
+					_remove(state.popularPosts, {id:action.payload.PostId});
+				}
+			})
+			.addCase(reportPost.rejected, (state, action) => {
+				state.reportPostLoading=false;
+				state.reportPostError = action.error.message;
+			})
       // likePost
       .addCase(likePost.pending, (state) => {
         state.likePostLoading = true;

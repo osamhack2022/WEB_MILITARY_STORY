@@ -5,6 +5,7 @@ import Router from 'next/router';
 import axios from 'axios';
 import useSWR from 'swr';
 
+import { loadPopularPosts } from "../actions/post"
 import AppLayout from '../components/AppLayout';
 import FollowList from '../components/FollowList';
 import NicknameEditForm from '../components/NicknameEditForm';
@@ -20,11 +21,6 @@ const Profile = () => {
   const [followingsLimit, setFollowingsLimit] = useState(4);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (!(me && me.id)) {
-      Router.push('/').then();
-    }
-  }, [me && me.id]);
 
   const { data: followersData, error: followerError } = useSWR(
     me && me.id ? `/user/followers?limit=${followersLimit}` : null,
@@ -34,6 +30,10 @@ const Profile = () => {
     me && me.id ? `/user/followings?limit=${followingsLimit}` : null,
     fetcher
   );
+	
+	useEffect(()=>{
+		dispatch(loadMyInfo())
+	}, [])
 
   const loadMoreFollowings = useCallback(() => {
     setFollowingsLimit((prev) => prev + 4);
@@ -55,7 +55,7 @@ const Profile = () => {
   return (
     <AppLayout>
       <Head>
-        <title>내 프로필 | NodeBird</title>
+        <title>내 프로필 | Military Story</title>
       </Head>
       <NicknameEditForm />
       {followingsData && (
@@ -77,5 +77,18 @@ const Profile = () => {
     </AppLayout>
   );
 };
+
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  async (context) => {
+    
+		await context.store.dispatch(loadPopularPosts({
+			limit: 3,
+		}))
+    return {
+      props: {},
+    };
+  }
+);
 
 export default Profile;
