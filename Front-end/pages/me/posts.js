@@ -5,7 +5,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Link from 'next/link';
-import { loadMyPosts } from '../../actions/post';
+import { loadMyPosts, loadPopularPosts } from '../../actions/post';
 import { loadMyInfo, loadUser } from '../../actions/user';
 import PostCard from '../../components/PostCard';
 import AppLayout from '../../components/AppLayout';
@@ -23,6 +23,9 @@ const User = () => {
   useEffect(() => {
     dispatch(loadMyInfo());
 		dispatch(loadMyPosts());
+		dispatch(loadPopularPosts({
+			limit: 3,
+		}))
 		console.log(mainPosts)
   }, [router.asPath]);
 

@@ -40,6 +40,7 @@ import {
   unlikePost,
   scrapPost,
   unScrapPost,
+	reportPost,
 } from '../actions/post';
 import FollowButton from './FollowButton';
 
@@ -149,6 +150,18 @@ const PostCard = ({ post }) => {
 		
   }, [id]);
 	
+	const onReportPost = useCallback(()=>{
+		if(!id) {
+			alert('로그인이 필요합니다.');
+			return;
+		}
+		dispatch(
+			reportPost({
+				postId: post.id
+			})
+		)
+	}, [id])
+	
 	const avatar = () =>{
 		if (!post.private_mode){
 			return(
@@ -214,7 +227,7 @@ const PostCard = ({ post }) => {
                     <Button onClick={onRemovePost}>삭제</Button>
                   </>
                 ) : (
-                  <Button color="error">신고</Button>
+                  <Button color="error" onClick={onReportPost}>신고</Button>
                 )}
               </Popover>
             </IconButton>

@@ -5,7 +5,7 @@ import AppLayout from '../components/AppLayout';
 import PostForm from '../components/PostForm';
 import PostCard from '../components/PostCard';
 import { loadMyInfo } from '../actions/user';
-import { loadPosts } from '../actions/post';
+import { loadPosts, loadPopularPosts } from '../actions/post';
 import wrapper from '../store/configureStore';
 
 import { useRouter } from "next/router"
@@ -68,6 +68,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
 		await context.store.dispatch(loadPosts({
 			category: context.params.id
 		}));
+		await context.store.dispatch(loadPopularPosts({
+			limit: 3,
+		}))
     return {
       props: {},
     };

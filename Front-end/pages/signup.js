@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { styled } from '@mui/material/styles';
 import Router from 'next/router';
 import axios from 'axios';
+import { loadPopularPosts } from "../actions/post"
 import { loadMyInfo, signup } from '../actions/user';
 import AppLayout from '../components/AppLayout';
 import wrapper from '../store/configureStore';
@@ -172,6 +173,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       axios.defaults.headers.Cookie = cookie;
     }
     await context.store.dispatch(loadMyInfo());
+		await context.store.dispatch(loadPopularPosts({
+			limit: 3,
+		}))
     return {
       props: {},
     };

@@ -1,15 +1,24 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Avatar, Card } from 'antd';
+import Card from "@mui/material/Card";
+import Avatar from "@mui/material/Avatar";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography"
+import CardActionArea from "@mui/material/CardActionArea"
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Link from 'next/link';
-import { loadUserPosts } from '../../actions/post';
+import { loadUserPosts, loadPopularPosts } from '../../actions/post';
 import { loadMyInfo, loadUser } from '../../actions/user';
 import PostCard from '../../components/PostCard';
 import AppLayout from '../../components/AppLayout';
 import wrapper from '../../store/configureStore';
+import CardHeader from "@mui/material/CardHeader";
+import Divider from "@mui/material/Divider"
+import CardActions from "@mui/material/CardActions"
+import Grid from "@mui/material/Grid"
+import Button from "@mui/material/Button"
 
 const User = () => {
   const dispatch = useDispatch();
@@ -23,6 +32,10 @@ const User = () => {
   useEffect(() => {
     dispatch(loadMyInfo());
   }, [router.asPath]);
+	
+	useEffect(()=>{
+		console.log(userInfo)
+	},[]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -69,40 +82,53 @@ const User = () => {
           />
         </Head>
       )}
-      {userInfo && userInfo.id !== me?.id ? (
-        <div style={{ padding: 15, background: '#ececec', marginBottom: 20 }}>
-          <Card
-            actions={[
-              <div key="twit">
-                게시물
-                <br />
-                {userInfo.Posts}
-              </div>,
-              <div key="following">
-                팔로잉
-                <br />
-                {userInfo.Followings}
-              </div>,
-              <div key="follower">
-                팔로워
-                <br />
-                {userInfo.Followers}
-              </div>,
-            ]}
-          >
-            <Card.Meta
-              avatar={
-                <Link href={`/user/${userInfo.id}`}>
-                  <a>
-                    <Avatar>{userInfo.nickname[0]}</Avatar>
-                  </a>
-                </Link>
-              }
-              title={userInfo.nickname}
-            />
-          </Card>
-        </div>
-      ) : null}
+      
+			<Card sx={{ width:"100%", backgroundColor:"#fefefe", border:"3px solid #ddd", marginTop:1.5 }}>
+      <CardHeader
+        avatar={
+          <Link href={`/user/${userInfo.id}`}>
+            <a>
+              <Avatar sx={{ bgcolor: 'grey' }} aria-label="recipe">
+                {userInfo.nickname[0]}
+              </Avatar>
+            </a>
+          </Link>
+        }
+        title={
+          <Link href={`/user/${userInfo.id}`}>
+            <a>
+              <span style={{ color: 'black' }}>{userInfo.nickname}</span>
+            </a>
+          </Link>
+        }
+      />
+
+      <Divider variant = "middle"/>
+      <CardActions disableSpacing>
+        <Grid container>
+          <Grid item xs={3.8}>
+              <span style={{display:'flex', justifyContent:'center' }}>게시글 : 
+							{userInfo.Posts}</span>
+          </Grid>
+					<Divider orientation="vertical" flexItem />
+          <Grid item xs={3.8}>
+            <span style={{display:'flex', justifyContent:'center' }}>
+							팔로잉 : 
+              {userInfo.Followings}
+						</span>
+          </Grid>
+					<Divider orientation="vertical" flexItem />
+          <Grid item xs={3.8}>
+            <span style={{display:'flex', justifyContent:'center' }}>
+							팔로워 : 
+              {userInfo.Followers}
+						</span>
+          </Grid>
+        </Grid>
+      </CardActions>
+    </Card>
+        
+     
       {mainPosts.map((post) => (
         <PostCard key={post.id} post={post} />
       ))}
@@ -123,7 +149,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
     await context.store.dispatch(loadUserPosts({ userId: context.params.id }));
     await context.store.dispatch(loadUser({ userId: context.params.id }));
     // await context.store.dispatch(loadMyInfo());
-
+		await context.store.dispatch(loadPopularPosts({
+			limit: 3,
+		}))
     return {
       props: {},
     };

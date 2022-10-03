@@ -5,6 +5,7 @@ import Router from 'next/router';
 import axios from 'axios';
 import useSWR from 'swr';
 
+import { loadPopularPosts } from "../actions/post"
 import AppLayout from '../components/AppLayout';
 import FollowList from '../components/FollowList';
 import NicknameEditForm from '../components/NicknameEditForm';
@@ -77,5 +78,24 @@ const Profile = () => {
     </AppLayout>
   );
 };
+
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  async (context) => {
+    const cookie = context.req ? context.req.headers.cookie : '';
+    axios.defaults.headers.Cookie = '';
+    // 쿠키가 브라우저에 있는경우만 넣어서 실행
+    // (주의, 아래 조건이 없다면 다른 사람으로 로그인 될 수도 있음)
+    if (context.req && cookie) {
+      axios.defaults.headers.Cookie = cookie;
+    }
+		await context.store.dispatch(loadPopularPosts({
+			limit: 3,
+		}))
+    return {
+      props: {},
+    };
+  }
+);
 
 export default Profile;

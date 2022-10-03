@@ -27,7 +27,7 @@ export const loadPosts = createAsyncThunk(
 export const loadPopularPosts = createAsyncThunk(
 	'post/loadPopularPosts',
 	async (data) => {
-		const response = await axios.get(`/posts/popular?lastId=${data?.lastId}&limit=${data?.limit}`);
+		const response = await axios.get(`/posts/popular`);
 		return response.data;
 	},
 	{
@@ -158,6 +158,19 @@ export const updatePost = createAsyncThunk(
     }
   }
 );
+
+export const reportPost = createAsyncThunk(
+	'post/reportPost',
+	async(data, {rejectWithValue}) => {
+		try{
+			const response = await axios.patch(`/post/${data.postId}/report`);
+			return response.data;
+		}
+		catch(error){
+			return rejectWithValue(error.response.data)
+		}
+	}
+)
 
 export const scrapPost = createAsyncThunk(
   'post/scrapPost',
