@@ -49,8 +49,8 @@ router.get('/comments', isLoggedIn, async(req, res, next)=>{
 	const user = await User.findOne({
 	  where : {id : req.user.id},
 		include:[{
-		  model:Comment,
-		  as: "Comments"
+        model:Comment,
+        as: "Comments"
 		}]
 	  })
 	if(!user) {
@@ -60,31 +60,31 @@ router.get('/comments', isLoggedIn, async(req, res, next)=>{
 	const comments = await user.getComments()
 	for (let i = 0;i<comments.length;i++){
 	  if(comments[i].dataValues.PostId !== null){
-		const my_post = await Post.findOne({
-		  where: {id : comments[i].dataValues.PostId, hidden_mode: false },
-		  attributes:['id', 'content', 'updatedAt', 'createdAt'],
-		  include: [{
-		    model: User,
-			attributes:['id', 'nickname'],
-		  },
-		  {
-			model:User,
-			as:'Likers',
-			attributes:['id'],
-		  },{
-			model: User,
-			as:'Scrappers',
-			attributes: ['id', 'nickname']
-		  },{
-			model:Comment,
-			attributes:['id']
-		  },{
-		    model : Image
-		  }]
-		})
-		if(my_post){
-		  my_comments.push([comments[i], my_post])
-		}
+        const my_post = await Post.findOne({
+          where: {id : comments[i].dataValues.PostId, hidden_mode: false },
+          attributes:['id', 'content', 'updatedAt', 'createdAt'],
+          include: [{
+            model: User,
+            attributes:['id', 'nickname'],
+          },
+          {
+            model:User,
+            as:'Likers',
+            attributes:['id'],
+          },{
+            model: User,
+            as:'Scrappers',
+            attributes: ['id', 'nickname']
+          },{
+            model:Comment,
+            attributes:['id']
+          },{
+            model : Image
+          }]
+        }) 
+        if(my_post){
+          my_comments.push([comments[i], my_post])
+        }
 	  }
 	}
 	res.status(200).json(my_comments)
