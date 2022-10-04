@@ -119,10 +119,10 @@ const MyComments = ({comments, post}) => {
     );
   }, [id]);
 	
-	useEffect(()=>{
-		console.log(comments)
-		console.log(post)
-	}, [])
+// 	useEffect(()=>{
+// 		console.log(comments)
+// 		console.log(post)
+// 	}, [])
 	
 	const liked = post.Likers.find((v) => v.id === id);
   const scrapped = post.Scrappers.find((v) => v.id === id);

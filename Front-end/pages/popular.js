@@ -10,6 +10,22 @@ import wrapper from '../store/configureStore';
 
 import { useRouter } from "next/router"
 
+import styled from "styled-components"
+
+const TitleDiv = styled.div`
+  marginTop: 100px;
+	marginBottom: 10px;
+ 	position: relative;
+  border: 3px solid #ddd;
+  margin: 0px -2px;
+	width:100%;
+	padding-top : 5px;
+	text-align: center;
+	font-weight: bold;
+	margin-bottom:5px;
+	font-size: 27px;
+`
+
 const Home = () => {
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
@@ -51,6 +67,7 @@ const Home = () => {
 
   return (
     <AppLayout>
+			<TitleDiv>인기 게시물 페이지</TitleDiv>
       {popularPosts.map((post) => (
         <PostCard key={post.id} post={post} />
       ))}
