@@ -56,5 +56,5 @@ app.use('/user', userRouter);
 app.use('/hashtag', hashtagRouter);
 
 app.listen(3000, () => {
-  console.log('server');
+  console.log('서버 실행 중!');
 });
