@@ -13,6 +13,7 @@ import wrapper from "../../store/configureStore"
 const Comment = () => {
 	const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
+	const [instanceComment, setInstanceComment] = useState([])
 	
   const { mainPosts, hasMorePosts, loadPostsLoading, userComments } = useSelector(
     (state) => state.post
@@ -21,12 +22,25 @@ const Comment = () => {
 	useEffect(()=>{
 		dispatch(loadMyInfo())
 		dispatch(loadUserComments())
-		console.log(userComments)
 	}, [])
+	
+	useEffect(()=>{
+		const _instance = [];
+		const _instancecomment = []
+		for (let i = 0;i<userComments.length;i++) {
+			if(_instance.indexOf(userComments[i][1].id) === -1) {
+				_instance.push(userComments[i][1].id)
+				_instancecomment.push(userComments[i])
+			}
+		}
+		console.log(_instance)
+		setInstanceComment(_instancecomment)
+	}, [userComments])
+	
 	return (
 		<AppLayout>
-			{userComments.map((el, idx)=>(
-				<MyComments key = {idx} comments = {el[0].content} post={el[1]} />
+			{instanceComment.map((el, idx)=>(
+				<MyComments key = {el[1].id} comments = {el[0].content} post={el[1]} />
 			))}
 		</AppLayout>)
 };
@@ -40,7 +54,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
       axios.defaults.headers.Cookie = cookie;
     }
 		
-		await context.store.dispatch(loadUserComments());
 		await context.store.dispatch(loadPopularPosts({
 			limit: 3,
 		}))

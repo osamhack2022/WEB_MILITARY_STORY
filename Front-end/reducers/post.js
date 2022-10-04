@@ -123,8 +123,15 @@ const postSlice = createSlice({
 				state.loadPostsDone = false;
 				state.loadPostsError = null;
 			})
-			.addCase(loadHotPosts.fulfilled)
-			.addCase(loadHotPosts.rejected)
+			.addCase(loadHotPosts.fulfilled, (state, action) => {
+				state.loadPostsLoading = false;
+				state.loadPostsDone = true;
+				state.hotPosts = _concat(state.hotPosts, action.payload);
+			})
+			.addCase(loadHotPosts.rejected, (state) => {
+				state.loadPostsLoading = false;
+				state.loadPostsError = action.error.message;
+			})
       .addCase(loadPosts.pending, (state) => {
         state.loadPostsLoading = true;
         state.loadPostsDone = false;

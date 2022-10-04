@@ -299,18 +299,17 @@ const PostCard = ({ post }) => {
             <List sx={{ width: '100%', bgcolor: 'background.paper' }} key={el.id}>
               <ListItem alignItems="flex-start">
                 <ListItemAvatar>
-                  {(el.priavte_mode === false) && 
-									<Link
-                    href={{ pathname: '/user', query: { id: el.User.id } }}
-                    as={`/user/${el.User.id}`}
-                  >
-                    <a>
-                      <Avatar alt="Remy Sharp">{el.User.nickname[0]}</Avatar>
-                    </a>
-                  </Link>}
-									{el.private_mode &&
-										<Avatar alt="Remy Sharp">?</Avatar>
-									}
+									{el.private_mode ?
+										(<Avatar alt="Remy Sharp">?</Avatar>):(
+										<Link
+                    	href={{ pathname: '/user', query: { id: el.User.id } }}
+                    	as={`/user/${el.User.id}`}
+                  	>
+                    	<a>
+                      	<Avatar alt="Remy Sharp">{el.User.nickname[0]}</Avatar>
+                    	</a>
+                  	</Link>)
+										}
                 </ListItemAvatar>
                 {(el.private_mode === false) && 
 									<ListItemText
