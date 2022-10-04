@@ -14,6 +14,7 @@ import PropTypes from 'prop-types';
 import { addComment } from '../actions/post';
 import useInput from '../hooks/useInput';
 import { styled } from "@mui/material/styles";
+import Checkbox from "@mui/material/Checkbox";
 
 const StyledAvatar=styled(Avatar)(({theme})=>({
 	width:35,
@@ -52,6 +53,12 @@ const CommentForm = ({ post }) => {
   );
   const { me } = useSelector((state) => state.user);
   const [commentText, onChangeCommentText, setCommentText] = useInput('');
+	
+	const [privateMode, setPrivateMode] = useState(false);
+	
+	const onChangePrivateMode = useCallback((e)=>{
+		setPrivateMode(e.target.checked)
+	})
 
   useEffect(() => {
     if (addCommentDone) {
@@ -72,6 +79,7 @@ const CommentForm = ({ post }) => {
         postId: post.id,
         userId: me.id,
         content: commentText,
+				private_mode: privateMode
       })
     );
 		setCommentText('');
@@ -107,11 +115,21 @@ const CommentForm = ({ post }) => {
               댓글
             </StyledLoadingButton>
           ) : (
-            <StyledButton
-              onClick={onSubmitComment}
-            >
-              댓글
-            </StyledButton>
+						<div>
+							<label style={{float:'right'}}>
+								<Checkbox 
+									name="private-mode"
+									checked={privateMode}
+									onChange={onChangePrivateMode}
+								/>
+								<span>닉네임 비공개</span>
+					  	</label>
+            	<StyledButton
+              	onClick={onSubmitComment}
+            	>
+              	댓글
+            	</StyledButton>
+				    </div>
           )}
       </StyledFormGroup>
   );

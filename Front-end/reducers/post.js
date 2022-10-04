@@ -21,7 +21,8 @@ import {
 	loadUserScraps,
 	loadMyPosts,
 	loadPopularPosts,
-	reportPost
+	reportPost,
+	loadHotPosts
 } from '../actions/post';
 
 // 기본 state
@@ -29,6 +30,7 @@ export const initialState = {
   mainPosts: [],
 	indexPosts: [],
 	popularPosts: [],
+	hotPosts: [],
 	userComments: [],
   hasMorePosts: true,
   singlePost: null,
@@ -116,6 +118,13 @@ const postSlice = createSlice({
         state.loadPopularPostsLoading = false;
         state.loadPopularPostsError = action.error.message;
       })
+			.addCase(loadHotPosts.pending, (state) => {
+				state.loadPostsLoading = true;
+				state.loadPostsDone = false;
+				state.loadPostsError = null;
+			})
+			.addCase(loadHotPosts.fulfilled)
+			.addCase(loadHotPosts.rejected)
       .addCase(loadPosts.pending, (state) => {
         state.loadPostsLoading = true;
         state.loadPostsDone = false;

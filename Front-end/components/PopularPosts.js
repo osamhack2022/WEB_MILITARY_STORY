@@ -64,7 +64,7 @@ const PopularPosts = ({index, posts}) => {
 		<StyledDiv>
 		<PaddingDiv>
 			<StyledSpan><strong>인기 게시물</strong></StyledSpan>
-			<Link href={`/${index}`}>
+			<Link href={`/popular`}>
 				<a>
 					<strong style={{float:"right", marginRight:1, color:"black", marginTop:5}}> 더보기 +</strong>
 				</a>

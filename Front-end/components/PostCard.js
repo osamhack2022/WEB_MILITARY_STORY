@@ -299,19 +299,31 @@ const PostCard = ({ post }) => {
             <List sx={{ width: '100%', bgcolor: 'background.paper' }} key={el.id}>
               <ListItem alignItems="flex-start">
                 <ListItemAvatar>
-                  <Link
+                  {(el.priavte_mode === false) && 
+									<Link
                     href={{ pathname: '/user', query: { id: el.User.id } }}
                     as={`/user/${el.User.id}`}
                   >
                     <a>
                       <Avatar alt="Remy Sharp">{el.User.nickname[0]}</Avatar>
                     </a>
-                  </Link>
+                  </Link>}
+									{el.private_mode &&
+										<Avatar alt="Remy Sharp">?</Avatar>
+									}
                 </ListItemAvatar>
-                <ListItemText
-                  primary={el.User.nickname}
-                  secondary={<React.Fragment><pre>{el.content}</pre></React.Fragment>}
-                />
+                {(el.private_mode === false) && 
+									<ListItemText
+                  	primary={el.User.nickname}
+                  	secondary={<React.Fragment><pre>{el.content}</pre></React.Fragment>}
+                	/>
+								}
+								{el.private_mode && 
+									<ListItemText
+                  	primary={'익명' + el.anonymous}
+                  	secondary={<React.Fragment><pre>{el.content}</pre></React.Fragment>}
+                	/>
+								}
               </ListItem>
               <Divider variant="inset" component="li" sx={{marginTop:-3}} />
             </List>

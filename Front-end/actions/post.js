@@ -27,7 +27,25 @@ export const loadPosts = createAsyncThunk(
 export const loadPopularPosts = createAsyncThunk(
 	'post/loadPopularPosts',
 	async (data) => {
-		const response = await axios.get(`/posts/popular`);
+		const response = await axios.get(`/posts/popular?limit=${data.limit}`);
+		return response.data;
+	},
+	{
+    condition: (data, { getState }) => {
+      const { post } = getState();
+
+      if (post.loadPostsLoading) {
+        return false;
+      }
+      return true;
+    },
+  }
+)
+
+export const loadHotPosts = createAsyncThunk(
+	'post/loadHotPosts',
+	async (data) => {
+		const response = await axios.get(`/posts/popular?$limit=${data.limit}`);
 		return response.data;
 	},
 	{
