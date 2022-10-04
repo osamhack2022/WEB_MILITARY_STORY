@@ -5,19 +5,13 @@ const fs = require('fs');
 const multerS3 = require('multer-s3');
 const AWS = require('aws-sdk');
 
-const { Post, Image, Comment, User, Hashtag } = require('../models');
+const { Post, Image, Comment, User, Hashtag, Userid } = require('../models');
 const { isLoggedIn } = require('./middlewares');
 
 const router = express.Router();
 
-try {
-  fs.accessSync('uploads');
-} catch (error) {
-  fs.mkdirSync('uploads');
-}
-
 try{
-	AWS.config.update({
+  AWS.config.update({
   accessKeyId: process.env.S3_ACCESS_KEY_ID,
   secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
   region: 'ap-northeast-2',
@@ -36,17 +30,20 @@ const upload = multer({
       cb(null, `original/${Date.now()}_${path.basename(file.originalname)}`)
     }
   }),
-  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB
+  limits: { fileSize: 20 * 1024 * 1024 },
 });
 
-router.post('/', isLoggedIn, upload.none(), async (req, res, next) => { // POST /post
+router.post('/', isLoggedIn, upload.none(), async (req, res, next) => {
   try {
     const hashtags = req.body.content.match(/#[^\s#]+/g);
     const post = await Post.create({
       content: req.body.content,
 	  category: req.body.category[1],
       UserId: req.user.id,
-	  private_mode: req.body.private_mode
+	  private_mode: req.body.private_mode,
+	  report_count: 0,
+	  hidden_mode: false,
+	  like_counts: 0,
     });
 	  
     if (hashtags) {
@@ -72,14 +69,14 @@ router.post('/', isLoggedIn, upload.none(), async (req, res, next) => { // POST 
       }, {
         model: Comment,
         include: [{
-          model: User, // 댓글 작성자
+          model: User,
           attributes: ['id', 'nickname'],
         }],
       }, {
-        model: User, // 게시글 작성자
+        model: User,
         attributes: ['id', 'nickname'],
       }, {
-        model: User, // 좋아요 누른 사람
+        model: User,
         as: 'Likers',
         attributes: ['id'],
       }, {
@@ -95,15 +92,15 @@ router.post('/', isLoggedIn, upload.none(), async (req, res, next) => { // POST 
   }
 });
 
-router.post('/images', isLoggedIn, upload.array('image'), (req, res, next) => { // POST /post/images
+router.post('/images', isLoggedIn, upload.array('image'), (req, res, next) => {
   console.log(req.files);
   res.json(req.files.map((v) => v.location.replace(/\/original\//, '/thumb/')));
 });
 
-router.get('/:postId', async (req, res, next) => { // GET /post/1
+router.get('/:postId', async (req, res, next) => {
   try {
     const post = await Post.findOne({
-      where: { id: req.params.postId },
+      where: { id: req.params.postId, hidden_mode: false },
     });
     if (!post) {
       return res.status(404).send('존재하지 않는 게시글입니다.');
@@ -177,7 +174,7 @@ router.delete('/:postId/scrap', isLoggedIn, async(req, res, next)=>{
 	}
 })
 
-router.post('/:postId/comment', isLoggedIn, async (req, res, next) => { // POST /post/1/comment
+router.post('/:postId/comment', isLoggedIn, async (req, res, next) => {
   try {
     const post = await Post.findOne({
       where: { id: req.params.postId },
@@ -189,7 +186,37 @@ router.post('/:postId/comment', isLoggedIn, async (req, res, next) => { // POST 
       content: req.body.content,
       PostId: parseInt(req.params.postId, 10),
       UserId: req.user.id,
+	  private_mode : req.body.private_mode,
+	  anonymous: '',
     })
+	
+	if(req.body.private_mode) {
+	  const writer_list = await post.getUserids();
+	  const _instance = []
+	  let anonymous = '';
+			
+	  console.log(writer_list)
+	  for (let i = 0 ; i<writer_list.length ; i++) {
+	    _instance.push(writer_list[i].my_id);
+      }
+	  if(_instance.indexOf(req.user.id) !== -1) {
+	    anonymous = _instance.indexOf(req.user.id) + 1;
+	  }else{
+		const writer = await Userid.create({
+	  	  my_id: req.user.id
+	    });
+	    await post.addUserid(writer);
+	    anonymous = (_instance.length + 1).toString()
+	  }
+	  await Comment.update({
+		anonymous,
+	  },{
+		where:{
+		  id: comment.id
+		}
+	  })
+	}
+	
     const fullComment = await Comment.findOne({
       where: { id: comment.id },
       include: [{
@@ -220,13 +247,56 @@ router.delete('/:commentId/comment', isLoggedIn, async(req, res, next)=>{
   }
 })
 
-router.patch('/:postId/like', isLoggedIn, async (req, res, next) => { // PATCH /post/1/like
+router.patch('/:postId/report', isLoggedIn, async(req, res, next) => {
+  try{
+	console.log(req.params.postId)
+    const post = await Post.findOne({where: {id: parseInt(req.params.postId, 10)}});
+	if(!post) {
+	  return res.status(403).send("게시글이 존재하지 않습니다.")
+	}
+	let hidden_mode = false;
+	let report_count = post.report_count + 1;
+	if (report_count >= 1){
+		hidden_mode = true;
+	}
+	await Post.update({
+      report_count,
+	  hidden_mode,
+    }, {
+      where: {
+        id: req.params.postId,
+      },
+    });	
+	  
+	  
+	res.json({ PostId: post.id, UserId: req.user.id, hidden_mode });
+		
+	}
+  catch(error){
+	console.error(error);
+    next(error);
+  }
+	
+})
+
+router.patch('/:postId/like', isLoggedIn, async (req, res, next) => {
   try {
     const post = await Post.findOne({ where: { id: req.params.postId }});
     if (!post) {
       return res.status(403).send('게시글이 존재하지 않습니다.');
     }
+	  
     await post.addLikers(req.user.id);
+	const likers = await post.getLikers()
+	
+	await Post.update({
+      like_counts: likers.length
+    }, {
+      where: {
+        id: req.params.postId,
+      },
+    });
+	
     res.json({ PostId: post.id, UserId: req.user.id });
   } catch (error) {
     console.error(error);
@@ -234,13 +304,25 @@ router.patch('/:postId/like', isLoggedIn, async (req, res, next) => { // PATCH /
   }
 });
 
-router.delete('/:postId/like', isLoggedIn, async (req, res, next) => { // DELETE /post/1/like
+router.delete('/:postId/like', isLoggedIn, async (req, res, next) => {
   try {
     const post = await Post.findOne({ where: { id: req.params.postId }});
+	
     if (!post) {
       return res.status(403).send('게시글이 존재하지 않습니다.');
     }
+	
+	
     await post.removeLikers(req.user.id);
+	  
+	const likers = await post.getLikers()
+	await Post.update({
+      like_counts: likers.length
+    }, {
+      where: {
+        id: req.params.postId,
+      },
+    });
     res.json({ PostId: post.id, UserId: req.user.id });
   } catch (error) {
     console.error(error);
@@ -248,7 +330,7 @@ router.delete('/:postId/like', isLoggedIn, async (req, res, next) => { // DELETE
   }
 });
 
-router.patch('/:postId', isLoggedIn, async (req, res, next) => { // PATCH /post/10
+router.patch('/:postId', isLoggedIn, async (req, res, next) => {
   const hashtags = req.body.content.match(/#[^\s#]+/g);
   try {
     await Post.update({
@@ -263,7 +345,7 @@ router.patch('/:postId', isLoggedIn, async (req, res, next) => { // PATCH /post/
     if (hashtags) {
       const result = await Promise.all(hashtags.map((tag) => Hashtag.findOrCreate({
         where: { name: tag.slice(1).toLowerCase() },
-      }))); 
+      })));
       await post.setHashtags(result.map((v) => v[0]));
     }
     res.status(200).json({ PostId: parseInt(req.params.postId, 10), content: req.body.content });
@@ -273,7 +355,7 @@ router.patch('/:postId', isLoggedIn, async (req, res, next) => { // PATCH /post/
   }
 });
 
-router.delete('/:postId', isLoggedIn, async (req, res, next) => { // DELETE /post/10
+router.delete('/:postId', isLoggedIn, async (req, res, next) => {
   try {
     await Post.destroy({
       where: {
@@ -287,5 +369,6 @@ router.delete('/:postId', isLoggedIn, async (req, res, next) => { // DELETE /pos
     next(error);
   }
 });
+
 
 module.exports = router;
