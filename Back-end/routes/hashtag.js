@@ -5,11 +5,10 @@ const { Post, Hashtag, Image, Comment, User } = require('../models');
 
 const router = express.Router();
 
-
-router.get('/:hashtag', async (req, res, next) => { 
+router.get('/:hashtag', async (req, res, next) => {
   try {
     const where = {};
-    if (parseInt(req.query.lastId, 10)) {
+    if (parseInt(req.query.lastId, 10)) { 
       where.id = { [Op.lt]: parseInt(req.query.lastId, 10)}
     }
     const posts = await Post.findAll({
@@ -36,10 +35,10 @@ router.get('/:hashtag', async (req, res, next) => {
         as: 'Likers',
         attributes: ['id'],
       }, {
-		model : User,
-		as:'Scrappers',
-		attributes:['id', 'nickname']
-	  }],
+	model : User,
+	as:'Scrappers',
+	attributes:['id', 'nickname']
+      }],
     });
     res.status(200).json(posts);
   } catch (error) {
