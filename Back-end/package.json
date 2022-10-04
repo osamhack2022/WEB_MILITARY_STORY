@@ -1,10 +1,11 @@
 {
-  "name": "osam_back",
+  "name": "back-end",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "dev": "nodemon app",
+	"dev": "nodemon app",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "gnncjegrgr",
   "license": "ISC",
@@ -25,6 +26,7 @@
     "mysql2": "^2.2.5",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
+    "pm2": "^4.5.0",
     "sequelize": "^6.3.5",
     "sequelize-cli": "^6.2.0",
     "sharp": "^0.31.0"
