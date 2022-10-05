@@ -12,38 +12,37 @@ import useInput from '../hooks/useInput';
 
 import styled from 'styled-components';
 
-import Checkbox from "@mui/material/Checkbox";
+import Checkbox from '@mui/material/Checkbox';
 
-import { useRouter } from "next/router"
-
+import { useRouter } from 'next/router';
 
 const pages = [
-	'자유 게시판',
+  '자유 게시판',
   '고민상담 게시판',
-	'정보 게시판',
-	'취미 게시판',
-	'질문 답변 게시판',
-	'감사 게시판'
-]
+  '정보 게시판',
+  '취미 게시판',
+  '질문 답변 게시판',
+  '감사 게시판',
+];
 
 const TitleDiv = styled.div`
- 	position: relative;
+  position: relative;
   border: 3px solid #ddd;
   margin: 0px -2px;
-	width:100%;
-	padding-top : 5px;
-	text-align: center;
-	font-weight: bold;
-	margin-bottom:5px;
-	font-size: 27px;
-`
+  width: 100%;
+  padding-top: 5px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 27px;
+`;
 
 const BoardDiv = styled.div`
   position: relative;
   border: 3px solid #ddd;
   margin: 0px -2px;
-	width:100%;
-	padding-top : 5px;
+  width: 100%;
+  padding-top: 5px;
 `;
 
 const BoardInput = styled.input`
@@ -102,7 +101,7 @@ const BoardTagarea = styled.textarea`
 
 const BoardTextarea = styled.textarea`
   width: 100%;
-	height:40px;
+  height: 40px;
   outline: none;
   padding: 8px;
   border: 1px solid #fff;
@@ -118,9 +117,9 @@ const BoardTextarea = styled.textarea`
 `;
 
 const StyledForm = styled.form`
-  marginTop: 16px;
-	marginBottom: 16px;
-`
+  margintop: 16px;
+  marginbottom: 16px;
+`;
 
 const PostForm = () => {
   const [action, setAction] = useState(null);
@@ -133,15 +132,15 @@ const PostForm = () => {
   const [text, onChangeText, setText] = useInput('');
   const [writeForm, setWriteForm] = useState(false);
   const [title, onChangeTitle, setTitle] = useInput('');
-	const [tag, onChangeTag, setTag] = useInput('')
-	
+  const [tag, onChangeTag, setTag] = useInput('');
+
   const textAreaRef = useRef(null);
-	const inputRef = useRef(null);
-	const tagRef = useRef(null);
-	const [privateMode, setPrivateMode] = useState(false);
-	
-	const { asPath } = useRouter();
-	
+  const inputRef = useRef(null);
+  const tagRef = useRef(null);
+  const [privateMode, setPrivateMode] = useState(false);
+
+  const { asPath } = useRouter();
+
   useEffect(() => {
     if (textAreaRef.current) {
       textAreaRef.current.style.height = 'auto';
@@ -149,15 +148,13 @@ const PostForm = () => {
         textAreaRef.current.scrollHeight + 'px';
     }
   }, [text]);
-	
-	useEffect(()=>{
-		if (tagRef.current){
-			tagRef.current.style.height = 'auto';
-			tagRef.current.style.height = 
-				tagRef.current.scrollHeight + 'px';
-		}
-	}, [tag])
-	
+
+  useEffect(() => {
+    if (tagRef.current) {
+      tagRef.current.style.height = 'auto';
+      tagRef.current.style.height = tagRef.current.scrollHeight + 'px';
+    }
+  }, [tag]);
 
   useEffect(() => {
     if (action) {
@@ -192,12 +189,11 @@ const PostForm = () => {
     },
     []
   );
-	
-	const onChangePrivateMode = useCallback((e)=>{
-		setPrivateMode(e.target.checked);
-	}, []);
 
-	
+  const onChangePrivateMode = useCallback((e) => {
+    setPrivateMode(e.target.checked);
+  }, []);
+
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
@@ -207,29 +203,32 @@ const PostForm = () => {
       if (!text || !text.trim()) {
         return alert('게시글을 작성하세요.');
       }
-			if(!tag || !tag.trim()) {
-				return alert('해시태그를 작성하세요.')
-			}
+      if (!tag || !tag.trim()) {
+        return alert('해시태그를 작성하세요.');
+      }
       const formData = new FormData();
       imagePaths.forEach((p) => {
         formData.append('image', p);
       });
       formData.append('content', title + '\n$' + tag + '\n' + text);
-			formData.append('category', asPath);
-			formData.append('private_mode', privateMode)
+      formData.append('category', asPath);
+      formData.append('private_mode', privateMode);
       dispatch(addPost(formData));
       setWriteForm(false);
       setText('');
-			setTag('');
+      setTag('');
       setTitle('');
-			setPrivateMode(false);
+      setPrivateMode(false);
     },
     [title, text, imagePaths, asPath, privateMode]
   );
 
   return (
-    <form style={{marginTop:10, marginBottom:10}} encType="multipart/form-data">
-			<TitleDiv>{pages[parseInt(asPath[1], 10)]}</TitleDiv>
+    <form
+      style={{ marginTop: 10, marginBottom: 10 }}
+      encType="multipart/form-data"
+    >
+      <TitleDiv>{pages[parseInt(asPath[1], 10)]}</TitleDiv>
       {!writeForm && (
         <StyledInput
           maxLength={140}
@@ -248,7 +247,7 @@ const PostForm = () => {
             placeholder="글 제목"
             value={title}
             onChange={onChangeTitle}
-						ref={inputRef}
+            ref={inputRef}
           />
           <hr />
           <BoardTagarea
@@ -259,14 +258,14 @@ const PostForm = () => {
             onChange={onChangeTag}
           />
           <hr />
-					<BoardTextarea
+          <BoardTextarea
             name="boardHashTag"
             placeholder="#해시태그"
-						ref={textAreaRef}
+            ref={textAreaRef}
             value={text}
             onChange={onChangeText}
           />
-					<hr />
+          <hr />
           <div style={{ paddingTop: -3, marginTop: -7 }}>
             <input
               type="file"
@@ -279,17 +278,17 @@ const PostForm = () => {
             <Button onClick={onClickImageUpload}>
               <PhotoOutlinedIcon color="primary" />
             </Button>
-						<label style={{ display:'inline-block'}}>
-							<Checkbox 
-								name="private-mode"
-								checked={privateMode}
-								onChange={onChangePrivateMode}
-							/>
-							<span>닉네임 비공개</span>
-						</label>
+            <label style={{ display: 'inline-block' }}>
+              <Checkbox
+                name="private-mode"
+                checked={privateMode}
+                onChange={onChangePrivateMode}
+              />
+              <span>닉네임 비공개</span>
+            </label>
             <Button
               type="primary"
-              style={{ float: 'right', display:'inline-block'}}
+              style={{ float: 'right', display: 'inline-block' }}
               onClick={onSubmit}
             >
               <BorderColorIcon color="primary" />
@@ -300,9 +299,13 @@ const PostForm = () => {
       <div>
         {imagePaths.map((v, i) => (
           <div key={v} style={{ display: 'inline-block' }}>
-            <img src={`${v.replace(/\/thumb\//, '/original/')}`} style={{ width: '200px' }} alt={v} />
+            <img
+              src={`${v.replace(/\/thumb\//, '/original/')}`}
+              style={{ width: '200px' }}
+              alt={v}
+            />
             <div>
-              <Button onClick={()=>console.log("제거")}>제거</Button>
+              <Button onClick={() => console.log('제거')}>제거</Button>
             </div>
           </div>
         ))}

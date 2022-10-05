@@ -9,7 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
-import Divider from "@mui/material/Divider";
+import Divider from '@mui/material/Divider';
 
 import Link from 'next/link';
 import Router from 'next/router';
@@ -25,7 +25,13 @@ const UserProfile = () => {
   }, []);
 
   return (
-    <Card sx={{ width:"90%", backgroundColor:"#fefefe", border:"2px solid #ddd" }}>
+    <Card
+      sx={{
+        width: '90%',
+        backgroundColor: '#fefefe',
+        border: '2px solid #ddd',
+      }}
+    >
       <CardHeader
         avatar={
           <Link href={`/user/${me.id}`}>
@@ -38,11 +44,18 @@ const UserProfile = () => {
         }
         action={
           logoutLoading ? (
-            <LoadingButton loading variant="outlined" sx={{border:"2px solid #ccc"}}>
+            <LoadingButton
+              loading
+              variant="outlined"
+              sx={{ border: '2px solid #ccc' }}
+            >
               로그아웃
             </LoadingButton>
           ) : (
-            <Button sx={{ marginTop: '6px', border:"2px solid #ccc" }} onClick={onLogout}>
+            <Button
+              sx={{ marginTop: '6px', border: '2px solid #ccc' }}
+              onClick={onLogout}
+            >
               로그아웃
             </Button>
           )
@@ -56,26 +69,43 @@ const UserProfile = () => {
         }
       />
 
-      <Divider variant = "middle"/>
+      <Divider variant="middle" />
       <CardActions disableSpacing>
         <Grid container>
           <Grid item xs={3}>
-            <Button sx={{marginLeft:'15%', border:"2px solid #ccc"}} onClick={() => Router.push('/profile')}>
+            <Button
+              sx={{ marginLeft: '15%', border: '2px solid #ccc' }}
+              onClick={() => Router.push('/profile')}
+            >
               내 정보
             </Button>
           </Grid>
-					<Divider sx={{marginLeft:"1%", marginRight:"5%"}} orientation="vertical" variant="middle" flexItem />
+          <Divider
+            sx={{ marginLeft: '1%', marginRight: '5%' }}
+            orientation="vertical"
+            variant="middle"
+            flexItem
+          />
           <Grid item xs={3}>
-            <Button sx={{border:"2px solid #ccc"}} onClick={() => Router.push('/profile')}>
-              팔로잉 {' '}
-              {me.Followings.length}
+            <Button
+              sx={{ border: '2px solid #ccc' }}
+              onClick={() => Router.push('/profile')}
+            >
+              팔로잉 {me.Followings.length}
             </Button>
           </Grid>
-					<Divider sx ={{marginLeft:"1%", marginRight:"5%"}} orientation="vertical" variant="middle" flexItem />
+          <Divider
+            sx={{ marginLeft: '1%', marginRight: '5%' }}
+            orientation="vertical"
+            variant="middle"
+            flexItem
+          />
           <Grid item xs={3}>
-            <Button sx={{border:"2px solid #ccc"}} onClick={() => Router.push('/profile')}>
-              팔로워 {' '}
-              {me.Followers.length}
+            <Button
+              sx={{ border: '2px solid #ccc' }}
+              onClick={() => Router.push('/profile')}
+            >
+              팔로워 {me.Followers.length}
             </Button>
           </Grid>
         </Grid>

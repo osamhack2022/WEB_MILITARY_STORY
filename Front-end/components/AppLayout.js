@@ -34,11 +34,18 @@ import PropTypes from 'prop-types';
 
 import LoginForm from './LoginForm';
 import UserProfile from './UserProfile';
-import ProfilePost from "./ProfilePost";
-import PopularPosts from "./PopularPosts"
+import ProfilePost from './ProfilePost';
+import PopularPosts from './PopularPosts';
 
 const drawerWidth = 240;
-const navItems = ['자유 게시판', '고민상담 게시판', '정보 게시판', '취미 게시판', '질문 답변 게시판', '감사 게시판'];
+const navItems = [
+  '자유 게시판',
+  '고민상담 게시판',
+  '정보 게시판',
+  '취미 게시판',
+  '질문 답변 게시판',
+  '감사 게시판',
+];
 
 const theme = createTheme({
   palette: {
@@ -105,38 +112,38 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const InfoDiv = styled('div')(({ theme }) => ({
-	borderRadius:"5px",
-	// border:"2px solid #ddd",
-	height:"90%",
-	width:"90%"
+  borderRadius: '5px',
+  // border:"2px solid #ddd",
+  height: '90%',
+  width: '90%',
 }));
 
 const LeftDiv = styled('div')(({ theme }) => ({
-	paddingLeft:"5%",
+  paddingLeft: '5%',
 }));
 
-const StyledBox = styled(Box)(({theme})=>({
-	textAlign: 'center'
-}))
+const StyledBox = styled(Box)(({ theme }) => ({
+  textAlign: 'center',
+}));
 
-const BlackSpan = styled('span')(({theme})=>({
-	color: 'black',
-}))
+const BlackSpan = styled('span')(({ theme }) => ({
+  color: 'black',
+}));
 
-const StyledTypography = styled(Typography)(({theme})=>({
-	padding:5,
-	margin:5,
-	color:'black'
-}))
+const StyledTypography = styled(Typography)(({ theme }) => ({
+  padding: 5,
+  margin: 5,
+  color: 'black',
+}));
 
-const StyledListItemButton = styled(ListItemButton)(({theme})=>({
-	textAlign:'center',
-	color:'black'
-}))
+const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
+  textAlign: 'center',
+  color: 'black',
+}));
 
-const StyledAppBar = styled(AppBar)(({theme})=>({
-	backgroundColor:'white'
-}))
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+  backgroundColor: 'white',
+}));
 
 function Home({ children }) {
   const router = useRouter();
@@ -169,7 +176,7 @@ function Home({ children }) {
       <StyledTypography variant="h6">
         <Link href="/">
           <a>
-						<BlackSpan>Military Story</BlackSpan>
+            <BlackSpan>Military Story</BlackSpan>
           </a>
         </Link>
       </StyledTypography>
@@ -232,7 +239,9 @@ function Home({ children }) {
                 }}
                 size="small"
               >
-                <span style={{ color: '#009000', fontSize: '25px' }}>게시판</span>
+                <span style={{ color: '#009000', fontSize: '25px' }}>
+                  게시판
+                </span>
                 {listOpen === false && <ArrowDropDownIcon color="third" />}
                 {listOpen && <ArrowDropUpIcon color="third" />}
               </IconButton>
@@ -248,10 +257,25 @@ function Home({ children }) {
         </StyledAppBar>
         <Box sx={{ flexGrow: 1, marginTop: 9 }}>
           {listOpen && (
-            <Grid container spacing={2} sx={{ background: '#eee', paddingLeft:3, marginBottom:1, boxShadow: '0 4px 4px -4px black' }}>
+            <Grid
+              container
+              spacing={2}
+              sx={{
+                background: '#eee',
+                paddingLeft: 3,
+                marginBottom: 1,
+                boxShadow: '0 4px 4px -4px black',
+              }}
+            >
               {navItems.map((item, idx) => (
                 <>
-                  <Grid key={item} item xs={5.6} md={1.8} sx={{ paddingBottom: 1 }}>
+                  <Grid
+                    key={item}
+                    item
+                    xs={5.6}
+                    md={1.8}
+                    sx={{ paddingBottom: 1 }}
+                  >
                     <Link href={'/' + idx}>
                       <a>
                         <span style={{ color: 'black' }}>{item}</span>
@@ -266,13 +290,16 @@ function Home({ children }) {
           <Grid container spacing={2}>
             <Grid item xs={12} md={3}>
               <LeftDiv>
-								{me ? <UserProfile /> : <LoginForm />}
-								
-								{me && <InfoDiv><ProfilePost /></InfoDiv>}
-								
-							</LeftDiv>
+                {me ? <UserProfile /> : <LoginForm />}
+
+                {me && (
+                  <InfoDiv>
+                    <ProfilePost />
+                  </InfoDiv>
+                )}
+              </LeftDiv>
             </Grid>
-            <Grid item xs={12} md={6} sx={{ marginTop:-1.5}}>
+            <Grid item xs={12} md={6} sx={{ marginTop: -1.5 }}>
               {children}
             </Grid>
             <Grid item xs={12} md={3}>
@@ -289,7 +316,7 @@ function Home({ children }) {
                   />
                 </Search>
               </form>
-							<PopularPosts />
+              <PopularPosts />
             </Grid>
           </Grid>
         </Box>

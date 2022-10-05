@@ -5,7 +5,11 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Link from 'next/link';
-import { loadPopularPosts, loadMyPosts, loadStartMyPosts } from '../../actions/post';
+import {
+  loadPopularPosts,
+  loadMyPosts,
+  loadStartMyPosts,
+} from '../../actions/post';
 import { loadMyInfo, loadUser } from '../../actions/user';
 import PostCard from '../../components/PostCard';
 import AppLayout from '../../components/AppLayout';
@@ -22,10 +26,12 @@ const User = () => {
 
   useEffect(() => {
     dispatch(loadMyInfo());
-		dispatch(loadMyPosts());
-		dispatch(loadPopularPosts({
-			limit: 3,
-		}))
+    dispatch(loadMyPosts());
+    dispatch(
+      loadPopularPosts({
+        limit: 3,
+      })
+    );
   }, [router.asPath]);
 
   useEffect(() => {
@@ -36,7 +42,7 @@ const User = () => {
           document.documentElement.scrollHeight - 300
         ) {
           const lastId = mainPosts[mainPosts.length - 1]?.id;
-          dispatch(loadMyPosts())
+          dispatch(loadMyPosts());
         }
       }
     };
@@ -74,6 +80,5 @@ const User = () => {
     </AppLayout>
   );
 };
-
 
 export default User;

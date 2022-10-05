@@ -53,9 +53,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
     }
     await context.store.dispatch(loadPost({ postId: context.params.id }));
     // await context.store.dispatch(loadMyInfo());
-		await context.store.dispatch(loadPopularPosts({
-			limit: 3,
-		}))
+    await context.store.dispatch(
+      loadPopularPosts({
+        limit: 3,
+      })
+    );
     return {
       props: {},
     };

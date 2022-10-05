@@ -26,11 +26,11 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import CommentIcon from '@mui/icons-material/Comment';
 
-import { useDispatch, useSelector } from "react-redux";
-import PropTypes from "prop-types"
-import moment from "moment"
-import 'moment/locale/ko'
-import Router from "next/router"
+import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+import moment from 'moment';
+import 'moment/locale/ko';
+import Router from 'next/router';
 import PostImages from './PostImages';
 import CommentForm from './CommentForm';
 import PostCardContent from './PostCardContent';
@@ -56,19 +56,18 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
+const MyComments = ({ comments, post }) => {
+  const dispatch = useDispatch();
+  const me = useSelector((state) => state.user);
+  const id = useSelector((state) => state.user.me?.id);
 
-const MyComments = ({comments, post}) => {
-	const dispatch = useDispatch();
-	const me = useSelector((state)=>state.user)
-	const id = useSelector((state)=>state.user.me?.id)
-	
-	const [expanded, setExpanded] = useState(false);
-	
-	const handleExpandClick = () => {
+  const [expanded, setExpanded] = useState(false);
+
+  const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-	
-	  const onZoomPost = useCallback(() => {
+
+  const onZoomPost = useCallback(() => {
     Router.push(`/post/${post.id}`).then();
   }, []);
 
@@ -118,16 +117,15 @@ const MyComments = ({comments, post}) => {
       })
     );
   }, [id]);
-	
-	
-	const liked = post.Likers.find((v) => v.id === id);
+
+  const liked = post.Likers.find((v) => v.id === id);
   const scrapped = post.Scrappers.find((v) => v.id === id);
-	
-	return (
-		<Card sx={{width:"100%", marginBottom:"5%"}}>
-			<CardHeader 
-				avatar={
-					<Link
+
+  return (
+    <Card sx={{ width: '100%', marginBottom: '5%' }}>
+      <CardHeader
+        avatar={
+          <Link
             href={{ pathname: '/user', query: { id: post.User.id } }}
             as={`/user/${post.User.id}`}
           >
@@ -135,16 +133,16 @@ const MyComments = ({comments, post}) => {
               <Avatar sx={{ bgcolor: '#ddd' }}>{post.User.nickname[0]}</Avatar>
             </a>
           </Link>
-				}
-				title={post.User.nickname}
-				subheader={moment(post.createdAt).fromNow()}
-			/>
-			<CardMedia>
+        }
+        title={post.User.nickname}
+        subheader={moment(post.createdAt).fromNow()}
+      />
+      <CardMedia>
         {post.Images.length > 0 && <PostImages images={post.Images} />}
       </CardMedia>
-			<CardContent>
+      <CardContent>
         <Typography variant="body2" color="text.secondary">
-          <pre style={{maxWidth:"100%"}}>
+          <pre style={{ maxWidth: '100%' }}>
             <PostCardContent
               postId={post.id}
               postContent={post.content}
@@ -154,28 +152,20 @@ const MyComments = ({comments, post}) => {
           </pre>
         </Typography>
       </CardContent>
-			<CardActions disableSpacing>
+      <CardActions disableSpacing>
         <IconButton onClick={() => Router.push(`/post/${post.id}`)}>
           <ZoomInIcon />
         </IconButton>
         {scrapped ? (
-            <StarBorderIcon style={{ color: '#FCE285' }} />
-          
+          <StarBorderIcon style={{ color: '#FCE285' }} />
         ) : (
-          
-            <StarBorderIcon />
-          
+          <StarBorderIcon />
         )}
-        <span style={{marginRight:6}}>{post.Scrappers.length}</span>
-        {liked ? (
-            <FavoriteIcon style={{ color: 'red' }} />
-        ) : (
-          
-            <FavoriteIcon />
-        )}
+        <span style={{ marginRight: 6 }}>{post.Scrappers.length}</span>
+        {liked ? <FavoriteIcon style={{ color: 'red' }} /> : <FavoriteIcon />}
         {post.Likers.length}
-				<ExpandMore
-					onClick={()=>Router.push(`/post/${post.id}`)}
+        <ExpandMore
+          onClick={() => Router.push(`/post/${post.id}`)}
           aria-label="show more"
         >
           <CommentIcon />
@@ -183,31 +173,30 @@ const MyComments = ({comments, post}) => {
         <span
           style={{ fontSize: 13, marginRight: '5%' }}
         >{`${post.Comments.length}개의 댓글`}</span>
-				
       </CardActions>
-				<CardContent>
-					<List sx={{width:"100%", bgcolor:" background.paper"}}>
-						<ListItem alignItems="flex-start">
-							<ListItemAvatar>
-								<Link
-									href={{pathname: '/user', query: { id: id} }}
-									as={`/user/${id}`}
-								>
-									<a>
-										<Avatar alt ="me">나</Avatar>
-									</a>
-								</Link>
-							</ListItemAvatar>
-							<ListItemText 
-								primary="나"
-								secondary={<React.Fragment>{comments}</React.Fragment>}
-							/>
-						</ListItem>
-						<Divider variant="inset" component="li" />
-					</List>
-				</CardContent>
-		</Card>
-	)
-}
+      <CardContent>
+        <List sx={{ width: '100%', bgcolor: ' background.paper' }}>
+          <ListItem alignItems="flex-start">
+            <ListItemAvatar>
+              <Link
+                href={{ pathname: '/user', query: { id: id } }}
+                as={`/user/${id}`}
+              >
+                <a>
+                  <Avatar alt="me">나</Avatar>
+                </a>
+              </Link>
+            </ListItemAvatar>
+            <ListItemText
+              primary="나"
+              secondary={<React.Fragment>{comments}</React.Fragment>}
+            />
+          </ListItem>
+          <Divider variant="inset" component="li" />
+        </List>
+      </CardContent>
+    </Card>
+  );
+};
 
 export default MyComments;

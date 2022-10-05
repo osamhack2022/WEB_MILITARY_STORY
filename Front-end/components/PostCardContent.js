@@ -11,14 +11,12 @@ import useInput from '../hooks/useInput';
 
 import styled from 'styled-components';
 
-
-
 const BoardDiv = styled.div`
   position: relative;
   border: 3px solid #ddd;
-	border-left: 5px solid #ddd;
+  border-left: 5px solid #ddd;
   margin: 0px -2px;
-	width:99%;
+  width: 99%;
 `;
 
 const BoardInput = styled.input`
@@ -61,7 +59,7 @@ const StyledInput = styled.input`
 
 const BoardTextarea = styled.textarea`
   width: 100%;
-	
+
   outline: none;
   padding: 10px;
   border: 1px solid #fff;
@@ -78,7 +76,7 @@ const BoardTextarea = styled.textarea`
 
 const BigSpan = styled.span`
   font-size: 23px;
-`
+`;
 
 const PostCardContent = ({
   postId,
@@ -105,7 +103,8 @@ const PostCardContent = ({
   useEffect(() => {
     if (textAreaRef.current) {
       textAreaRef.current.style.height = 'auto';
-      textAreaRef.current.style.height = textAreaRef.current.scrollHeight + 'px';
+      textAreaRef.current.style.height =
+        textAreaRef.current.scrollHeight + 'px';
     }
   }, [text, editMode]);
 
@@ -134,7 +133,7 @@ const PostCardContent = ({
 
   useEffect(() => {
     let result_arr = []; // 제목이면서 해시태그 : 3, 제목이면 : 2, 해시태그 : 1, 내용 : 0
-    let arr = [postContent.split('\n$')[0]+'\n', postContent.split('\n$')[1]]
+    let arr = [postContent.split('\n$')[0] + '\n', postContent.split('\n$')[1]];
     let splited_arr = [];
     // console.log(Number(!0))
     for (let i = 0; i < arr.length; i++) {
@@ -152,35 +151,29 @@ const PostCardContent = ({
     setSplitedContent(splited_arr);
   }, []);
 
-
   return (
     <>
       {editMode ? (
         <BoardDiv>
-          <BoardInput 
-            name = "boardTitle"
-            placeholder = "글제목"
-            value = {title}
+          <BoardInput
+            name="boardTitle"
+            placeholder="글제목"
+            value={title}
             onChange={onChangeTitle}
           />
-          <hr/>
+          <hr />
           <BoardTextarea
             name="boardContent"
-            placeholder = "글의 내용을 작성해주세요"
-						value = {text}
+            placeholder="글의 내용을 작성해주세요"
+            value={text}
             ref={textAreaRef}
-						onChange={onChangeText}
-		  		/>
-		  		<hr/>
-					<Button onClick={onSubmit}>
-						수정
-					</Button>
-					<Button onClick={onToggleChangePost}>
-						취소
-					</Button>
+            onChange={onChangeText}
+          />
+          <hr />
+          <Button onClick={onSubmit}>수정</Button>
+          <Button onClick={onToggleChangePost}>취소</Button>
         </BoardDiv>
       ) : (
-		
         splitedContent?.map((el, idx) => {
           if (distribute[idx] === 3) {
             return (
@@ -200,17 +193,16 @@ const PostCardContent = ({
             );
           } else if (distribute[idx] === 1) {
             return (
-							<span>
-              	<Link href={`/hashtag/${el.slice(1)}`} key={idx}>
-                	<a>{el}</a>
-             		</Link>
-							</span>
+              <span>
+                <Link href={`/hashtag/${el.slice(1)}`} key={idx}>
+                  <a>{el}</a>
+                </Link>
+              </span>
             );
           } else {
             return <span>{el}</span>;
           }
         })
-		
       )}
     </>
   );

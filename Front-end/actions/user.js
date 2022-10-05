@@ -87,8 +87,6 @@ export const unfollow = createAsyncThunk(
   }
 );
 
-
-
 export const removeFollow = createAsyncThunk(
   'post/removeFollow',
   async (data, { rejectWithValue }) => {

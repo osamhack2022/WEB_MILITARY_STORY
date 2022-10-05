@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Card from "@mui/material/Card";
-import Avatar from "@mui/material/Avatar";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography"
-import CardActionArea from "@mui/material/CardActionArea"
+import Card from '@mui/material/Card';
+import Avatar from '@mui/material/Avatar';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import CardActionArea from '@mui/material/CardActionArea';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import axios from 'axios';
@@ -14,11 +14,11 @@ import { loadMyInfo, loadUser } from '../../actions/user';
 import PostCard from '../../components/PostCard';
 import AppLayout from '../../components/AppLayout';
 import wrapper from '../../store/configureStore';
-import CardHeader from "@mui/material/CardHeader";
-import Divider from "@mui/material/Divider"
-import CardActions from "@mui/material/CardActions"
-import Grid from "@mui/material/Grid"
-import Button from "@mui/material/Button"
+import CardHeader from '@mui/material/CardHeader';
+import Divider from '@mui/material/Divider';
+import CardActions from '@mui/material/CardActions';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
 
 const User = () => {
   const dispatch = useDispatch();
@@ -27,21 +27,21 @@ const User = () => {
   const { mainPosts, hasMorePosts, loadPostsLoading } = useSelector(
     (state) => state.post
   );
-	
-	const[info, setInfo] = useState(null);
-	
+
+  const [info, setInfo] = useState(null);
+
   const { userInfo, me } = useSelector((state) => state.user);
 
   useEffect(() => {
-		const path_arr = router.asPath.split('/')
-		
+    const path_arr = router.asPath.split('/');
+
     dispatch(loadMyInfo());
-		dispatch(loadUser({ userId: path_arr[2] }));
+    dispatch(loadUser({ userId: path_arr[2] }));
   }, [router.asPath]);
-	
-	useEffect(()=>{
-		setInfo(userInfo)
-	},[router.asPath]);
+
+  useEffect(() => {
+    setInfo(userInfo);
+  }, [router.asPath]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -69,75 +69,72 @@ const User = () => {
   return (
     <AppLayout>
       {info && (
-				<>
-        <Head>
-          <title>
-            {info.nickname}
-            님의 글
-          </title>
-          <meta
-            name="description"
-            content={`${info.nickname}님의 게시글`}
-          />
-          <meta
-            property="og:title"
-            content={`${info.nickname}님의 게시글`}
-          />
-          <meta
-            property="og:description"
-            content={`${info.nickname}님의 게시글`}
-          />
-        </Head>
-				<Card sx={{ width:"100%", backgroundColor:"#fefefe", border:"3px solid #ddd", marginTop:1.5 }}>
-      <CardHeader
-        avatar={
-          <Link href={`/user/${info.id}`}>
-            <a>
-              <Avatar sx={{ bgcolor: 'grey' }} aria-label="recipe">
-                {info.nickname[0]}
-              </Avatar>
-            </a>
-          </Link>
-        }
-        title={
-          <Link href={`/user/${info.id}`}>
-            <a>
-              <span style={{ color: 'black' }}>{info.nickname}</span>
-            </a>
-          </Link>
-        }
-      />
+        <>
+          <Head>
+            <title>
+              {info.nickname}
+              님의 글
+            </title>
+            <meta name="description" content={`${info.nickname}님의 게시글`} />
+            <meta property="og:title" content={`${info.nickname}님의 게시글`} />
+            <meta
+              property="og:description"
+              content={`${info.nickname}님의 게시글`}
+            />
+          </Head>
+          <Card
+            sx={{
+              width: '100%',
+              backgroundColor: '#fefefe',
+              border: '3px solid #ddd',
+              marginTop: 1.5,
+            }}
+          >
+            <CardHeader
+              avatar={
+                <Link href={`/user/${info.id}`}>
+                  <a>
+                    <Avatar sx={{ bgcolor: 'grey' }} aria-label="recipe">
+                      {info.nickname[0]}
+                    </Avatar>
+                  </a>
+                </Link>
+              }
+              title={
+                <Link href={`/user/${info.id}`}>
+                  <a>
+                    <span style={{ color: 'black' }}>{info.nickname}</span>
+                  </a>
+                </Link>
+              }
+            />
 
-      <Divider variant = "middle"/>
-      <CardActions disableSpacing>
-        <Grid container>
-          <Grid item xs={3.8}>
-              <span style={{display:'flex', justifyContent:'center' }}>게시글 : 
-							{info.Posts}</span>
-          </Grid>
-					<Divider orientation="vertical" flexItem />
-          <Grid item xs={3.8}>
-            <span style={{display:'flex', justifyContent:'center' }}>
-							팔로잉 : 
-              {info.Followings}
-						</span>
-          </Grid>
-					<Divider orientation="vertical" flexItem />
-          <Grid item xs={3.8}>
-            <span style={{display:'flex', justifyContent:'center' }}>
-							팔로워 : 
-              {info.Followers}
-						</span>
-          </Grid>
-        </Grid>
-      </CardActions>
-    </Card>
-				</>
+            <Divider variant="middle" />
+            <CardActions disableSpacing>
+              <Grid container>
+                <Grid item xs={3.8}>
+                  <span style={{ display: 'flex', justifyContent: 'center' }}>
+                    게시글 :{info.Posts}
+                  </span>
+                </Grid>
+                <Divider orientation="vertical" flexItem />
+                <Grid item xs={3.8}>
+                  <span style={{ display: 'flex', justifyContent: 'center' }}>
+                    팔로잉 :{info.Followings}
+                  </span>
+                </Grid>
+                <Divider orientation="vertical" flexItem />
+                <Grid item xs={3.8}>
+                  <span style={{ display: 'flex', justifyContent: 'center' }}>
+                    팔로워 :{info.Followers}
+                  </span>
+                </Grid>
+              </Grid>
+            </CardActions>
+          </Card>
+        </>
       )}
-      
-			
-        
-     
+
       {mainPosts.map((post) => (
         <PostCard key={post.id} post={post} />
       ))}
@@ -158,9 +155,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
     await context.store.dispatch(loadUserPosts({ userId: context.params.id }));
     await context.store.dispatch(loadUser({ userId: context.params.id }));
     // await context.store.dispatch(loadMyInfo());
-		await context.store.dispatch(loadPopularPosts({
-			limit: 3,
-		}))
+    await context.store.dispatch(
+      loadPopularPosts({
+        limit: 3,
+      })
+    );
     return {
       props: {},
     };
