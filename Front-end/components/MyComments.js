@@ -119,10 +119,6 @@ const MyComments = ({comments, post}) => {
     );
   }, [id]);
 	
-// 	useEffect(()=>{
-// 		console.log(comments)
-// 		console.log(post)
-// 	}, [])
 	
 	const liked = post.Likers.find((v) => v.id === id);
   const scrapped = post.Scrappers.find((v) => v.id === id);
@@ -170,12 +166,9 @@ const MyComments = ({comments, post}) => {
             <StarBorderIcon />
           
         )}
-        {post.Scrappers.length}
-				<span style={{marginRight:3}}/>
+        <span style={{marginRight:6}}>{post.Scrappers.length}</span>
         {liked ? (
-          
             <FavoriteIcon style={{ color: 'red' }} />
-          
         ) : (
           
             <FavoriteIcon />
