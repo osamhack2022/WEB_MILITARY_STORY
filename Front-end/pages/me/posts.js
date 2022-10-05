@@ -5,7 +5,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Link from 'next/link';
-import { loadMyPosts, loadPopularPosts } from '../../actions/post';
+import { loadPopularPosts, loadMyPosts, loadStartMyPosts } from '../../actions/post';
 import { loadMyInfo, loadUser } from '../../actions/user';
 import PostCard from '../../components/PostCard';
 import AppLayout from '../../components/AppLayout';
@@ -15,7 +15,7 @@ const User = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { id } = router.query;
-  const { mainPosts, hasMorePosts, loadPostsLoading } = useSelector(
+  const { myPosts, hasMorePosts, loadPostsLoading } = useSelector(
     (state) => state.post
   );
   const { userInfo, me } = useSelector((state) => state.user);
@@ -26,7 +26,6 @@ const User = () => {
 		dispatch(loadPopularPosts({
 			limit: 3,
 		}))
-		console.log(mainPosts)
   }, [router.asPath]);
 
   useEffect(() => {
@@ -45,7 +44,7 @@ const User = () => {
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
-  }, [mainPosts.length, hasMorePosts, id, loadPostsLoading]);
+  }, [myPosts.length, hasMorePosts, id, loadPostsLoading]);
 
   return (
     <AppLayout>
@@ -69,7 +68,7 @@ const User = () => {
           />
         </Head>
       )}
-      {mainPosts.map((post) => (
+      {myPosts.map((post) => (
         <PostCard key={post.id} post={post} />
       ))}
     </AppLayout>

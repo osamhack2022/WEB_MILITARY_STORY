@@ -24,8 +24,44 @@ export const loadPosts = createAsyncThunk(
   }
 );
 
+export const loadStartPosts = createAsyncThunk(
+  'post/loadStartPosts',
+  async (data) => {
+    const response = await axios.get(`/posts?lastId=${data?.lastId || 0}&category=${data?.category}&limit=${data?.limit}`);
+    return response.data;
+  },
+  {
+    condition: (data, { getState }) => {
+      const { post } = getState();
+
+      if (post.loadPostsLoading) {
+        return false;
+      }
+      return true;
+    },
+  }
+);
+
 export const loadPopularPosts = createAsyncThunk(
 	'post/loadPopularPosts',
+	async (data) => {
+		const response = await axios.get(`/posts/popular?limit=${data.limit}`);
+		return response.data;
+	},
+	{
+    condition: (data, { getState }) => {
+      const { post } = getState();
+
+      if (post.loadPostsLoading) {
+        return false;
+      }
+      return true;
+    },
+  }
+)
+
+export const loadStartPopularPosts = createAsyncThunk(
+	'post/loadStartPopularPosts',
 	async (data) => {
 		const response = await axios.get(`/posts/popular?limit=${data.limit}`);
 		return response.data;
@@ -60,8 +96,44 @@ export const loadHotPosts = createAsyncThunk(
   }
 )
 
+export const loadStartHotPosts = createAsyncThunk(
+	'post/loadStartHotPosts',
+	async (data) => {
+		const response = await axios.get(`/posts/popular?$limit=${data.limit}`);
+		return response.data;
+	},
+	{
+    condition: (data, { getState }) => {
+      const { post } = getState();
+
+      if (post.loadPostsLoading) {
+        return false;
+      }
+      return true;
+    },
+  }
+)
+
 export const loadIndexPosts = createAsyncThunk(
   'post/loadIndexPosts',
+  async (data) => {
+    const response = await axios.get(`/posts?lastId=${data?.lastId || 0}&category=${data?.category}&limit=${data?.limit}`);
+    return response.data;
+  },
+  {
+    condition: (data, { getState }) => {
+      const { post } = getState();
+
+      if (post.loadIndexPostsLoading) {
+        return false;
+      }
+      return true;
+    },
+  }
+);
+
+export const loadStartIndexPosts = createAsyncThunk(
+  'post/loadStartIndexPosts',
   async (data) => {
     const response = await axios.get(`/posts?lastId=${data?.lastId || 0}&category=${data?.category}&limit=${data?.limit}`);
     return response.data;
@@ -254,6 +326,19 @@ export const loadUserScraps = createAsyncThunk(
 	}
 )
 
+export const loadStartUserScraps = createAsyncThunk(
+	'user/loadStartUserScraps',
+	async(data, {rejectWithValue})=>{
+		try{
+			const response = await axios.get('/user/scrap');
+			return response.data;
+		}
+		catch(error){
+			return rejectWithValue(error.response.data)
+		}
+	}
+)
+
 export const loadUserPosts = createAsyncThunk(
   'user/loadUserPosts',
   async (data, { rejectWithValue }) => {
@@ -268,8 +353,36 @@ export const loadUserPosts = createAsyncThunk(
   }
 );
 
+export const loadStartUserPosts = createAsyncThunk(
+  'user/loadStartUserPosts',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        `/user/${data.userId}/posts?last=${data?.lastId || 0}`
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const loadMyPosts = createAsyncThunk(
 	'user/loadMyPosts',
+	async(data, { rejectWithValue }) => {
+		try{
+			const response = await axios.get(
+				`/user/me/posts?last=${data?.lastId || 0}`
+			);
+			return response.data;
+		}catch(error) {
+			return rejectWithValue(error.response.data);
+		}
+	}
+)
+
+export const loadStartMyPosts = createAsyncThunk(
+	'user/loadStartMyPosts',
 	async(data, { rejectWithValue }) => {
 		try{
 			const response = await axios.get(
