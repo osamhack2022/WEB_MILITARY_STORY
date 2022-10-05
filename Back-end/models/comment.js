@@ -18,14 +18,21 @@ module.exports = class Comment extends Model {
           allowNull: false,
         },
       },
-      {
-        modelName: 'Comment',
-        tableName: 'comments',
-        charset: 'utf8mb4',
-        collate: 'utf8mb4_general_ci',
-        sequelize,
-      }
-    );
+	    private_mode: {
+		    type: DataTypes.BOOLEAN,
+		    allowNull: false,
+	    },
+	    anonymous: {
+		    type: DataTypes.TEXT,
+		    allowNull: false,
+	    }
+    }, {
+      modelName: 'Comment',
+      tableName: 'comments',
+      charset: 'utf8mb4',
+      collate: 'utf8mb4_general_ci',
+      sequelize,
+    });
   }
 
   static associate(db) {
@@ -33,3 +40,4 @@ module.exports = class Comment extends Model {
     db.Comment.belongsTo(db.Post);
   }
 };
+
