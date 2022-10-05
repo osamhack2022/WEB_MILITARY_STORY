@@ -35,10 +35,10 @@ router.get('/:hashtag', async (req, res, next) => {
         as: 'Likers',
         attributes: ['id'],
       }, {
-		model : User,
-		as:'Scrappers',
-		attributes:['id', 'nickname']
-	  }],
+	model : User,
+	as:'Scrappers',
+	attributes:['id', 'nickname']
+      }],
     });
     res.status(200).json(posts);
   } catch (error) {

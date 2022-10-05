@@ -8,14 +8,14 @@ module.exports = class Comment extends Model {
         type: DataTypes.TEXT,
         allowNull: false,
       },
-	  private_mode: {
-		type: DataTypes.BOOLEAN,
-		allowNull: false,
-	  },
-	  anonymous: {
-		type: DataTypes.TEXT,
-		allowNull: false,
-	  }
+	    private_mode: {
+		    type: DataTypes.BOOLEAN,
+		    allowNull: false,
+	    },
+	    anonymous: {
+		    type: DataTypes.TEXT,
+		    allowNull: false,
+	    }
     }, {
       modelName: 'Comment',
       tableName: 'comments',
@@ -30,3 +30,4 @@ module.exports = class Comment extends Model {
     db.Comment.belongsTo(db.Post);
   }
 };
+
