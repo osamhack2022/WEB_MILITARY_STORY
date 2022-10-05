@@ -8,26 +8,26 @@ module.exports = class Post extends Model {
         type: DataTypes.TEXT,
         allowNull: false,
       },
-      category: {
-	type: DataTypes.TEXT,
-	allowNull: false,
-      },
-      private_mode: {
-	type: DataTypes.BOOLEAN,
-	allowNull: false,
-      },
-      report_count: {
-	type: DataTypes.INTEGER,
-	allowNull: false,
-      },
-      hidden_mode: {
-	type: DataTypes.BOOLEAN,
-	allowNull: false,
-      },
-      like_counts: {
-	type: DataTypes.INTEGER,
-	allowNull : false,
-      }
+	  category: {
+		  type: DataTypes.TEXT,
+		  allowNull: false,
+	  },
+	  private_mode: {
+	    type: DataTypes.BOOLEAN,
+	    allowNull: false,
+	  },
+	  report_count: {
+		  type: DataTypes.INTEGER,
+		  allowNull: false,
+	  },
+	  hidden_mode: {
+		  type: DataTypes.BOOLEAN,
+		  allowNull: false,
+	  },
+	  like_counts: {
+		  type: DataTypes.INTEGER,
+		  allowNull : false,
+	  }
     }, {
       modelName: 'Post',
       tableName: 'posts',
@@ -43,6 +43,7 @@ module.exports = class Post extends Model {
     db.Post.hasMany(db.Userid);
     db.Post.hasMany(db.Image); 
     db.Post.belongsToMany(db.User, { through: 'Scrap', as : 'Scrappers'})
+
     db.Post.belongsToMany(db.User, { through: 'Like', as: 'Likers' })
   }
 };

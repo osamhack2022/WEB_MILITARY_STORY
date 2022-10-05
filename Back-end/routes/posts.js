@@ -43,8 +43,50 @@ router.get('/', async (req, res, next) => {
 		attributes:['id', 'nickname']
 	  }],
     });
-	  
-	console.log(posts)
+    res.status(200).json(posts);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+router.get('/hot', async (req, res, next) => {
+  try {
+	const where = { hidden_mode : false }
+    where.like_counts = { [Op.gt]: 2}
+	let limit = 20
+	console.log(req.query.limit)
+	if(req.query.limit) {
+		limit = req.query.limit;
+	}
+    const posts = await Post.findAll({
+      where,
+      limit: 10,
+      order: [
+        ['createdAt', 'DESC'],
+        [Comment, 'createdAt', 'DESC'],
+      ],
+      include: [{
+        model: User,
+        attributes: ['id', 'nickname'],
+      }, {
+        model: Image,
+      }, {
+        model: Comment,
+        include: [{
+          model: User,
+          attributes: ['id', 'nickname'],
+        }],
+      }, {
+        model: User,
+        as: 'Likers',
+        attributes: ['id'],
+      }, {
+		model: User,
+		as : 'Scrappers',
+		attributes:['id', 'nickname']
+	  }],
+    });
     res.status(200).json(posts);
   } catch (error) {
     console.error(error);
@@ -57,12 +99,13 @@ router.get('/popular', async (req, res, next) => {
 	const where = { hidden_mode : false }
     where.like_counts = { [Op.gt]: 2}
 	let limit = 20
+	console.log(req.query.limit)
 	if(req.query.limit) {
 		limit = req.query.limit;
 	}
     const posts = await Post.findAll({
       where,
-      limit,
+      limit: 3,
       order: [
         ['createdAt', 'DESC'],
         [Comment, 'createdAt', 'DESC'],
