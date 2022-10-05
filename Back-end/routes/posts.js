@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/', async (req, res, next) => {
   try {
-    const where = {};
+    const where = { hidden_mode : false, category:req.query.category };
     if (parseInt(req.query.lastId, 10)) { 
       where.id = { [Op.lt]: parseInt(req.query.lastId, 10)}
     }
@@ -16,7 +16,7 @@ router.get('/', async (req, res, next) => {
 		limit = 10
 	}
     const posts = await Post.findAll({
-      where: { category : req.query.category},
+      where,
       limit,
       order: [
         ['createdAt', 'DESC'],
@@ -34,7 +34,95 @@ router.get('/', async (req, res, next) => {
           attributes: ['id', 'nickname'],
         }],
       }, {
-        model: User, // 좋아요 누른 사람
+        model: User,
+        as: 'Likers',
+        attributes: ['id'],
+      }, {
+		model: User,
+		as : 'Scrappers',
+		attributes:['id', 'nickname']
+	  }],
+    });
+    res.status(200).json(posts);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+router.get('/hot', async (req, res, next) => {
+  try {
+	const where = { hidden_mode : false }
+    where.like_counts = { [Op.gt]: 2}
+	let limit = 20
+	console.log(req.query.limit)
+	if(req.query.limit) {
+		limit = req.query.limit;
+	}
+    const posts = await Post.findAll({
+      where,
+      limit: 10,
+      order: [
+        ['createdAt', 'DESC'],
+        [Comment, 'createdAt', 'DESC'],
+      ],
+      include: [{
+        model: User,
+        attributes: ['id', 'nickname'],
+      }, {
+        model: Image,
+      }, {
+        model: Comment,
+        include: [{
+          model: User,
+          attributes: ['id', 'nickname'],
+        }],
+      }, {
+        model: User,
+        as: 'Likers',
+        attributes: ['id'],
+      }, {
+		model: User,
+		as : 'Scrappers',
+		attributes:['id', 'nickname']
+	  }],
+    });
+    res.status(200).json(posts);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+router.get('/popular', async (req, res, next) => {
+  try {
+	const where = { hidden_mode : false }
+    where.like_counts = { [Op.gt]: 2}
+	let limit = 20
+	console.log(req.query.limit)
+	if(req.query.limit) {
+		limit = req.query.limit;
+	}
+    const posts = await Post.findAll({
+      where,
+      limit: 3,
+      order: [
+        ['createdAt', 'DESC'],
+        [Comment, 'createdAt', 'DESC'],
+      ],
+      include: [{
+        model: User,
+        attributes: ['id', 'nickname'],
+      }, {
+        model: Image,
+      }, {
+        model: Comment,
+        include: [{
+          model: User,
+          attributes: ['id', 'nickname'],
+        }],
+      }, {
+        model: User,
         as: 'Likers',
         attributes: ['id'],
       }, {
@@ -61,11 +149,12 @@ router.get('/related', async (req, res, next) => {
       }]
     });
     const where = {
-      UserId: { [Op.in]: followings.map((v) => v.id) }
+      UserId: { [Op.in]: followings.map((v) => v.id) },
+	  hidden_mode : false
     };
-    if (parseInt(req.query.lastId, 10)) { // 초기 로딩이 아닐 때
+    if (parseInt(req.query.lastId, 10)) { 
       where.id = { [Op.lt]: parseInt(req.query.lastId, 10)}
-    } // 21 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1
+    } 
     const posts = await Post.findAll({
       where,
       limit: 10,
@@ -85,7 +174,7 @@ router.get('/related', async (req, res, next) => {
           attributes: ['id', 'nickname'],
         }],
       }, {
-        model: User, // 좋아요 누른 사람
+        model: User,
         as: 'Likers',
         attributes: ['id'],
       }, {
@@ -112,11 +201,12 @@ router.get('/unrelated', async (req, res, next) => {
       }]
     });
     const where = {
-      UserId: { [Op.notIn]: followings.map((v) => v.id).concat(req.user.id) }
+      UserId: { [Op.notIn]: followings.map((v) => v.id).concat(req.user.id) },
+	  hidden_mode: false
     };
-    if (parseInt(req.query.lastId, 10)) { // 초기 로딩이 아닐 때
+    if (parseInt(req.query.lastId, 10)) {
       where.id = { [Op.lt]: parseInt(req.query.lastId, 10)}
-    } // 21 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1
+    } 
     const posts = await Post.findAll({
       where,
       limit: 10,
@@ -136,7 +226,7 @@ router.get('/unrelated', async (req, res, next) => {
           attributes: ['id', 'nickname'],
         }],
       }, {
-        model: User, // 좋아요 누른 사람
+        model: User,
         as: 'Likers',
         attributes: ['id'],
       }, {

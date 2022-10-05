@@ -8,7 +8,7 @@ const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
 
-router.get('/', async (req, res, next) => { // GET /user
+router.get('/', async (req, res, next) => {
   try {
     if (req.user) {
       const fullUserWithoutPassword = await User.findOne({
@@ -44,55 +44,55 @@ router.get('/', async (req, res, next) => { // GET /user
 });
 
 router.get('/comments', isLoggedIn, async(req, res, next)=>{
-	try{
-		let my_comments = [];
-		const user = await User.findOne({
-			where : {id : req.user.id},
-			include:[{
-				model:Comment,
-				as: "Comments"
-			}]
-		})
-		if(!user) {
-			res.status(403).send("없는 사람을 찾으려고 하시네요?");
-		}
+  try{
+    let my_comments = [];
+	const user = await User.findOne({
+	  where : {id : req.user.id},
+		include:[{
+        model:Comment,
+        as: "Comments"
+		}]
+	  })
+	if(!user) {
+	  res.status(403).send("없는 사람을 찾으려고 하시네요?");
+	}
 		
-		const comments = await user.getComments()
-		for (let i = 0;i<comments.length;i++){
-			if(comments[i].dataValues.PostId !== null){
-				const my_post = await Post.findOne({
-					where: {id : comments[i].dataValues.PostId },
-					attributes:['id', 'content', 'updatedAt', 'createdAt'],
-					include: [{
-						model: User,
-						attributes:['id', 'nickname'],
-					},
-					{
-						model:User,
-						as:'Likers',
-						attributes:['id'],
-					},{
-						model: User,
-						as:'Scrappers',
-						attributes: ['id', 'nickname']
-					},{
-						model:Comment,
-						attributes:['id']
-					},{
-						model : Image
-					}
-							 ]
-				})
-				my_comments.push([comments[i], my_post])
-				
-			}
-		}
-		res.status(200).json(my_comments)
+	const comments = await user.getComments()
+	for (let i = 0;i<comments.length;i++){
+	  if(comments[i].dataValues.PostId !== null){
+        const my_post = await Post.findOne({
+          where: {id : comments[i].dataValues.PostId, hidden_mode: false },
+          attributes:['id', 'content', 'updatedAt', 'createdAt'],
+          include: [{
+            model: User,
+            attributes:['id', 'nickname'],
+          },
+          {
+            model:User,
+            as:'Likers',
+            attributes:['id'],
+          },{
+            model: User,
+            as:'Scrappers',
+            attributes: ['id', 'nickname']
+          },{
+            model:Comment,
+            attributes:['id']
+          },{
+            model : Image
+          }]
+        }) 
+        if(my_post){
+          my_comments.push([comments[i], my_post])
+        }
+	  }
 	}
-	catch(error){
-		console.error(error)
-		next(error)
-	}
+	res.status(200).json(my_comments)
+  }
+  catch(error){
+	console.error(error)
+	next(error)
+  }
 })
 
 router.get('/scrap', isLoggedIn, async(req, res, next)=>{
@@ -102,13 +102,13 @@ router.get('/scrap', isLoggedIn, async(req, res, next)=>{
 	  res.status(403).send("없는 사람을 찾으려고 하시네요?");
 	}
 	const scrapped = await user.getScrapped()
-	// console.log(scrapped)
+	
 	let my_scrapped = []
 	
 	for (let i = 0 ; i<scrapped.length;i++){
 		console.log(scrapped[i])
 		const post = await Post.findOne({
-			where:{id : scrapped[i].dataValues.id},
+			where:{id : scrapped[i].dataValues.id, hidden_mode : false},
 			order: [
 				['createdAt', 'DESC'],
 				[Comment, 'createdAt', 'DESC'],
@@ -161,7 +161,7 @@ router.get('/followers', isLoggedIn, async (req, res, next) => {
   }
 });
 
-router.get('/followings', isLoggedIn, async (req, res, next) => { // GET /user/followings
+router.get('/followings', isLoggedIn, async (req, res, next) => {
   try {
     const user = await User.findOne({ where: { id: req.user.id }});
     if (!user) {
@@ -177,7 +177,7 @@ router.get('/followings', isLoggedIn, async (req, res, next) => { // GET /user/f
   }
 });
 
-router.get('/:userId', async (req, res, next) => { // GET /user/1
+router.get('/:userId', async (req, res, next) => {
   try {
     const fullUserWithoutPassword = await User.findOne({
       where: { id: req.params.userId },
@@ -203,7 +203,7 @@ router.get('/:userId', async (req, res, next) => { // GET /user/1
     })
     if (fullUserWithoutPassword) {
       const data = fullUserWithoutPassword.toJSON();
-      data.Posts = data.Posts.length; // 개인정보 침해 예방
+      data.Posts = data.Posts.length;
       data.Followers = data.Followers.length;
       data.Followings = data.Followings.length;
       res.status(200).json(data);
@@ -216,12 +216,55 @@ router.get('/:userId', async (req, res, next) => { // GET /user/1
   }
 });
 
-router.get('/:userId/posts', async (req, res, next) => { // GET /user/1/posts
+router.get('/me/posts', async(req, res, next)=>{
   try {
-    const where = { UserId: req.params.userId };
-    if (parseInt(req.query.lastId, 10)) { // 초기 로딩이 아닐 때
+    if(req.user){
+		const where = { UserId: req.user.id, hidden_mode: false };
+    	const posts = await Post.findAll({
+      	  where,
+	      limit: 10,
+       	  order: [['createdAt', 'DESC']],
+      	  include: [{
+          model: User,
+          attributes: ['id', 'nickname'],
+        }, {
+          model: Image,
+      	}, {
+          model: Comment,
+          include: [{
+          	model: User,
+          	attributes: ['id', 'nickname'],
+          	order: [['createdAt', 'DESC']],
+          }],
+      	}, {
+          model: User,
+          as: 'Likers',
+          attributes: ['id'],
+      	}, {
+		  model: User,
+		  as: 'Scrappers',
+		  attributes: ['id', 'nickname']
+	    }],
+      });
+	  console.log(posts)
+      res.status(200).json(posts);
+	}
+	else {
+	  console.log('no req.user')
+      res.status(200).json(null);
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+})
+
+router.get('/:userId/posts', async (req, res, next) => {
+  try {
+    const where = { UserId: req.params.userId, private_mode:false, hidden_mode: false };
+    if (parseInt(req.query.lastId, 10)) {
       where.id = { [Op.lt]: parseInt(req.query.lastId, 10)}
-    } // 21 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1
+    } 
     const posts = await Post.findAll({
       where,
       limit: 10,
@@ -239,7 +282,7 @@ router.get('/:userId/posts', async (req, res, next) => { // GET /user/1/posts
           order: [['createdAt', 'DESC']],
         }],
       }, {
-        model: User, // 좋아요 누른 사람
+        model: User,
         as: 'Likers',
         attributes: ['id'],
       }, {
@@ -296,7 +339,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
   })(req, res, next);
 });
 
-router.post('/', isNotLoggedIn, async (req, res, next) => { // POST /user/
+router.post('/', isNotLoggedIn, async (req, res, next) => {
   try {
     const exUser = await User.findOne({
       where: {
@@ -315,7 +358,7 @@ router.post('/', isNotLoggedIn, async (req, res, next) => { // POST /user/
     res.status(201).send('ok');
   } catch (error) {
     console.error(error);
-    next(error); // status 500
+    next(error);
   }
 });
 
@@ -339,9 +382,8 @@ router.patch('/nickname', isLoggedIn, async (req, res, next) => {
   }
 });
 
-router.patch('/:userId/following', isLoggedIn, async (req, res, next) => { // PATCH /user/1/follow
+router.patch('/:userId/following', isLoggedIn, async (req, res, next) => { 
   try {
-	console.log("hello")
     const user = await User.findOne({ where: { id: req.params.userId }});
     if (!user) {
       res.status(403).send('없는 사람을 팔로우하려고 하시네요?');
@@ -354,7 +396,7 @@ router.patch('/:userId/following', isLoggedIn, async (req, res, next) => { // PA
   }
 });
 
-router.delete('/:userId/following', isLoggedIn, async (req, res, next) => { // DELETE /user/1/follow
+router.delete('/:userId/following', isLoggedIn, async (req, res, next) => { 
   try {
     const user = await User.findOne({ where: { id: req.params.userId }});
     if (!user) {
@@ -368,7 +410,7 @@ router.delete('/:userId/following', isLoggedIn, async (req, res, next) => { // D
   }
 });
 
-router.delete('/follower/:userId', isLoggedIn, async (req, res, next) => { // DELETE /user/follower/2
+router.delete('/follower/:userId', isLoggedIn, async (req, res, next) => { 
   try {
     const user = await User.findOne({ where: { id: req.params.userId }});
     if (!user) {
