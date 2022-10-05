@@ -9,7 +9,7 @@ import {
   loadHashtagPosts,
   loadPost,
   loadPosts,
-	loadIndexPosts,
+  loadIndexPosts,
   loadUserPosts,
   removePost,
   scrapPost,
@@ -17,37 +17,37 @@ import {
   unlikePost,
   updatePost,
   uploadImages,
-	loadUserComments,
-	loadUserScraps,
-	loadMyPosts,
-	loadPopularPosts,
-	reportPost,
-	loadHotPosts,
-	loadStartPosts,
-	loadStartPopularPosts,
-	loadStartHotPosts,
-	loadStartIndexPosts,
-	loadStartUserPosts,
-	loadStartUserScraps,
+  loadUserComments,
+  loadUserScraps,
+  loadMyPosts,
+  loadPopularPosts,
+  reportPost,
+  loadHotPosts,
+  loadStartPosts,
+  loadStartPopularPosts,
+  loadStartHotPosts,
+  loadStartIndexPosts,
+  loadStartUserPosts,
+  loadStartUserScraps,
 } from '../actions/post';
 
 // 기본 state
 export const initialState = {
   mainPosts: [],
-	indexPosts: [],
-	popularPosts: [],
-	hotPosts: [],
-	userComments: [],
-	myPosts: [],
+  indexPosts: [],
+  popularPosts: [],
+  hotPosts: [],
+  userComments: [],
+  myPosts: [],
   hasMorePosts: true,
   singlePost: null,
   imagePaths: [],
   loadPostsLoading: false,
   loadPostsDone: false,
   loadPostsError: null,
-	loadUserCommentsLoading: false,
-	loadUserCommentsDone: false,
-	loadUserCommentsError: null,
+  loadUserCommentsLoading: false,
+  loadUserCommentsDone: false,
+  loadUserCommentsError: null,
   addPostLoading: false,
   addPostDone: false,
   addPostError: null,
@@ -69,18 +69,18 @@ export const initialState = {
   scrapPostLoading: false,
   scrapPostDone: false,
   scrapPostError: null,
-	loadScrapLoading: false,
-	loadScrapDone: false,
-	loadScrapError: null,
-	loadIndexPostsLoading: false,
-	loadIndexPostsDone: false,
-	loadIndexPostsError: null,
-	loadPopularPostsLoading: false,
-	loadPopularPostsDone: false,
-	loadPopularPostsError: null,
-	reportPostLoading: false,
-	reportPostDone: false,
-	reportPostError: null,
+  loadScrapLoading: false,
+  loadScrapDone: false,
+  loadScrapError: null,
+  loadIndexPostsLoading: false,
+  loadIndexPostsDone: false,
+  loadIndexPostsError: null,
+  loadPopularPostsLoading: false,
+  loadPopularPostsDone: false,
+  loadPopularPostsError: null,
+  reportPostLoading: false,
+  reportPostDone: false,
+  reportPostError: null,
 };
 
 // toolkit 사용방법
@@ -96,7 +96,7 @@ const postSlice = createSlice({
   },
   extraReducers: (builder) =>
     builder
-			.addCase(loadIndexPosts.pending, (state) => {
+      .addCase(loadIndexPosts.pending, (state) => {
         state.loadIndexPostsLoading = true;
         state.loadIndexPostsDone = false;
         state.loadIndexPostsError = null;
@@ -105,13 +105,13 @@ const postSlice = createSlice({
         state.loadIndexPostsLoading = false;
         state.loadIndexPostsDone = true;
         state.indexPosts = _concat(state.indexPosts, action.payload);
-				state.mainPosts = _concat(state.mainPosts, action.payload);
+        state.mainPosts = _concat(state.mainPosts, action.payload);
       })
       .addCase(loadIndexPosts.rejected, (state, action) => {
         state.loadIndexPostsLoading = false;
         state.loadIndexPostsError = action.error.message;
       })
-			.addCase(loadStartIndexPosts.pending, (state) => {
+      .addCase(loadStartIndexPosts.pending, (state) => {
         state.loadIndexPostsLoading = true;
         state.loadIndexPostsDone = false;
         state.loadIndexPostsError = null;
@@ -120,13 +120,13 @@ const postSlice = createSlice({
         state.loadIndexPostsLoading = false;
         state.loadIndexPostsDone = true;
         state.indexPosts = _concat([], action.payload);
-				state.mainPosts = _concat(state.mainPosts, action.payload);
+        state.mainPosts = _concat(state.mainPosts, action.payload);
       })
       .addCase(loadStartIndexPosts.rejected, (state, action) => {
         state.loadIndexPostsLoading = false;
         state.loadIndexPostsError = action.error.message;
       })
-			.addCase(loadPopularPosts.pending, (state) => {
+      .addCase(loadPopularPosts.pending, (state) => {
         state.loadPopularPostsLoading = true;
         state.loadPopularPostsDone = false;
         state.loadPopularPostsError = null;
@@ -140,34 +140,34 @@ const postSlice = createSlice({
         state.loadPopularPostsLoading = false;
         state.loadPopularPostsError = action.error.message;
       })
-			.addCase(loadHotPosts.pending, (state) => {
-				state.loadPostsLoading = true;
-				state.loadPostsDone = false;
-				state.loadPostsError = null;
-			})
-			.addCase(loadHotPosts.fulfilled, (state, action) => {
-				state.loadPostsLoading = false;
-				state.loadPostsDone = true;
-				state.hotPosts = _concat(state.hotPosts, action.payload);
-			})
-			.addCase(loadHotPosts.rejected, (state) => {
-				state.loadPostsLoading = false;
-				state.loadPostsError = action.error.message;
-			})
-	    .addCase(loadStartHotPosts.pending, (state) => {
-				state.loadPostsLoading = true;
-				state.loadPostsDone = false;
-				state.loadPostsError = null;
-			})
-			.addCase(loadStartHotPosts.fulfilled, (state, action) => {
-				state.loadPostsLoading = false;
-				state.loadPostsDone = true;
-				state.hotPosts = _concat([], action.payload);
-			})
-			.addCase(loadStartHotPosts.rejected, (state) => {
-				state.loadPostsLoading = false;
-				state.loadPostsError = action.error.message;
-			})
+      .addCase(loadHotPosts.pending, (state) => {
+        state.loadPostsLoading = true;
+        state.loadPostsDone = false;
+        state.loadPostsError = null;
+      })
+      .addCase(loadHotPosts.fulfilled, (state, action) => {
+        state.loadPostsLoading = false;
+        state.loadPostsDone = true;
+        state.hotPosts = _concat(state.hotPosts, action.payload);
+      })
+      .addCase(loadHotPosts.rejected, (state) => {
+        state.loadPostsLoading = false;
+        state.loadPostsError = action.error.message;
+      })
+      .addCase(loadStartHotPosts.pending, (state) => {
+        state.loadPostsLoading = true;
+        state.loadPostsDone = false;
+        state.loadPostsError = null;
+      })
+      .addCase(loadStartHotPosts.fulfilled, (state, action) => {
+        state.loadPostsLoading = false;
+        state.loadPostsDone = true;
+        state.hotPosts = _concat([], action.payload);
+      })
+      .addCase(loadStartHotPosts.rejected, (state) => {
+        state.loadPostsLoading = false;
+        state.loadPostsError = action.error.message;
+      })
       .addCase(loadPosts.pending, (state) => {
         state.loadPostsLoading = true;
         state.loadPostsDone = false;
@@ -183,7 +183,7 @@ const postSlice = createSlice({
         state.loadPostsLoading = false;
         state.loadPostsError = action.error.message;
       })
-			.addCase(loadStartPosts.pending, (state) => {
+      .addCase(loadStartPosts.pending, (state) => {
         state.loadPostsLoading = true;
         state.loadPostsDone = false;
         state.loadPostsError = null;
@@ -230,7 +230,7 @@ const postSlice = createSlice({
         state.loadPostsLoading = false;
         state.loadPostsError = action.error.message;
       })
-			.addCase(loadStartUserPosts.pending, (state) => {
+      .addCase(loadStartUserPosts.pending, (state) => {
         state.loadPostsLoading = true;
         state.loadPostsDone = false;
         state.loadPostsError = null;
@@ -245,7 +245,7 @@ const postSlice = createSlice({
         state.loadPostsLoading = false;
         state.loadPostsError = action.error.message;
       })
-			.addCase(loadMyPosts.pending, (state) => {
+      .addCase(loadMyPosts.pending, (state) => {
         state.loadPostsLoading = true;
         state.loadPostsDone = false;
         state.loadPostsError = null;
@@ -301,9 +301,9 @@ const postSlice = createSlice({
         let post = _find(state.mainPosts, { id: action.payload.PostId });
         state.addCommentLoading = false;
         state.addCommentDone = true;
-				if(!post){
-					post = state.singlePost
-				}
+        if (!post) {
+          post = state.singlePost;
+        }
         post.Comments.unshift(action.payload);
       })
       .addCase(addComment.rejected, (state, action) => {
@@ -325,26 +325,26 @@ const postSlice = createSlice({
         state.removePostLoading = false;
         state.removePostError = action.error.message;
       })
-	    .addCase(reportPost.pending, (state) => {
-				state.reportPostLoading = true;
-				state.reportPostDone = false;
-				state.reportPostError = null;
-			})
-			.addCase(reportPost.fulfilled, (state, action) => {
-				state.reportPostLoading = false;
-				state.reportPostDone = true;
-				if(action.payload.hidden_mode) {
-					_remove(state.mainPosts, {id: action.payload.PostId});
-					_remove(state.indexPosts, {id:action.payload.PostId});
-					_remove(state.singlePost, {id :action.payload.PostId});
-					_remove(state.popularPosts, {id:action.payload.PostId});
-					_remove(state.myPosts, {id:action.payload.PostId})
-				}
-			})
-			.addCase(reportPost.rejected, (state, action) => {
-				state.reportPostLoading=false;
-				state.reportPostError = action.error.message;
-			})
+      .addCase(reportPost.pending, (state) => {
+        state.reportPostLoading = true;
+        state.reportPostDone = false;
+        state.reportPostError = null;
+      })
+      .addCase(reportPost.fulfilled, (state, action) => {
+        state.reportPostLoading = false;
+        state.reportPostDone = true;
+        if (action.payload.hidden_mode) {
+          _remove(state.mainPosts, { id: action.payload.PostId });
+          _remove(state.indexPosts, { id: action.payload.PostId });
+          _remove(state.singlePost, { id: action.payload.PostId });
+          _remove(state.popularPosts, { id: action.payload.PostId });
+          _remove(state.myPosts, { id: action.payload.PostId });
+        }
+      })
+      .addCase(reportPost.rejected, (state, action) => {
+        state.reportPostLoading = false;
+        state.reportPostError = action.error.message;
+      })
       // likePost
       .addCase(likePost.pending, (state) => {
         state.likePostLoading = true;
@@ -355,9 +355,9 @@ const postSlice = createSlice({
         let post = _find(state.mainPosts, { id: action.payload.PostId });
         state.likePostLoading = false;
         state.likePostDone = true;
-				if (!post) {
-					post = state.singlePost
-				}
+        if (!post) {
+          post = state.singlePost;
+        }
         post.Likers.push({ id: action.payload.UserId });
       })
       .addCase(likePost.rejected, (state, action) => {
@@ -371,12 +371,14 @@ const postSlice = createSlice({
         state.scrapPostError = null;
       })
       .addCase(scrapPost.fulfilled, (state, action) => {
-        let post = _find(state.mainPosts.concat(state.indexPosts), { id: action.payload.PostId });
+        let post = _find(state.mainPosts.concat(state.indexPosts), {
+          id: action.payload.PostId,
+        });
         state.scrapPostLoading = false;
         state.scrapPostDone = true;
-				if(!post){
-					post = state.singlePost
-				}
+        if (!post) {
+          post = state.singlePost;
+        }
         post.Scrappers.push({ id: action.payload.UserId });
       })
       .addCase(scrapPost.rejected, (state, action) => {
@@ -393,9 +395,9 @@ const postSlice = createSlice({
         let post = _find(state.mainPosts, { id: action.payload.PostId });
         state.likePostLoading = false;
         state.likePostDone = true;
-				if (!post){
-					post = state.singlePost
-				}
+        if (!post) {
+          post = state.singlePost;
+        }
         _remove(post.Likers, { id: action.payload.UserId });
       })
       .addCase(unlikePost.rejected, (state, action) => {
@@ -411,9 +413,9 @@ const postSlice = createSlice({
         let post = _find(state.mainPosts, { id: action.payload.PostId });
         state.scrapPostLoading = false;
         state.scrapPostDone = true;
-				if(!post){
-					post = state.singlePost
-				}
+        if (!post) {
+          post = state.singlePost;
+        }
         _remove(post.Scrappers, { id: action.payload.UserId });
       })
       .addCase(unScrapPost.rejected, (state, action) => {
@@ -430,9 +432,9 @@ const postSlice = createSlice({
         let post = _find(state.mainPosts, { id: action.payload.PostId });
         state.updatePostLoading = false;
         state.updatePostDone = true;
-				if (!post){
-					post = state.singlePost
-				}
+        if (!post) {
+          post = state.singlePost;
+        }
         post.content = action.payload.content;
       })
       .addCase(updatePost.rejected, (state, action) => {
@@ -455,21 +457,21 @@ const postSlice = createSlice({
         state.loadPostsLoading = false;
         state.loadPostsError = action.error.message;
       })
-			.addCase(loadUserComments.pending, (state, action)=>{
-				state.loadUserCommentslLoaidng = true;
-				state.loadUserCommentsDone = false;
-				state.loadUserCommentsError = null;
-			})
-			.addCase(loadUserComments.fulfilled, (state, action)=>{
-				state.loadUserCommentsLoading=false;
-				state.loadPostsDone = true;
-				state.userComments = _concat(state.userComments, action.payload);
-			})
-		  .addCase(loadUserComments.rejected, (state, action)=>{
-				state.loadUserCommentsLoading = false;
-				state.loadUserCommentsError = action.error.message;
-			})
-			.addCase(loadUserScraps.pending, (state) => {
+      .addCase(loadUserComments.pending, (state, action) => {
+        state.loadUserCommentslLoaidng = true;
+        state.loadUserCommentsDone = false;
+        state.loadUserCommentsError = null;
+      })
+      .addCase(loadUserComments.fulfilled, (state, action) => {
+        state.loadUserCommentsLoading = false;
+        state.loadPostsDone = true;
+        state.userComments = _concat(state.userComments, action.payload);
+      })
+      .addCase(loadUserComments.rejected, (state, action) => {
+        state.loadUserCommentsLoading = false;
+        state.loadUserCommentsError = action.error.message;
+      })
+      .addCase(loadUserScraps.pending, (state) => {
         state.loadPostsLoading = true;
         state.loadPostsDone = false;
         state.loadPostsError = null;
@@ -484,7 +486,7 @@ const postSlice = createSlice({
         state.loadPostsLoading = false;
         state.loadPostsError = action.error.message;
       })
-	    .addCase(loadStartUserScraps.pending, (state) => {
+      .addCase(loadStartUserScraps.pending, (state) => {
         state.loadPostsLoading = true;
         state.loadPostsDone = false;
         state.loadPostsError = null;

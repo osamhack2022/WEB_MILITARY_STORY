@@ -3,10 +3,20 @@ const { Model } = DataTypes;
 
 module.exports = class Comment extends Model {
   static init(sequelize) {
-    return super.init({
-      content: {
-        type: DataTypes.TEXT,
-        allowNull: false,
+    return super.init(
+      {
+        content: {
+          type: DataTypes.TEXT,
+          allowNull: false,
+        },
+        private_mode: {
+          type: DataTypes.BOOLEAN,
+          allowNull: false,
+        },
+        anonymous: {
+          type: DataTypes.TEXT,
+          allowNull: false,
+        },
       },
 	    private_mode: {
 		    type: DataTypes.BOOLEAN,

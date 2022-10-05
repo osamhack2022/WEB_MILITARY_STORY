@@ -29,7 +29,7 @@ import CommentIcon from '@mui/icons-material/Comment';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import 'moment/locale/ko'
+import 'moment/locale/ko';
 import Router from 'next/router';
 import PostImages from './PostImages';
 import CommentForm from './CommentForm';
@@ -40,11 +40,11 @@ import {
   unlikePost,
   scrapPost,
   unScrapPost,
-	reportPost,
+  reportPost,
 } from '../actions/post';
 import FollowButton from './FollowButton';
 
-const noname = '익명'
+const noname = '익명';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -88,7 +88,6 @@ const PostCard = ({ post }) => {
   const onZoomPost = useCallback(() => {
     Router.push(`/post/${post.id}`).then();
   }, []);
-	
 
   const onLike = useCallback(() => {
     if (!id) {
@@ -147,25 +146,24 @@ const PostCard = ({ post }) => {
         postId: post.id,
       })
     );
-		
   }, [id]);
-	
-	const onReportPost = useCallback(()=>{
-		if(!id) {
-			alert('로그인이 필요합니다.');
-			return;
-		}
-		dispatch(
-			reportPost({
-				postId: post.id
-			})
-		)
-	}, [id])
-	
-	const avatar = () =>{
-		if (!post.private_mode){
-			return(
-				<Link
+
+  const onReportPost = useCallback(() => {
+    if (!id) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
+    dispatch(
+      reportPost({
+        postId: post.id,
+      })
+    );
+  }, [id]);
+
+  const avatar = () => {
+    if (!post.private_mode) {
+      return (
+        <Link
           href={{ pathname: '/user', query: { id: post.User.id } }}
           as={`/user/${post.User.id}`}
         >
@@ -173,29 +171,19 @@ const PostCard = ({ post }) => {
             <Avatar sx={{ bgcolor: '#ddd' }}>{post.User.nickname[0]}</Avatar>
           </a>
         </Link>
-			)
-		}
-		else{
-			return (
-				<Avatar sx={{bgcolor:"#ddd"}}>?</Avatar>
-			)
-		}
-	}
-	
-	const name = () => {
-		if(!post.private_mode) {
-			return(
-			post.User.nickname
-			)
-		}
-		else{
-			return(
-				noname
-			)
-		}
-	}
-	
+      );
+    } else {
+      return <Avatar sx={{ bgcolor: '#ddd' }}>?</Avatar>;
+    }
+  };
 
+  const name = () => {
+    if (!post.private_mode) {
+      return post.User.nickname;
+    } else {
+      return noname;
+    }
+  };
 
   const liked = post.Likers.find((v) => v.id === id);
   const scrapped = post.Scrappers.find((v) => v.id === id);
@@ -203,12 +191,10 @@ const PostCard = ({ post }) => {
   return (
     <Card sx={{ width: '100%', marginBottom: '5%', marginTop: '1%' }}>
       <CardHeader
-        avatar={
-          avatar()
-        }
+        avatar={avatar()}
         action={
           <>
-            {(me && !post.private_mode) && <FollowButton post={post} />}
+            {me && !post.private_mode && <FollowButton post={post} />}
             <IconButton aria-label="settings">
               <IconButton onClick={handleClick}>
                 <MoreVertIcon />
@@ -227,7 +213,9 @@ const PostCard = ({ post }) => {
                     <Button onClick={onRemovePost}>삭제</Button>
                   </>
                 ) : (
-                  <Button color="error" onClick={onReportPost}>신고</Button>
+                  <Button color="error" onClick={onReportPost}>
+                    신고
+                  </Button>
                 )}
               </Popover>
             </IconButton>
@@ -241,7 +229,7 @@ const PostCard = ({ post }) => {
       </CardMedia>
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          <pre style={{width:"100%"}}>
+          <pre style={{ width: '100%' }}>
             <PostCardContent
               postId={post.id}
               postContent={post.content}
@@ -296,35 +284,47 @@ const PostCard = ({ post }) => {
           )}
 
           {post.Comments?.map((el, idx) => (
-            <List sx={{ width: '100%', bgcolor: 'background.paper' }} key={el.id}>
+            <List
+              sx={{ width: '100%', bgcolor: 'background.paper' }}
+              key={el.id}
+            >
               <ListItem alignItems="flex-start">
                 <ListItemAvatar>
-									{el.private_mode ?
-										(<Avatar alt="Remy Sharp">?</Avatar>):(
-										<Link
-                    	href={{ pathname: '/user', query: { id: el.User.id } }}
-                    	as={`/user/${el.User.id}`}
-                  	>
-                    	<a>
-                      	<Avatar alt="Remy Sharp">{el.User.nickname[0]}</Avatar>
-                    	</a>
-                  	</Link>)
-										}
+                  {el.private_mode ? (
+                    <Avatar alt="Remy Sharp">?</Avatar>
+                  ) : (
+                    <Link
+                      href={{ pathname: '/user', query: { id: el.User.id } }}
+                      as={`/user/${el.User.id}`}
+                    >
+                      <a>
+                        <Avatar alt="Remy Sharp">{el.User.nickname[0]}</Avatar>
+                      </a>
+                    </Link>
+                  )}
                 </ListItemAvatar>
-                {(el.private_mode === false) && 
-									<ListItemText
-                  	primary={el.User.nickname}
-                  	secondary={<React.Fragment><pre>{el.content}</pre></React.Fragment>}
-                	/>
-								}
-								{el.private_mode && 
-									<ListItemText
-                  	primary={'익명' + el.anonymous}
-                  	secondary={<React.Fragment><pre>{el.content}</pre></React.Fragment>}
-                	/>
-								}
+                {el.private_mode === false && (
+                  <ListItemText
+                    primary={el.User.nickname}
+                    secondary={
+                      <React.Fragment>
+                        <pre>{el.content}</pre>
+                      </React.Fragment>
+                    }
+                  />
+                )}
+                {el.private_mode && (
+                  <ListItemText
+                    primary={'익명' + el.anonymous}
+                    secondary={
+                      <React.Fragment>
+                        <pre>{el.content}</pre>
+                      </React.Fragment>
+                    }
+                  />
+                )}
               </ListItem>
-              <Divider variant="inset" component="li" sx={{marginTop:-3}} />
+              <Divider variant="inset" component="li" sx={{ marginTop: -3 }} />
             </List>
           ))}
         </CardContent>

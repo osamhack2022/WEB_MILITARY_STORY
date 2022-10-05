@@ -8,33 +8,32 @@ import { loadMyInfo } from '../actions/user';
 import { loadPosts, loadPopularPosts } from '../actions/post';
 import wrapper from '../store/configureStore';
 
-import { useRouter } from "next/router"
+import { useRouter } from 'next/router';
 
-import styled from "styled-components"
+import styled from 'styled-components';
 
 const TitleDiv = styled.div`
-  marginTop: 100px;
-	marginBottom: 10px;
- 	position: relative;
+  margintop: 100px;
+  marginbottom: 10px;
+  position: relative;
   border: 3px solid #ddd;
   margin: 0px -2px;
-	width:100%;
-	padding-top : 5px;
-	text-align: center;
-	font-weight: bold;
-	margin-bottom:5px;
-	font-size: 27px;
-`
+  width: 100%;
+  padding-top: 5px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 27px;
+`;
 
 const Home = () => {
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
-	const { asPath } = useRouter();
-  const { mainPosts, hasMorePosts, loadPostsLoading, popularPosts } = useSelector(
-    (state) => state.post
-  );
-	
-  const post = useSelector((state)=>state.post)
+  const { asPath } = useRouter();
+  const { mainPosts, hasMorePosts, loadPostsLoading, popularPosts } =
+    useSelector((state) => state.post);
+
+  const post = useSelector((state) => state.post);
 
   useEffect(() => {
     function onScroll() {
@@ -47,7 +46,7 @@ const Home = () => {
           dispatch(
             loadPosts({
               lastId,
-							category: asPath[1],
+              category: asPath[1],
             })
           );
         }
@@ -62,12 +61,10 @@ const Home = () => {
   useEffect(() => {
     dispatch(loadMyInfo());
   }, []);
-	
-	
 
   return (
     <AppLayout>
-			<TitleDiv>인기 게시물 페이지</TitleDiv>
+      <TitleDiv>인기 게시물 페이지</TitleDiv>
       {popularPosts.map((post) => (
         <PostCard key={post.id} post={post} />
       ))}
@@ -77,13 +74,15 @@ const Home = () => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
-		console.log(context.req)
+    console.log(context.req);
     const cookie = context.req ? context.req.headers.cookie : '';
     axios.defaults.headers.Cookie = '';
-		
-		await context.store.dispatch(loadPopularPosts({
-			limit: 3,
-		}))
+
+    await context.store.dispatch(
+      loadPopularPosts({
+        limit: 3,
+      })
+    );
     return {
       props: {},
     };

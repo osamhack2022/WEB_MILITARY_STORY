@@ -13,36 +13,36 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addComment } from '../actions/post';
 import useInput from '../hooks/useInput';
-import { styled } from "@mui/material/styles";
-import Checkbox from "@mui/material/Checkbox";
+import { styled } from '@mui/material/styles';
+import Checkbox from '@mui/material/Checkbox';
 
-const StyledAvatar=styled(Avatar)(({theme})=>({
-	width:35,
-	height:35,
-	fontSize:15,
-	backgroundColor:'grey',
-	marginRight:5,
-}))
+const StyledAvatar = styled(Avatar)(({ theme }) => ({
+  width: 35,
+  height: 35,
+  fontSize: 15,
+  backgroundColor: 'grey',
+  marginRight: 5,
+}));
 
-const StyledFormGroup = styled(FormGroup)(({theme})=>({
-	position:'relative',
-}))
+const StyledFormGroup = styled(FormGroup)(({ theme }) => ({
+  position: 'relative',
+}));
 
-const StyledLoadingButton = styled(LoadingButton)(({theme})=>({
-	position:'absolute',
-	right:0,
-	bottom:-40,
-	zIndex:2
-}))
+const StyledLoadingButton = styled(LoadingButton)(({ theme }) => ({
+  position: 'absolute',
+  right: 0,
+  bottom: -40,
+  zIndex: 2,
+}));
 
-const StyledButton = styled(Button)(({theme})=>({
-	position:'absolute',
-	right:0,
-	bottom:-40,
-	zIndex: 2,
-	border:'1px solid #eee',
-	marginTop:3,
-}))
+const StyledButton = styled(Button)(({ theme }) => ({
+  position: 'absolute',
+  right: 0,
+  bottom: -40,
+  zIndex: 2,
+  border: '1px solid #eee',
+  marginTop: 3,
+}));
 
 const CommentForm = ({ post }) => {
   const [action, setAction] = useState(null);
@@ -53,12 +53,12 @@ const CommentForm = ({ post }) => {
   );
   const { me } = useSelector((state) => state.user);
   const [commentText, onChangeCommentText, setCommentText] = useInput('');
-	
-	const [privateMode, setPrivateMode] = useState(false);
-	
-	const onChangePrivateMode = useCallback((e)=>{
-		setPrivateMode(e.target.checked)
-	})
+
+  const [privateMode, setPrivateMode] = useState(false);
+
+  const onChangePrivateMode = useCallback((e) => {
+    setPrivateMode(e.target.checked);
+  });
 
   useEffect(() => {
     if (addCommentDone) {
@@ -70,68 +70,53 @@ const CommentForm = ({ post }) => {
   }, [addCommentDone, addCommentError]);
 
   const onSubmitComment = () => {
-		
-    if(!commentText | !commentText.trim()) {
-			return alert('댓글을 작성하세요.')
-		}
+    if (!commentText | !commentText.trim()) {
+      return alert('댓글을 작성하세요.');
+    }
     dispatch(
       addComment({
         postId: post.id,
         userId: me.id,
         content: commentText,
-				private_mode: privateMode
+        private_mode: privateMode,
       })
     );
-		setCommentText('');
+    setCommentText('');
   };
-	
-	
 
   return (
-      <StyledFormGroup>
-        <br />
-					<TextField
-          	id="standard-textarea"
-          	placeholder="댓글 추가"
-          	multiline
-						sx={{ fontSize : 15}}
-          	variant="standard"
-						
-						InputProps={{
-							startAdornment:(
-                	<StyledAvatar>
-                  	{me?.nickname[0]}
-                	</StyledAvatar>
-          		)
-						}}
-						value={commentText}
-            onChange={onChangeCommentText}
-        	/>
-          {addCommentLoading ? (
-            <StyledLoadingButton
-              loading
-              variant="outlined"
-            >
-              댓글
-            </StyledLoadingButton>
-          ) : (
-						<div>
-							<label style={{float:'right'}}>
-								<Checkbox 
-									name="private-mode"
-									checked={privateMode}
-									onChange={onChangePrivateMode}
-								/>
-								<span>닉네임 비공개</span>
-					  	</label>
-            	<StyledButton
-              	onClick={onSubmitComment}
-            	>
-              	댓글
-            	</StyledButton>
-				    </div>
-          )}
-      </StyledFormGroup>
+    <StyledFormGroup>
+      <br />
+      <TextField
+        id="standard-textarea"
+        placeholder="댓글 추가"
+        multiline
+        sx={{ fontSize: 15 }}
+        variant="standard"
+        InputProps={{
+          startAdornment: <StyledAvatar>{me?.nickname[0]}</StyledAvatar>,
+        }}
+        value={commentText}
+        onChange={onChangeCommentText}
+      />
+      {addCommentLoading ? (
+        <StyledLoadingButton loading variant="outlined">
+          댓글
+        </StyledLoadingButton>
+      ) : (
+        <div>
+          <label style={{ float: 'right' }}>
+            <Checkbox
+              name="private-mode"
+              checked={privateMode}
+              onChange={onChangePrivateMode}
+            />
+            <span>닉네임 비공개</span>
+          </label>
+          <StyledButton onClick={onSubmitComment}>댓글</StyledButton>
+        </div>
+      )}
+    </StyledFormGroup>
   );
 };
 
@@ -164,8 +149,6 @@ CommentForm.propTypes = {
   }).isRequired,
 };
 
-
-          
 // <InputLabel htmlFor="input-with-icon-adornment">댓글 달기</InputLabel>
 //<Input
 //             sx={{ height: 50 }}

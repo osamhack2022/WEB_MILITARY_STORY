@@ -1,12 +1,12 @@
-import React, {useState} from "react";
+import React, { useState } from 'react';
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
-import Divider from "@mui/material/Divider";
-import Button from "@mui/material/Button"
+import Divider from '@mui/material/Divider';
+import Button from '@mui/material/Button';
 
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
@@ -14,24 +14,24 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 
 import { useSelector } from 'react-redux';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 import { styled as styledMui, createTheme } from '@mui/material/styles';
 
-import Link from "next/link"
+import Link from 'next/link';
 
 const StyledSpan = styled.div`
-	color:#666;
-	font-size:15px;
-	margin-left:5px;
-	margin-bottom:-5px;
-	border-radius:3px;
-`
+  color: #666;
+  font-size: 15px;
+  margin-left: 5px;
+  margin-bottom: -5px;
+  border-radius: 3px;
+`;
 
 const StyledDiv = styled.div`
-	margin-top: 13px;
-	border: 3px solid #ddd;
-	background-color: #fefefe;
-`
+  margin-top: 13px;
+  border: 3px solid #ddd;
+  background-color: #fefefe;
+`;
 
 const theme = createTheme({
   palette: {
@@ -50,37 +50,34 @@ const theme = createTheme({
 });
 
 const StyledButton = styled(Button)(({ theme }) => ({
-  width:"100%"
+  width: '100%',
 }));
 
-export default function ProfilePost(){
-	const { me } = useSelector((state) => state.user);
-	
-	return (
-		<StyledDiv>
-			<Link href={"/me/posts"}>
-				<StyledButton>
-					<FormatListBulletedIcon sx={{color:"#cdd0ff"}}/>
-					{' '}
-					<StyledSpan>나의 게시물</StyledSpan>
-				</StyledButton>
-			</Link>
-			<Divider variant="middle" />
-			<Link href={"/me/comment"}>
-				<StyledButton>
-					<ChatBubbleOutlineIcon sx={{color:"#A0DE98"}}/>
-					{' '}
-					<StyledSpan>댓글 단 게시물</StyledSpan>
-				</StyledButton>
-			</Link>
-			<Divider variant="middle" />
-			<Link href={"/me/scrap"}>
-				<StyledButton>
-					<StarBorderIcon sx={{color:"#FCE285"}}/>
-					{' '}
-					<StyledSpan>나의 스크랩</StyledSpan>
-				</StyledButton>
-			</Link>
-		</StyledDiv>
-	)
+export default function ProfilePost() {
+  const { me } = useSelector((state) => state.user);
+
+  return (
+    <StyledDiv>
+      <Link href={'/me/posts'}>
+        <StyledButton>
+          <FormatListBulletedIcon sx={{ color: '#cdd0ff' }} />{' '}
+          <StyledSpan>나의 게시물</StyledSpan>
+        </StyledButton>
+      </Link>
+      <Divider variant="middle" />
+      <Link href={'/me/comment'}>
+        <StyledButton>
+          <ChatBubbleOutlineIcon sx={{ color: '#A0DE98' }} />{' '}
+          <StyledSpan>댓글 단 게시물</StyledSpan>
+        </StyledButton>
+      </Link>
+      <Divider variant="middle" />
+      <Link href={'/me/scrap'}>
+        <StyledButton>
+          <StarBorderIcon sx={{ color: '#FCE285' }} />{' '}
+          <StyledSpan>나의 스크랩</StyledSpan>
+        </StyledButton>
+      </Link>
+    </StyledDiv>
+  );
 }

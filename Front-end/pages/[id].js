@@ -8,17 +8,17 @@ import { loadMyInfo } from '../actions/user';
 import { loadPosts, loadPopularPosts } from '../actions/post';
 import wrapper from '../store/configureStore';
 
-import { useRouter } from "next/router"
+import { useRouter } from 'next/router';
 
 const Home = () => {
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
-	const { asPath } = useRouter();
+  const { asPath } = useRouter();
   const { mainPosts, hasMorePosts, loadPostsLoading } = useSelector(
     (state) => state.post
   );
-	
-  const post = useSelector((state)=>state.post)
+
+  const post = useSelector((state) => state.post);
 
   useEffect(() => {
     function onScroll() {
@@ -31,7 +31,7 @@ const Home = () => {
           dispatch(
             loadPosts({
               lastId,
-							category: asPath[1],
+              category: asPath[1],
             })
           );
         }
@@ -46,8 +46,6 @@ const Home = () => {
   useEffect(() => {
     dispatch(loadMyInfo());
   }, []);
-	
-	
 
   return (
     <AppLayout>
@@ -61,16 +59,20 @@ const Home = () => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
-		console.log(context.req)
+    console.log(context.req);
     const cookie = context.req ? context.req.headers.cookie : '';
     axios.defaults.headers.Cookie = '';
-		
-		await context.store.dispatch(loadPosts({
-			category: context.params.id
-		}));
-		await context.store.dispatch(loadPopularPosts({
-			limit: 3,
-		}))
+
+    await context.store.dispatch(
+      loadPosts({
+        category: context.params.id,
+      })
+    );
+    await context.store.dispatch(
+      loadPopularPosts({
+        limit: 3,
+      })
+    );
     return {
       props: {},
     };

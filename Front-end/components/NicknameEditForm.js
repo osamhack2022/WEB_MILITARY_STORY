@@ -64,7 +64,7 @@ const NicknameEditForm = () => {
         border: '2px solid #ddd',
         padding: '20px',
         paddingRight: '50px',
-				marginTop:'13px'
+        marginTop: '13px',
       }}
     >
       <Grid container spacing={2}>
