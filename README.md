@@ -2,7 +2,7 @@
 군 장병 커뮤니티 서비스
 
 ## 프로젝트 소개
-군장병들이 지신의 이야기를 담은 글을 자유롭게 공유할 수 있는 플랫폼 서비스입니다.
+군장병들이 지신의 이야기를 담은 글을 자유롭게 공유할 수 있는 플랫폼 서비스입니다.육군, 해군, 공군, 해병대 모두가 가입해 서로 다른 경험을 공유항 수 있습니다. 또한 Covid-19로 비대면 소통이 익숙한 사람들이 유익하게 이용할 수 있습니다. 비대면으로 익명 소통/상담이 필요할 때 활용 될 수 있습니다.
 
 ## 기능 설명
 ### 1. 다양한 게시판
@@ -29,7 +29,7 @@ redux : global state 관리
 
 ## 팀원
 김용 : gnncjegrgr, skystar234556@gmail.com
-유호인 : hoinhoin, (email)
+유호인 : hoinhoin, follow3448@naver.com
 
 ## copyleft / End User License
 + [MIT](https://github.com/osamhack2020/Sample_Technology_ProjectName_TeamName/blob/master/license.md)
