@@ -9,7 +9,8 @@ import { loadPopularPosts } from '../actions/post';
 import AppLayout from '../components/AppLayout';
 import FollowList from '../components/FollowList';
 import NicknameEditForm from '../components/NicknameEditForm';
-import { loadMyInfo } from '../actions/user';
+import MyChart from "../components/MyChart";
+import { loadMyInfo, editDate } from '../actions/user';
 import wrapper from '../store/configureStore';
 
 const fetcher = (url) =>
@@ -44,6 +45,20 @@ const Profile = () => {
   if (!me) {
     return null;
   }
+	
+	const onEdit = (value1, value2) => {
+		if(value1 && value2){
+			dispatch(
+				editDate({
+				start_date: value1?.$d,
+				end_date: value2?.$d,
+			}))
+			
+		}
+		dispatch(
+				loadMyInfo()
+			)
+	}
 
   // 주의 return 이 hooks 보다 위에 있으면 안됨
   if (followerError || followingError) {
@@ -56,6 +71,7 @@ const Profile = () => {
       <Head>
         <title>내 프로필 | Military Story</title>
       </Head>
+			<MyChart onEdit={onEdit}/>
       <NicknameEditForm />
       {followingsData && (
         <FollowList

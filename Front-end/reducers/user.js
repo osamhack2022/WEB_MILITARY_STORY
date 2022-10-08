@@ -10,6 +10,7 @@ import {
   removeFollow,
   signup,
   unfollow,
+	editDate,
 } from '../actions/user';
 
 // 기본 state
@@ -142,6 +143,20 @@ const userSlice = createSlice({
         state.changeNicknameLoading = false;
         state.changeNicknameError = action.payload;
       })
+			.addCase(editDate.pending, (state) => {
+				state.changeNicknameLoading = true;
+				state.changeNicknameDone = false;
+				state.changeNicknameError = null;
+			})
+			.addCase(editDate.fulfilled, (state, action) => {
+				state.changeNicknameLoading = false;
+				state.changeNicknameDone = true;
+				state.me = action.payload;
+			})
+			.addCase(editDate.rejected, (state, action) => {
+				state.changeNicknameLoading = false;
+				state.changeNicknameError = action.payload
+			})
       // follow
       .addCase(follow.pending, (state) => {
         state.followLoading = true;

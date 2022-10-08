@@ -63,6 +63,19 @@ export const changeNickname = createAsyncThunk(
   }
 );
 
+export const editDate = createAsyncThunk(
+	'user/editDate',
+	async(data, { rejectWithValue }) => {
+		try{
+			const response = await axios.patch('/user/editDate', data);
+			return response.data;
+		}
+		catch(error){
+			return rejectWithValue(error.response.data);
+		}
+	}
+)
+
 export const follow = createAsyncThunk(
   'post/follow',
   async (data, { rejectWithValue }) => {
