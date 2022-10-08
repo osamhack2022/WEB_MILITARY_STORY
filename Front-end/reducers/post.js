@@ -83,7 +83,6 @@ export const initialState = {
   reportPostError: null,
 };
 
-// toolkit 사용방법
 const postSlice = createSlice({
   name: 'post',
   initialState,

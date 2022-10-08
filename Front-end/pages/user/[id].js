@@ -41,7 +41,7 @@ const User = () => {
 
   useEffect(() => {
     setInfo(userInfo);
-  }, [router.asPath]);
+  }, [userInfo, me]);
 
   useEffect(() => {
     const onScroll = () => {

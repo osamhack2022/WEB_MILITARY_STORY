@@ -67,7 +67,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       axios.defaults.headers.Cookie = cookie;
     }
     await context.store.dispatch(
-      loadStartHashtagPosts({ hashtag: context.params.tag })
+      loadHashtagPosts({ hashtag: context.params.tag })
     );
     // await context.store.dispatch(loadMyInfo());
     await context.store.dispatch(
