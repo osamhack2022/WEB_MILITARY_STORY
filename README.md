@@ -1,4 +1,4 @@
-# military-story
+# MILITARY STORY
 군 장병 커뮤니티 서비스
 
 ## 프로젝트 소개
