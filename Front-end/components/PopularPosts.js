@@ -51,7 +51,6 @@ const PopularPosts = ({ index, posts }) => {
 
   useEffect(() => {
     setPopularPost(popularPosts);
-    console.log(asPath);
   }, [asPath]);
 
   useEffect(() => {

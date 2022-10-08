@@ -10,7 +10,8 @@ import AppLayout from '../components/AppLayout';
 import FollowList from '../components/FollowList';
 import NicknameEditForm from '../components/NicknameEditForm';
 import MyChart from "../components/MyChart";
-import { loadMyInfo, editDate } from '../actions/user';
+import MyVacation from "../components/MyVacation";
+import { loadMyInfo, editDate, editVacation } from '../actions/user';
 import wrapper from '../store/configureStore';
 
 const fetcher = (url) =>
@@ -20,6 +21,7 @@ const Profile = () => {
   const { me } = useSelector((state) => state.user);
   const [followersLimit, setFollowersLimit] = useState(4);
   const [followingsLimit, setFollowingsLimit] = useState(4);
+	const [edit, setEdit] = useState(false);
   const dispatch = useDispatch();
 
   const { data: followersData, error: followerError } = useSWR(
@@ -46,6 +48,14 @@ const Profile = () => {
     return null;
   }
 	
+	const sendEditVacation = (category, content, days) => {
+		dispatch(editVacation({
+			category,
+			reason:content,
+			days
+		}))
+	}
+	
 	const onEdit = (value1, value2) => {
 		if(value1 && value2){
 			dispatch(
@@ -54,10 +64,11 @@ const Profile = () => {
 				end_date: value2?.$d,
 			}))
 			
-		}
-		dispatch(
+			dispatch(
 				loadMyInfo()
 			)
+		}
+		setEdit(false)
 	}
 
   // 주의 return 이 hooks 보다 위에 있으면 안됨
@@ -71,8 +82,9 @@ const Profile = () => {
       <Head>
         <title>내 프로필 | Military Story</title>
       </Head>
-			<MyChart onEdit={onEdit}/>
       <NicknameEditForm />
+			<MyChart onEdit={onEdit} edit={edit} setEdit={setEdit} />
+			<MyVacation sendEditVacation = {sendEditVacation} />
       {followingsData && (
         <FollowList
           header="팔로잉"

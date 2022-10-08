@@ -11,6 +11,7 @@ import {
   signup,
   unfollow,
 	editDate,
+	editVacation,
 } from '../actions/user';
 
 // 기본 state
@@ -113,6 +114,20 @@ const userSlice = createSlice({
         state.loadMyInfoLoading = false;
         state.loadMyInfoError = action.payload;
       })
+			.addCase(editVacation.pending, (state) => {
+				state.loadUserLoading = true;
+				state.loadUserDone = false;
+				state.loadUserError = null;
+			})
+			.addCase(editVacation.fulfilled, (state, action) => {
+				state.loadUserLoading = false;
+				state.loadUserDone = true;
+				state.me = action.payload;
+			})
+			.addCase(editVacation.rejected, (state, action) => {
+				state.loadUserLoading = false;
+				state.loadUserError = action.payload;
+			})
       // loadUser
       .addCase(loadUser.pending, (state) => {
         state.loadUserLoading = true;

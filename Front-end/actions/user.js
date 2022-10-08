@@ -34,6 +34,19 @@ export const login = createAsyncThunk(
   }
 );
 
+export const editVacation = createAsyncThunk(
+	'user/editVacation',
+	async(data, { rejectWithValue }) => {
+		try{
+			const response = await axios.patch('/user/editVacation', data);
+			return response.data;
+		}
+		catch(error){
+			return rejectWithValue(error.response.data);
+		}
+	}
+)
+
 export const logout = createAsyncThunk('user/logout', async () => {
   const response = await axios.post('/user/logout');
   return response.data;

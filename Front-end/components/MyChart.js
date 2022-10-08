@@ -25,7 +25,7 @@ const StyledDiv = styled.div`
 	padding: 20px;
 `
 
-function MyChart({onEdit}) {
+function MyChart({onEdit, edit, setEdit}) {
 	const { me } = useSelector((state)=>state.user);
 	const dispatch = useDispatch();
 	
@@ -34,7 +34,6 @@ function MyChart({onEdit}) {
 	const [current, setCurrent] = useState(0);
 	const [total, setTotal] = useState(0);
 	const [series, setSeries] = useState([0, 0]);
-	const [edit, setEdit] = useState(false)
 	const [options, setOptions ] = useState({
 		series: [current, total-current],
 		labels: ['현재 복무일', '남은 복무일'],
@@ -60,14 +59,10 @@ function MyChart({onEdit}) {
 	});
 	
 	useEffect(()=>{
-		console.log(me)
 		if(me){
-			console.log(me.start_date.split('T')[0])
 			const day1 = new Date(me.start_date.split('T')[0])
 			const day2 = new Date(me.end_date.split('T')[0])
 			
-			console.log(day1)
-			console.log(day2)
 			
 			const curDay = new Date();
 			const totalDate = day2.getTime() - day1.getTime();
@@ -76,7 +71,6 @@ function MyChart({onEdit}) {
 			const cur_ins = Math.floor(Math.abs(Math.abs(curDate / (1000*60*60*24))))
 			const total_ins = Math.floor(Math.abs(totalDate / (1000*60*60*24)))
 			
-			console.log(cur_ins, total_ins)
 			
 			setCurrent(cur_ins);
 			
@@ -114,11 +108,13 @@ function MyChart({onEdit}) {
 	
 	
 	
+	
 	return (
 		<form style={{marginTop:'13px'}}>
 		<StyledDiv>
 			
-		<div style={{color:"#777", alignItems:'center'}}>나의 군생활</div>
+		<div style={{color:"#777", alignItems:'center', fontSize: "25px"}}>나의 군생활</div>
+		<div style={{ color: "#777"}}>남은 복무일 : {total - current} / 현재 복무일 : {current} </div>
 			<Chart 
 				options = {options}
 				series = {series}
