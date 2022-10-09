@@ -253,7 +253,7 @@ const postSlice = createSlice({
         state.loadPostsLoading = false;
         state.loadPostsDone = true;
         state.myPosts = _concat(state.myPosts, action.payload);
-        state.hasMorePosts = action.payload.length === 10;
+        state.hasMorePosts = action.payload?.length === 10;
       })
       .addCase(loadMyPosts.rejected, (state, action) => {
         state.loadPostsLoading = false;
@@ -303,6 +303,12 @@ const postSlice = createSlice({
         if (!post) {
           post = state.singlePost;
         }
+				if(!post) {
+					post = _find(state.myPosts, { id: action.payload.PostId})
+				}
+				if(!post){
+					post = _find(state.hotPosts, {id: action.payload.PostsId})
+				}
         post.Comments.unshift(action.payload);
       })
       .addCase(addComment.rejected, (state, action) => {

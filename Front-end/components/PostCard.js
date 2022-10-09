@@ -18,7 +18,9 @@ import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Badge from "@mui/material/Badge";
 
+import StarIcon from '@mui/icons-material/Star';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -59,7 +61,7 @@ const ExpandMore = styled((props) => {
 
 const PostCard = ({ post }) => {
   const dispatch = useDispatch();
-  const me = useSelector((state) => state.user);
+  const {me} = useSelector((state) => state.user);
   const id = useSelector((state) => state.user.me?.id);
   const { removePostLoading } = useSelector((state) => state.post);
 
@@ -88,6 +90,11 @@ const PostCard = ({ post }) => {
   const onZoomPost = useCallback(() => {
     Router.push(`/post/${post.id}`).then();
   }, []);
+	
+	useEffect(()=>{
+		console.log(post)
+	}, [post])
+	
 
   const onLike = useCallback(() => {
     if (!id) {
@@ -162,7 +169,30 @@ const PostCard = ({ post }) => {
 
   const avatar = () => {
     if (!post.private_mode) {
-      return (
+      if(post.User.followers>=2) {
+				return (
+					<Link
+          	href={{ pathname: '/user', query: { id: post.User.id } }}
+          	as={`/user/${post.User.id}`}
+        	>
+          	<a>
+            	<Badge 
+								overlap="circular"
+								anchorOrigin={{ vertical: 'top', horizontal: 'right'}}
+								badgeContent={
+									<StarIcon sx={{ color: 'yellow'}}/>
+								}
+							>
+								<Avatar sx={{ border:'2px solid yellow', bgcolor: 'black' }} aria-label="recipe">
+        	      	{post.User.nickname[0]}
+          	  	</Avatar>
+							</Badge>
+          	</a>
+      		</Link>
+				)
+			}
+			else{
+				return (
         <Link
           href={{ pathname: '/user', query: { id: post.User.id } }}
           as={`/user/${post.User.id}`}
@@ -172,6 +202,7 @@ const PostCard = ({ post }) => {
           </a>
         </Link>
       );
+			}
     } else {
       return <Avatar sx={{ bgcolor: '#ddd' }}>?</Avatar>;
     }
@@ -290,18 +321,33 @@ const PostCard = ({ post }) => {
             >
               <ListItem alignItems="flex-start">
                 <ListItemAvatar>
-                  {el.private_mode ? (
-                    <Avatar alt="Remy Sharp">?</Avatar>
-                  ) : (
-                    <Link
+									{el.private_mode && <Avatar alt="Remy Sharp">?</Avatar>}
+                  {(!el.private_mode && el.User.followers>=2) && (
+                   <Link
+                      href={{ pathname: '/user', query: { id: el.User.id } }}
+                      as={`/user/${el.User.id}`}
+                    >
+                      <a>
+												<Badge
+													overlap="circular"
+													anchorOrigin={{vertical: 'top', horizontal:'right'}}
+													badgeContent={
+														<StarIcon sx={{color:'yellow'}}/>
+													}
+												>	
+                        <Avatar alt="Remy Sharp" sx={{ border:'2px solid yellow', bgcolor: 'black' }}>{el.User.nickname[0]}</Avatar>
+												</Badge>
+                      </a>
+                    </Link> 
+                  )}
+									{(!el.private_mode && el.User.followers<2) && <Link
                       href={{ pathname: '/user', query: { id: el.User.id } }}
                       as={`/user/${el.User.id}`}
                     >
                       <a>
                         <Avatar alt="Remy Sharp">{el.User.nickname[0]}</Avatar>
                       </a>
-                    </Link>
-                  )}
+                    </Link>}
                 </ListItemAvatar>
                 {el.private_mode === false && (
                   <ListItemText

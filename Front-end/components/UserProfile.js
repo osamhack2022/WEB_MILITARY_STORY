@@ -10,6 +10,8 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Divider from '@mui/material/Divider';
+import Badge from "@mui/material/Badge";
+import StarIcon from '@mui/icons-material/Star';
 
 import Link from 'next/link';
 import Router from 'next/router';
@@ -23,6 +25,39 @@ const UserProfile = () => {
   const onLogout = useCallback(() => {
     dispatch(logout());
   }, []);
+	
+	const returnAvatar = () => {
+		if(me.Followers.length >= 2){
+			return (
+				<Link href={`/user/${me.id}`}>
+          <a>
+            <Badge 
+							overlap="circular"
+							anchorOrigin={{ vertical: 'top', horizontal: 'right'}}
+							badgeContent={
+								<StarIcon sx={{ color: 'yellow'}}/>
+							}
+						>
+							<Avatar sx={{ border:'2px solid yellow', bgcolor: 'black' }} aria-label="recipe">
+              	{me.nickname[0]}
+            	</Avatar>
+						</Badge>
+          </a>
+      	</Link>
+			)
+		}
+		else{
+			return (
+			<Link href={`/user/${me.id}`}>
+        <a>
+    			<Avatar sx={{ bgcolor: 'grey' }} aria-label="recipe">
+            {me.nickname[0]}
+          </Avatar>
+        </a>
+      </Link>
+			)
+		}
+	}
 
   return (
     <Card
@@ -34,13 +69,7 @@ const UserProfile = () => {
     >
       <CardHeader
         avatar={
-          <Link href={`/user/${me.id}`}>
-            <a>
-              <Avatar sx={{ bgcolor: 'grey' }} aria-label="recipe">
-                {me.nickname[0]}
-              </Avatar>
-            </a>
-          </Link>
+          returnAvatar()
         }
         action={
           logoutLoading ? (

@@ -18,6 +18,9 @@ import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Badge from "@mui/material/Badge";
+
+import StarIcon from "@mui/icons-material/Star";
 
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -70,6 +73,43 @@ const MyComments = ({ comments, post }) => {
   const onZoomPost = useCallback(() => {
     Router.push(`/post/${post.id}`).then();
   }, []);
+	
+	const avatar = () =>{
+		if(post.private_mode) {
+			return(
+          	<Avatar sx={{ bgcolor: '#ddd' }}>?</Avatar>)
+		}
+		else if(post.User.followers>=2){
+			return (
+				<Link
+       	 	href={{ pathname: '/user', query: { id: post.User.id } }}
+        	as={`/user/${post.User.id}`}
+      	>
+        	<a>
+			<Badge 
+							overlap="circular"
+							anchorOrigin={{ vertical: 'top', horizontal: 'right'}}
+							badgeContent={
+								<StarIcon sx={{ color: 'yellow'}}/>
+							}
+						>
+			</Badge>
+					</a>
+				</Link>)
+		}
+		else{
+			return(
+				<Link
+       	 	href={{ pathname: '/user', query: { id: post.User.id } }}
+        	as={`/user/${post.User.id}`}
+      	>
+        	<a>
+          	<Avatar sx={{ bgcolor: '#ddd' }}>{post.User.nickname[0]}</Avatar>
+        	</a>
+      	</Link>
+		)
+		}
+	}
 
   const onLike = useCallback(() => {
     if (!id) {
@@ -125,14 +165,7 @@ const MyComments = ({ comments, post }) => {
     <Card sx={{ width: '100%', marginBottom: '5%' }}>
       <CardHeader
         avatar={
-          <Link
-            href={{ pathname: '/user', query: { id: post.User.id } }}
-            as={`/user/${post.User.id}`}
-          >
-            <a>
-              <Avatar sx={{ bgcolor: '#ddd' }}>{post.User.nickname[0]}</Avatar>
-            </a>
-          </Link>
+          avatar()
         }
         title={post.User.nickname}
         subheader={moment(post.createdAt).fromNow()}

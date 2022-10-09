@@ -5,11 +5,14 @@ import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useDispatch, useSelector } from 'react-redux';
-import { updatePost } from '../actions/post';
+import { updatePost, loadPosts } from '../actions/post';
+
 
 import useInput from '../hooks/useInput';
 
 import styled from 'styled-components';
+
+import { useRouter } from "next/router";
 
 const BoardDiv = styled.div`
   position: relative;
@@ -86,6 +89,7 @@ const PostCardContent = ({
 }) => {
   const dispatch = useDispatch();
   const [action, setAction] = useState(false);
+	const { asPath } = useRouter();
   const [title, onChangeTitle, setTitle] = useInput(
     postContent.split('\n$').shift()
   );
@@ -128,8 +132,11 @@ const PostCardContent = ({
         content: title + '\n$' + text,
       })
     );
+		dispatch(loadPosts({
+			category: asPath[1],
+		}))
     setAction(true);
-  }, [title, text]);
+  }, [title, text, asPath]);
 
   useEffect(() => {
     let result_arr = []; // 제목이면서 해시태그 : 3, 제목이면 : 2, 해시태그 : 1, 내용 : 0

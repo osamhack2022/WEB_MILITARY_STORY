@@ -15,6 +15,9 @@ import { addComment } from '../actions/post';
 import useInput from '../hooks/useInput';
 import { styled } from '@mui/material/styles';
 import Checkbox from '@mui/material/Checkbox';
+import Badge from "@mui/material/Badge";
+
+import StarIcon from '@mui/icons-material/Star';
 
 const StyledAvatar = styled(Avatar)(({ theme }) => ({
   width: 35,
@@ -23,6 +26,15 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
   backgroundColor: 'grey',
   marginRight: 5,
 }));
+
+const WhiteAvatar=styled(Avatar)(({theme})=>({
+	width: 35,
+  height: 35,
+  fontSize: 15,
+  backgroundColor: 'black',
+	border: '2px solid yellow',
+  marginRight: 5,
+}))
 
 const StyledFormGroup = styled(FormGroup)(({ theme }) => ({
   position: 'relative',
@@ -59,6 +71,26 @@ const CommentForm = ({ post }) => {
   const onChangePrivateMode = useCallback((e) => {
     setPrivateMode(e.target.checked);
   });
+	
+	const returnAvatar = () => {
+		if(me.followers >= 2){
+			return(
+			<Badge
+				overlap="circular"
+				anchorOrigin={{vertical:'top', horizontal:'right'}}
+				badgeContent={
+					<StarIcon sx={{color:'yellow'}} />
+				}
+			>
+				<WhiteAvatar>{me?.nickname[0]}</WhiteAvatar>
+			</Badge>
+		)
+		}
+		else {
+			return(
+			<StyledAvatar>{me?.nickname[0]}</StyledAvatar>)
+		}
+	}
 
   useEffect(() => {
     if (addCommentDone) {
@@ -94,7 +126,7 @@ const CommentForm = ({ post }) => {
         sx={{ fontSize: 15 }}
         variant="standard"
         InputProps={{
-          startAdornment: <StyledAvatar>{me?.nickname[0]}</StyledAvatar>,
+          startAdornment: returnAvatar(),
         }}
         value={commentText}
         onChange={onChangeCommentText}
