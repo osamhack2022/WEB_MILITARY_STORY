@@ -13,6 +13,8 @@
 해시태그를 통해 게시물을 검색할 수 있도록 하여 좀 더 효과적으로 원하는 게시글을 찾을 수 있도록 합니다.
 ### 4. 구독 기능 
 구독 기능을 통해 팔로잉 한 서람들이 올린 글만을 볼 수 있도록 하는 페이지를 만들어 원하는 게시글을 빠르게 한꺼번에 모아 볼 수 있습니다.
+### 5. 지난 군생활, 휴가 계산 기능 
+군생활에서 지난 군생활이 몇 퍼센트인지 차트로 볼 수 있고 받은 휴가가 며칠인지 입력할 수 있습니다. 
 
 ## 기술 스택
 #### backend 
@@ -29,7 +31,7 @@ redux : global state 관리
 
 ## 팀원
 김용 : gnncjegrgr, skystar234556@gmail.com
-유호인 : hoinhoin, (email)
+유호인 : hoinhoin, follow3448@naver.com
 
 ## copyleft / End User License
 + [MIT](https://github.com/osamhack2022/WEB_MILITARY_STORY/blob/master/License)
