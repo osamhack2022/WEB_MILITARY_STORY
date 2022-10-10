@@ -43,7 +43,7 @@ function MyVacation({ sendEditVacation }) {
 
   return (
     <StyledDiv>
-      <div style={{ color: '#777', fontSize: '25px' }}>
+      <div style={{ color: '#777', fontSize: '25px', marginBottom: 10 }}>
         총 휴가 :{' '}
         {me.annual + me.reward + me.compensation + me.consolation + me.petition}
       </div>

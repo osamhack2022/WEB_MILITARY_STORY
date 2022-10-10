@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import wrapper from '../store/configureStore';
+import "../public/static/fonts/styles.css";
 
 const App = ({ Component, pageProps }) => (
   <>

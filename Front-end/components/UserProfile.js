@@ -30,7 +30,7 @@ const UserProfile = () => {
     if (me.Followers.length >= 2) {
       return (
         <Link href={`/user/${me.id}`}>
-          <a>
+          <a style={{ textDecoration: 'none'}}>
             <Badge
               overlap="circular"
               anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -49,7 +49,7 @@ const UserProfile = () => {
     } else {
       return (
         <Link href={`/user/${me.id}`}>
-          <a>
+          <a style={{textDecoration: 'none'}}>
             <Avatar sx={{ bgcolor: 'grey' }} aria-label="recipe">
               {me.nickname[0]}
             </Avatar>
@@ -89,7 +89,7 @@ const UserProfile = () => {
         }
         title={
           <Link href={`/user/${me.id}`}>
-            <a>
+            <a style={{ textDecoration: 'none'}}>
               <span style={{ color: 'black' }}>{me.nickname}</span>
             </a>
           </Link>

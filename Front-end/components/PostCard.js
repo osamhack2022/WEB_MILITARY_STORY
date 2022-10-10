@@ -174,7 +174,7 @@ const PostCard = ({ post }) => {
             href={{ pathname: '/user', query: { id: post.User.id } }}
             as={`/user/${post.User.id}`}
           >
-            <a>
+            <a style={{ textDecoration: 'none', color: 'white'}}>
               <Badge
                 overlap="circular"
                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -196,7 +196,7 @@ const PostCard = ({ post }) => {
             href={{ pathname: '/user', query: { id: post.User.id } }}
             as={`/user/${post.User.id}`}
           >
-            <a>
+            <a style={{ textDecoration: 'none', color: 'white'}}>
               <Avatar sx={{ bgcolor: '#ddd' }}>{post.User.nickname[0]}</Avatar>
             </a>
           </Link>
@@ -225,7 +225,7 @@ const PostCard = ({ post }) => {
         action={
           <>
             {me && !post.private_mode && <FollowButton post={post} />}
-            <IconButton aria-label="settings">
+            <>
               <IconButton onClick={handleClick}>
                 <MoreVertIcon />
               </IconButton>
@@ -248,16 +248,16 @@ const PostCard = ({ post }) => {
                   </Button>
                 )}
               </Popover>
-            </IconButton>
+            </>
           </>
         }
         title={name()}
         subheader={moment(post.createdAt).fromNow()}
       />
-      <CardMedia>
-        {post.Images[0] && <PostImages images={post.Images} />}
-      </CardMedia>
       <CardContent>
+        {post.Images[0] && <PostImages id={post.id} images={post.Images} />}
+      </CardContent>
+      <CardContent sx={{ marginTop: -8}}>
         <Typography variant="body2" color="text.secondary">
           <pre style={{ width: '100%' }}>
             <PostCardContent
@@ -326,7 +326,7 @@ const PostCard = ({ post }) => {
                       href={{ pathname: '/user', query: { id: el.User.id } }}
                       as={`/user/${el.User.id}`}
                     >
-                      <a>
+                      <a style={{ textDecoration: 'none', color:'white'}}>
                         <Badge
                           overlap="circular"
                           anchorOrigin={{
@@ -353,7 +353,7 @@ const PostCard = ({ post }) => {
                       href={{ pathname: '/user', query: { id: el.User.id } }}
                       as={`/user/${el.User.id}`}
                     >
-                      <a>
+                      <a style={{ color:'white', textDecoration: 'none'}}>
                         <Avatar alt="Remy Sharp">{el.User.nickname[0]}</Avatar>
                       </a>
                     </Link>
@@ -364,7 +364,7 @@ const PostCard = ({ post }) => {
                     primary={el.User.nickname}
                     secondary={
                       <React.Fragment>
-                        <pre>{el.content}</pre>
+                        <pre style={{ marginTop : 0}}>{el.content}</pre>
                       </React.Fragment>
                     }
                   />
@@ -374,7 +374,7 @@ const PostCard = ({ post }) => {
                     primary={'익명' + el.anonymous}
                     secondary={
                       <React.Fragment>
-                        <pre>{el.content}</pre>
+                        <pre style={{ marginTop: 0}}>{el.content}</pre>
                       </React.Fragment>
                     }
                   />

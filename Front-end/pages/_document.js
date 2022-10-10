@@ -1,5 +1,5 @@
 import React from 'react';
-import Document from 'next/document';
+import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
 export default class MyDocument extends Document {
@@ -28,4 +28,21 @@ export default class MyDocument extends Document {
       sheet.seal();
     }
   }
+	
+	render(){
+		return(
+		<Html>
+        <Head>
+          <link
+            href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css"
+            rel="stylesheet"
+            type="text/css"
+          />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>)
+	}
 }

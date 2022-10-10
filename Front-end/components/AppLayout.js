@@ -18,6 +18,7 @@ import Container from '@mui/material/Container';
 
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import MenuIcon from '@mui/icons-material/Menu';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import Link from 'next/link';
 import Router, { useRouter } from 'next/router';
 import SearchIcon from '@mui/icons-material/Search';
@@ -119,7 +120,8 @@ const InfoDiv = styled('div')(({ theme }) => ({
 }));
 
 const LeftDiv = styled('div')(({ theme }) => ({
-  paddingLeft: '5%',
+  float: 'right',
+	width: '100%'
 }));
 
 const StyledBox = styled(Box)(({ theme }) => ({
@@ -175,7 +177,7 @@ function Home({ children }) {
     <StyledBox onClick={handleDrawerToggle}>
       <StyledTypography variant="h6">
         <Link href="/">
-          <a>
+          <a style ={{ textDecoration: 'none', color:'black' }}>
             <BlackSpan>Military Story</BlackSpan>
           </a>
         </Link>
@@ -201,9 +203,6 @@ function Home({ children }) {
         <StyledAppBar component="nav">
           <Toolbar>
             <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
               onClick={handleDrawerToggle}
               sx={{ mr: 2, display: { sm: 'none' } }}
             >
@@ -220,7 +219,7 @@ function Home({ children }) {
               }}
             >
               <Link href="/">
-                <a>
+                <a style={{ textDecoration: 'none', color:'black'}}>
                   <BlackSpan>Military Story</BlackSpan>
                 </a>
               </Link>
@@ -230,7 +229,6 @@ function Home({ children }) {
               <IconButton
                 color="inherit"
                 aria-label="open list"
-                edge="start_list"
                 onClick={handleListOpen}
                 sx={{
                   flexGrow: 1,
@@ -255,7 +253,7 @@ function Home({ children }) {
             )}
           </Toolbar>
         </StyledAppBar>
-        <Box sx={{ flexGrow: 1, marginTop: 9 }}>
+        <Box sx={{  marginTop: 9, width:'100%' }}>
           {listOpen && (
             <Grid
               container
@@ -263,6 +261,7 @@ function Home({ children }) {
               sx={{
                 background: '#eee',
                 paddingLeft: 3,
+								marginTop: -3,
                 marginBottom: 1,
                 boxShadow: '0 4px 4px -4px black',
               }}
@@ -273,16 +272,16 @@ function Home({ children }) {
                     key={item}
                     item
                     xs={5.6}
-                    md={1.8}
-                    sx={{ paddingBottom: 1 }}
+                    md={1.9}
+                    sx={{ paddingBottom: 1, alignItems:'center' }}
                   >
                     <Link href={'/' + idx}>
-                      <a>
-                        <span style={{ color: 'black' }}>{item}</span>
+                      <a style={{ textDecoration: 'none', color: 'black' }}>
+                        <Button>ㆍ {item}</Button>
                       </a>
                     </Link>
                   </Grid>
-                  <Divider orientation="vertical" flexItem />
+								{idx!==5 && <Divider orientation="vertical" flexItem />}
                 </>
               ))}
             </Grid>
@@ -291,7 +290,6 @@ function Home({ children }) {
             <Grid item xs={12} md={3}>
               <LeftDiv>
                 {me ? <UserProfile /> : <LoginForm />}
-
                 {me && (
                   <InfoDiv>
                     <ProfilePost />

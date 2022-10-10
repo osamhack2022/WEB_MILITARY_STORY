@@ -103,7 +103,7 @@ const LoginForm = () => {
               </Button>
             )}
             <Link href="/signup">
-              <a>
+              <a style={{textDecoration: 'none', color:'black'}}>
                 <Button sx={{ color: 'black' }}>회원가입</Button>
               </a>
             </Link>

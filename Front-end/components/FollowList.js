@@ -80,17 +80,18 @@ const FollowList = ({ header, data, onClickMore, loading }) => {
         <ListItem>
           <Grid container spacing={2}>
             {data?.map((v, idx) => (
-              <Grid item xs={3} key={v.id}>
+              <Grid item xs={3} key={v.id} sx={{ height: '50%'}}>
                 <Item
                   sx={{
                     border: '2px solid #dddddd',
                     display: 'flex',
                     justifyContent: 'center',
+										height: '50%'
                   }}
                 >
                   <Link href={`/user/${v.id}`}>
-                    <a>
-                      <div style={{ display: 'flex', marginTop: 11 }}>
+                    <a style={{ textDecoration: 'none', color:'black'}}>
+                      <div style={{ display: 'flex' }}>
                         <Avatar>{v.nickname[0]}</Avatar>
                         <span
                           style={{
