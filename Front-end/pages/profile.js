@@ -9,8 +9,8 @@ import { loadPopularPosts } from '../actions/post';
 import AppLayout from '../components/AppLayout';
 import FollowList from '../components/FollowList';
 import NicknameEditForm from '../components/NicknameEditForm';
-import MyChart from "../components/MyChart";
-import MyVacation from "../components/MyVacation";
+import MyChart from '../components/MyChart';
+import MyVacation from '../components/MyVacation';
 import { loadMyInfo, editDate, editVacation } from '../actions/user';
 import wrapper from '../store/configureStore';
 
@@ -21,7 +21,7 @@ const Profile = () => {
   const { me } = useSelector((state) => state.user);
   const [followersLimit, setFollowersLimit] = useState(4);
   const [followingsLimit, setFollowingsLimit] = useState(4);
-	const [edit, setEdit] = useState(false);
+  const [edit, setEdit] = useState(false);
   const dispatch = useDispatch();
 
   const { data: followersData, error: followerError } = useSWR(
@@ -47,29 +47,30 @@ const Profile = () => {
   if (!me) {
     return null;
   }
-	
-	const sendEditVacation = (category, content, days) => {
-		dispatch(editVacation({
-			category,
-			reason:content,
-			days
-		}))
-	}
-	
-	const onEdit = (value1, value2) => {
-		if(value1 && value2){
-			dispatch(
-				editDate({
-				start_date: value1?.$d,
-				end_date: value2?.$d,
-			}))
-			
-			dispatch(
-				loadMyInfo()
-			)
-		}
-		setEdit(false)
-	}
+
+  const sendEditVacation = (category, content, days) => {
+    dispatch(
+      editVacation({
+        category,
+        reason: content,
+        days,
+      })
+    );
+  };
+
+  const onEdit = (value1, value2) => {
+    if (value1 && value2) {
+      dispatch(
+        editDate({
+          start_date: value1?.$d,
+          end_date: value2?.$d,
+        })
+      );
+
+      dispatch(loadMyInfo());
+    }
+    setEdit(false);
+  };
 
   // 주의 return 이 hooks 보다 위에 있으면 안됨
   if (followerError || followingError) {
@@ -83,8 +84,8 @@ const Profile = () => {
         <title>내 프로필 | Military Story</title>
       </Head>
       <NicknameEditForm />
-			<MyChart onEdit={onEdit} edit={edit} setEdit={setEdit} />
-			<MyVacation sendEditVacation = {sendEditVacation} />
+      <MyChart onEdit={onEdit} edit={edit} setEdit={setEdit} />
+      <MyVacation sendEditVacation={sendEditVacation} />
       {followingsData && (
         <FollowList
           header="팔로잉"

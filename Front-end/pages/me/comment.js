@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import Head from "next/head";
+import Head from 'next/head';
 import AppLayout from '../../components/AppLayout';
 import PostForm from '../../components/PostForm';
 import PostCard from '../../components/PostCard';
@@ -42,11 +42,9 @@ const Comment = () => {
 
   return (
     <AppLayout>
-			<Head>
-				<title>
-					내가 댓글 단 글
-				</title>
-			</Head>
+      <Head>
+        <title>내가 댓글 단 글</title>
+      </Head>
       {instanceComment.map((el, idx) => (
         <MyComments key={el[1].id} comments={el[0].content} post={el[1]} />
       ))}

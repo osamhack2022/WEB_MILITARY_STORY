@@ -7,12 +7,11 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { updatePost, loadPosts } from '../actions/post';
 
-
 import useInput from '../hooks/useInput';
 
 import styled from 'styled-components';
 
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
 
 const BoardDiv = styled.div`
   position: relative;
@@ -89,7 +88,7 @@ const PostCardContent = ({
 }) => {
   const dispatch = useDispatch();
   const [action, setAction] = useState(false);
-	const { asPath } = useRouter();
+  const { asPath } = useRouter();
   const [title, onChangeTitle, setTitle] = useInput(
     postContent.split('\n$').shift()
   );
@@ -132,9 +131,11 @@ const PostCardContent = ({
         content: title + '\n$' + text,
       })
     );
-		dispatch(loadPosts({
-			category: asPath[1],
-		}))
+    dispatch(
+      loadPosts({
+        category: asPath[1],
+      })
+    );
     setAction(true);
   }, [title, text, asPath]);
 

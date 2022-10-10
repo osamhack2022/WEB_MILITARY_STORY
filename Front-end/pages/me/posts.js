@@ -41,9 +41,11 @@ const User = () => {
           document.documentElement.scrollHeight - 300
         ) {
           const lastId = mainPosts[mainPosts.length - 1]?.id;
-          dispatch(loadMyPosts({
-						lastId
-					}));
+          dispatch(
+            loadMyPosts({
+              lastId,
+            })
+          );
         }
       }
     };

@@ -79,13 +79,13 @@ export default function ProfilePost() {
           <StyledSpan>나의 스크랩</StyledSpan>
         </StyledButton>
       </Link>
-			<Divider variant="middel" />
-			<Link href={'/me/following'}>
-				<StyledButton>
-					<Groups2OutlinedIcon sx={{color:"orange"}}/>
-					<StyledSpan>나의 팔로잉 게시물</StyledSpan>
-				</StyledButton>
-			</Link>
+      <Divider variant="middel" />
+      <Link href={'/me/following'}>
+        <StyledButton>
+          <Groups2OutlinedIcon sx={{ color: 'orange' }} />
+          <StyledSpan>나의 팔로잉 게시물</StyledSpan>
+        </StyledButton>
+      </Link>
     </StyledDiv>
   );
 }

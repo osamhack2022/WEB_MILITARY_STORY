@@ -4,7 +4,7 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
-import Grid from "@mui/material/Grid";
+import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { styled } from '@mui/material/styles';
@@ -14,7 +14,7 @@ import { loadPopularPosts } from '../actions/post';
 import { loadMyInfo, signup } from '../actions/user';
 import AppLayout from '../components/AppLayout';
 import wrapper from '../store/configureStore';
-import { Dayjs } from "dayjs"
+import { Dayjs } from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -27,8 +27,8 @@ const Signup = () => {
   const { me, signupLoading, signupDone, signupError } = useSelector(
     (state) => state.user
   );
-	const [value1, setValue1] = useState(null)
-	const [value2, setValue2] = useState(null);
+  const [value1, setValue1] = useState(null);
+  const [value2, setValue2] = useState(null);
   const [passwordCheck, setPasswordCheck] = useState('');
   const [term, setTerm] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
@@ -37,8 +37,6 @@ const Signup = () => {
   const [email, onChangeEmail] = useInput('');
   const [nick, onChangeNick] = useInput('');
   const [password, onChangePassword] = useInput('');
-	
-	
 
   useEffect(() => {
     if (me && me.id) {
@@ -87,8 +85,8 @@ const Signup = () => {
         email: email,
         nickname: nick,
         password: password,
-				start_date: value1?.$d,
-				end_date: value2?.$d
+        start_date: value1?.$d,
+        end_date: value2?.$d,
       })
     );
   }, [email, password, passwordCheck, term]);
@@ -99,38 +97,37 @@ const Signup = () => {
         <title>회원가입 | Military Story</title>
       </Head>
       <form>
-				
         <Paper sx={{ padding: '3%' }}>
           <br />
           <h2 htmlFor="sign-up">Military Story 회원가입</h2>
-					<Grid container spacing={2}>
-						<Grid item xs={12} md={5.5}>
-							<LocalizationProvider dateAdapter={AdapterDayjs}>
-      					<DatePicker
-        					label="입대일"
-        					value={value1}
-        					onChange={(newValue) => {
-          					setValue1(newValue);
-        					}}
-        					renderInput={(params) => <TextField {...params} />}
-									inputFormat="YYYY-MM-DD"
-      					/>
-							</LocalizationProvider>
-						</Grid>
-						<Grid item xs={12} md={5.5}>
-							<LocalizationProvider dateAdapter={AdapterDayjs}>
-      					<DatePicker
-        					label="전역일"
-        					value={value2}
-        					onChange={(newValue) => {
-          					setValue2(newValue);
-        					}}
-        					renderInput={(params) => <TextField {...params} />}
-									inputFormat="YYYY-MM-DD"
-      					/>
-							</LocalizationProvider>
-						</Grid>
-					</Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={5.5}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  label="입대일"
+                  value={value1}
+                  onChange={(newValue) => {
+                    setValue1(newValue);
+                  }}
+                  renderInput={(params) => <TextField {...params} />}
+                  inputFormat="YYYY-MM-DD"
+                />
+              </LocalizationProvider>
+            </Grid>
+            <Grid item xs={12} md={5.5}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  label="전역일"
+                  value={value2}
+                  onChange={(newValue) => {
+                    setValue2(newValue);
+                  }}
+                  renderInput={(params) => <TextField {...params} />}
+                  inputFormat="YYYY-MM-DD"
+                />
+              </LocalizationProvider>
+            </Grid>
+          </Grid>
           <div>
             <TextField
               email="ID"

@@ -19,9 +19,9 @@ import Divider from '@mui/material/Divider';
 import CardActions from '@mui/material/CardActions';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-import Badge from "@mui/material/Badge";
+import Badge from '@mui/material/Badge';
 
-import StarIcon from "@mui/icons-material/Star";
+import StarIcon from '@mui/icons-material/Star';
 
 const User = () => {
   const dispatch = useDispatch();
@@ -41,37 +41,39 @@ const User = () => {
     dispatch(loadMyInfo());
     dispatch(loadUser({ userId: path_arr[2] }));
   }, [router.asPath]);
-	
-	const avatar = () => {
-		if(userInfo.followers>=2){
-			return (
-				<Link href={`/user/${info.id}`}>
+
+  const avatar = () => {
+    if (userInfo.followers >= 2) {
+      return (
+        <Link href={`/user/${info.id}`}>
           <a>
-						<Badge 
-							overlap="circular"
-							anchorOrigin={{ vertical: 'top', horizontal: 'right'}}
-							badgeContent={
-								<StarIcon sx={{ color: 'yellow'}}/>
-							}
-						>
-            <Avatar sx={{ bgcolor: 'black', border:'2px solid yellow' }} aria-label="recipe">
-              {info.nickname[0]}
-            </Avatar>
-						</Badge>
+            <Badge
+              overlap="circular"
+              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+              badgeContent={<StarIcon sx={{ color: 'yellow' }} />}
+            >
+              <Avatar
+                sx={{ bgcolor: 'black', border: '2px solid yellow' }}
+                aria-label="recipe"
+              >
+                {info.nickname[0]}
+              </Avatar>
+            </Badge>
           </a>
-        </Link>)
-		}
-		else{
-			return (
-				<Link href={`/user/${info.id}`}>
+        </Link>
+      );
+    } else {
+      return (
+        <Link href={`/user/${info.id}`}>
           <a>
             <Avatar sx={{ bgcolor: 'grey' }} aria-label="recipe">
               {info.nickname[0]}
             </Avatar>
           </a>
-        </Link>)
-		}
-	}
+        </Link>
+      );
+    }
+  };
 
   useEffect(() => {
     setInfo(userInfo);
@@ -125,9 +127,7 @@ const User = () => {
             }}
           >
             <CardHeader
-              avatar={
-                avatar()
-              }
+              avatar={avatar()}
               title={
                 <Link href={`/user/${info.id}`}>
                   <a>
