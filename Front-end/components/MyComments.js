@@ -61,7 +61,7 @@ const ExpandMore = styled((props) => {
 
 const MyComments = ({ comments, post }) => {
   const dispatch = useDispatch();
-  const me = useSelector((state) => state.user);
+  const { me } = useSelector((state) => state.user);
   const id = useSelector((state) => state.user.me?.id);
 
   const [expanded, setExpanded] = useState(false);
@@ -86,14 +86,15 @@ const MyComments = ({ comments, post }) => {
         	as={`/user/${post.User.id}`}
       	>
         	<a>
-			<Badge 
+						<Badge 
 							overlap="circular"
 							anchorOrigin={{ vertical: 'top', horizontal: 'right'}}
 							badgeContent={
 								<StarIcon sx={{ color: 'yellow'}}/>
 							}
 						>
-			</Badge>
+							<Avatar sx={{ bgcolor: '#000', border:"2px solid yellow" }}>{post.User.nickname[0]}</Avatar>
+						</Badge>
 					</a>
 				</Link>)
 		}
@@ -216,7 +217,17 @@ const MyComments = ({ comments, post }) => {
                 as={`/user/${id}`}
               >
                 <a>
-                  <Avatar alt="me">나</Avatar>
+                  {(me.followers>=2) && 
+										<Badge 
+											overlap="circular"
+											anchorOrigin={{ vertical: 'top', horizontal: 'right'}}
+											badgeContent={
+												<StarIcon sx={{ color: 'yellow'}}/>
+											}
+										>
+										 <Avatar alt="me" sx={{backgroundColor:"black", border:'2px solid yellow'}}>나</Avatar>
+									 </Badge>}
+									{(me.followers<2) && <Avatar alt="me">나</Avatar>}
                 </a>
               </Link>
             </ListItemAvatar>

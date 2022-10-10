@@ -305,7 +305,7 @@ const PostForm = () => {
               alt={v}
             />
             <div>
-              <Button onClick={() => console.log('제거')}>제거</Button>
+              <Button onClick={onRemoveImage(i)}>제거</Button>
             </div>
           </div>
         ))}

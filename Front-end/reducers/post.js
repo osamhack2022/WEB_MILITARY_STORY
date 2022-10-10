@@ -29,6 +29,8 @@ import {
   loadStartIndexPosts,
   loadStartUserPosts,
   loadStartUserScraps,
+	loadStartFollowingsPosts,
+	loadFollowingsPosts
 } from '../actions/post';
 
 // 기본 state
@@ -39,6 +41,7 @@ export const initialState = {
   hotPosts: [],
   userComments: [],
   myPosts: [],
+	followingsPosts:[],
   hasMorePosts: true,
   singlePost: null,
   imagePaths: [],
@@ -506,6 +509,21 @@ const postSlice = createSlice({
         state.loadPostsLoading = false;
         state.loadPostsError = action.error.message;
       })
+			.addCase(loadFollowingsPosts.pending, (state) => {
+				state.loadPostsLoading = true;
+      	state.loadPostsDone = false;
+        state.loadPostsError = null;
+			})
+			.addCase(loadFollowingsPosts.fulfilled, (state, action) => {
+				state.loadPostsLoading = false;
+        state.loadPostsDone = true;
+        state.followingsPosts = _concat(state.followingsPosts, action.payload);
+        state.hasMorePosts = action.payload.length === 10;
+			})
+			.addCase(loadFollowingsPosts.rejected, (state, action) => {
+				state.loadPostsLoading = false;
+        state.loadPostsError = action.error.message;
+			})
       .addDefaultCase((state) => state),
 });
 

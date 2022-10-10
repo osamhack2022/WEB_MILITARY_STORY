@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import Groups2OutlinedIcon from '@mui/icons-material/Groups2Outlined';
 
 import { useSelector } from 'react-redux';
 
@@ -78,6 +79,13 @@ export default function ProfilePost() {
           <StyledSpan>나의 스크랩</StyledSpan>
         </StyledButton>
       </Link>
+			<Divider variant="middel" />
+			<Link href={'/me/following'}>
+				<StyledButton>
+					<Groups2OutlinedIcon sx={{color:"orange"}}/>
+					<StyledSpan>나의 팔로잉 게시물</StyledSpan>
+				</StyledButton>
+			</Link>
     </StyledDiv>
   );
 }
