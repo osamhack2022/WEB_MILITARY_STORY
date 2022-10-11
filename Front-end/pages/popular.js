@@ -32,6 +32,18 @@ const Home = () => {
   const { asPath } = useRouter();
   const { mainPosts, hasMorePosts, loadPostsLoading, popularPosts } =
     useSelector((state) => state.post);
+	
+	const [isEdited, setIsEdited] = useState(false);
+	
+	useEffect(()=>{
+		const lastId = mainPosts[mainPosts.length - 1]?.id;
+    dispatch(
+      loadPosts({
+        lastId,
+        category: asPath[1],
+      })
+    );
+	}, [isEdited])
 
   const post = useSelector((state) => state.post);
 
@@ -66,7 +78,7 @@ const Home = () => {
     <AppLayout>
       <TitleDiv>인기 게시물 페이지</TitleDiv>
       {popularPosts.map((post) => (
-        <PostCard key={post.id} post={post} />
+        <PostCard key={post.id} post={post} isEdited={isEdited} setIsEdited={setIsEdited} />
       ))}
     </AppLayout>
   );

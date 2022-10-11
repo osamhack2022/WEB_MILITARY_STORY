@@ -34,10 +34,10 @@ const UserProfile = () => {
             <Badge
               overlap="circular"
               anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-              badgeContent={<StarIcon sx={{ color: 'yellow' }} />}
+              badgeContent={<StarIcon sx={{ color: '#FFD400' }} />}
             >
               <Avatar
-                sx={{ border: '2px solid yellow', bgcolor: 'black' }}
+                sx={{ border: '2px solid #FFD400', bgcolor: 'black' }}
                 aria-label="recipe"
               >
                 {me.nickname[0]}
@@ -64,7 +64,7 @@ const UserProfile = () => {
       sx={{
         width: '90%',
         backgroundColor: '#fefefe',
-        border: '2px solid #ddd',
+        border: '2px solid #2F9658',
       }}
     >
       <CardHeader
@@ -74,13 +74,13 @@ const UserProfile = () => {
             <LoadingButton
               loading
               variant="outlined"
-              sx={{ border: '2px solid #ccc' }}
+              sx={{ border: '2px solid #1B3B1A' }}
             >
               로그아웃
             </LoadingButton>
           ) : (
             <Button
-              sx={{ marginTop: '6px', border: '2px solid #ccc' }}
+              sx={{ marginTop: '6px', border: '2px solid #1B3B1A' }}
               onClick={onLogout}
             >
               로그아웃
@@ -96,40 +96,28 @@ const UserProfile = () => {
         }
       />
 
-      <Divider variant="middle" />
+      <Divider variant="middle" sx ={{ bgcolor : "#1B3B1A" }} />
       <CardActions disableSpacing>
-        <Grid container>
-          <Grid item xs={3}>
+        <Grid container sx={{alignItems: 'center'}}>
+          <Grid item xs={4}>
             <Button
-              sx={{ marginLeft: '15%', border: '2px solid #ccc' }}
+              sx={{ marginLeft: '15%', border: '2px solid #1B3B1A' }}
               onClick={() => Router.push('/profile')}
             >
               내 정보
             </Button>
           </Grid>
-          <Divider
-            sx={{ marginLeft: '1%', marginRight: '5%' }}
-            orientation="vertical"
-            variant="middle"
-            flexItem
-          />
-          <Grid item xs={3}>
+          <Grid item xs={4}>
             <Button
-              sx={{ border: '2px solid #ccc' }}
+              sx={{ border: '2px solid #1B3B1A' }}
               onClick={() => Router.push('/profile')}
             >
               팔로잉 {me.Followings.length}
             </Button>
           </Grid>
-          <Divider
-            sx={{ marginLeft: '1%', marginRight: '5%' }}
-            orientation="vertical"
-            variant="middle"
-            flexItem
-          />
-          <Grid item xs={3}>
+          <Grid item xs={4}>
             <Button
-              sx={{ border: '2px solid #ccc' }}
+              sx={{ border: '2px solid #1B3B1A' }}
               onClick={() => Router.push('/profile')}
             >
               팔로워 {me.Followers.length}

@@ -32,6 +32,8 @@ const User = () => {
       })
     );
   }, [router.asPath]);
+	
+	
 
   useEffect(() => {
     const onScroll = () => {

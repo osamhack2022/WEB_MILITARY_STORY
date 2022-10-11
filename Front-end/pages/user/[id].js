@@ -30,7 +30,6 @@ const User = () => {
   const { mainPosts, hasMorePosts, loadPostsLoading } = useSelector(
     (state) => state.post
   );
-
   const [info, setInfo] = useState(null);
 
   const { userInfo, me } = useSelector((state) => state.user);

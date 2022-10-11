@@ -27,7 +27,7 @@ const pages = [
 
 const TitleDiv = styled.div`
   position: relative;
-  border: 3px solid #ddd;
+  border: 2px solid #1B3B1A;
   margin: 0px -2px;
   width: 100%;
   padding-top: 5px;
@@ -35,14 +35,18 @@ const TitleDiv = styled.div`
   font-weight: bold;
   margin-bottom: 5px;
   font-size: 27px;
+	border-radius: 5px;
+	color: #009000;
 `;
 
 const BoardDiv = styled.div`
   position: relative;
-  border: 3px solid #ddd;
+  border: 2px solid #1B3B1A;
   margin: 0px -2px;
   width: 100%;
   padding-top: 5px;
+	border-radius: 5px;
+	color: #009000;
 `;
 
 const BoardInput = styled.input`
@@ -69,7 +73,7 @@ const BoardInput = styled.input`
 const StyledInput = styled.input`
   width: 100%;
   outline: none;
-  border: 3px solid #ddd;
+  border: 3px solid #1B3B1A;
   box-sizing: border-box;
   color: #333;
   padding-left: 0.5rem;
@@ -81,6 +85,10 @@ const StyledInput = styled.input`
   margin-top: 5px;
 
   border-radius: 1.5px;
+	
+	 ::placeholder {
+     color: #1B3B1A;
+   }
 `;
 
 const BoardTagarea = styled.textarea`

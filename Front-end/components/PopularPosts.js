@@ -30,10 +30,11 @@ const StyledSpan = styled.span`
 
 const StyledDiv = styled.div`
   margin-top: 13px;
-  border: 3px solid #ddd;
+  border: 2px solid #2F9658;
   background-color: #fefefe;
   margin-left: 24px;
   margin-right: 31px;
+	border-radius: 3px;
 `;
 
 const PaddingDiv = styled.div`

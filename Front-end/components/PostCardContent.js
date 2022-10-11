@@ -102,6 +102,7 @@ const PostCardContent = ({
     (state) => state.post
   );
   const textAreaRef = useRef(null);
+	
 
   useEffect(() => {
     if (textAreaRef.current) {
@@ -131,11 +132,6 @@ const PostCardContent = ({
         content: title + '\n$' + text,
       })
     );
-    dispatch(
-      loadPosts({
-        category: asPath[1],
-      })
-    );
     setAction(true);
   }, [title, text, asPath]);
 
@@ -157,7 +153,9 @@ const PostCardContent = ({
     }
     setDistribute(result_arr);
     setSplitedContent(splited_arr);
-  }, []);
+		setTitle(postContent.split('\n$').shift())
+		setText(postContent.split('\n$').slice(1).join('\n'))
+  }, [postContent]);
 
   return (
     <>

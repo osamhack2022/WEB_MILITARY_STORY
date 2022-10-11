@@ -22,7 +22,7 @@ import Badge from '@mui/material/Badge';
 
 import StarIcon from '@mui/icons-material/Star';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -59,7 +59,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const PostCard = ({ post }) => {
+const PostCard = ({ post, isEdited, setIsEdited }) => {
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
   const id = useSelector((state) => state.user.me?.id);
@@ -91,9 +91,6 @@ const PostCard = ({ post }) => {
     Router.push(`/post/${post.id}`).then();
   }, []);
 
-  useEffect(() => {
-    console.log(post);
-  }, [post]);
 
   const onLike = useCallback(() => {
     if (!id) {
@@ -178,10 +175,10 @@ const PostCard = ({ post }) => {
               <Badge
                 overlap="circular"
                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                badgeContent={<StarIcon sx={{ color: 'yellow' }} />}
+                badgeContent={<StarIcon sx={{ color: '#FFD400' }} />}
               >
                 <Avatar
-                  sx={{ border: '2px solid yellow', bgcolor: 'black' }}
+                  sx={{ border: '2px solid #FFD400', bgcolor: 'black' }}
                   aria-label="recipe"
                 >
                   {post.User.nickname[0]}
@@ -219,7 +216,7 @@ const PostCard = ({ post }) => {
   const scrapped = post.Scrappers.find((v) => v.id === id);
 
   return (
-    <Card sx={{ width: '100%', marginBottom: '5%', marginTop: '1%' }}>
+    <Card sx={{ width: '100%', marginBottom: '5%', marginTop: '1%', border: '1px solid #1B3B1A' }}>
       <CardHeader
         avatar={avatar()}
         action={
@@ -227,7 +224,7 @@ const PostCard = ({ post }) => {
             {me && !post.private_mode && <FollowButton post={post} />}
             <>
               <IconButton onClick={handleClick}>
-                <MoreVertIcon />
+                <MoreVertIcon sx={{ color:"1B3B1A"}}/>
               </IconButton>
               <Popover
                 id="more-icon"
@@ -254,24 +251,25 @@ const PostCard = ({ post }) => {
         title={name()}
         subheader={moment(post.createdAt).fromNow()}
       />
+			<Divider sx={{ marginTop: 0, bgcolor:"#1B3B1A" }} variant = "middle"/>
       <CardContent>
         {post.Images[0] && <PostImages id={post.id} images={post.Images} />}
       </CardContent>
-      <CardContent sx={{ marginTop: -8}}>
-        <Typography variant="body2" color="text.secondary">
-          <pre style={{ width: '100%' }}>
-            <PostCardContent
-              postId={post.id}
-              postContent={post.content}
-              editMode={editMode}
-              onToggleChangePost={onToggleChangePost}
-            />
-          </pre>
+      <CardContent sx={{ marginTop: -5}}>
+        <Typography variant="body2" component="pre" color="text.secondary" sx = {{ width:"100%" }} >
+          <PostCardContent
+            postId={post.id}
+            postContent={post.content}
+            editMode={editMode}
+            onToggleChangePost={onToggleChangePost}
+						isEdited={isEdited}
+						setIsEdited={setIsEdited}
+          />
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton onClick={() => Router.push(`/post/${post.id}`)}>
-          <ZoomInIcon />
+          <ZoomInIcon sx={{ color: "#005000" }}/>
         </IconButton>
         {scrapped ? (
           <IconButton aria-label="scrap" onClick={onUnScrap}>
@@ -285,11 +283,11 @@ const PostCard = ({ post }) => {
         {post.Scrappers.length}
         {liked ? (
           <IconButton aria-label="like" onClick={onUnlike}>
-            <FavoriteIcon style={{ color: 'red' }} />
+						<FavoriteBorderOutlinedIcon style = {{ color:'red' }} />
           </IconButton>
         ) : (
           <IconButton aria-label="unlike" onClick={onLike}>
-            <FavoriteIcon />
+            <FavoriteBorderOutlinedIcon />
           </IconButton>
         )}
         {post.Likers.length}
@@ -299,7 +297,7 @@ const PostCard = ({ post }) => {
           aria-expanded={expanded}
           aria-label="show more"
         >
-          <CommentIcon />
+          <CommentIcon sx={{ color:"#A0DE98" }}/>
         </ExpandMore>
         <span
           style={{ fontSize: 13, marginRight: '5%' }}
@@ -333,12 +331,12 @@ const PostCard = ({ post }) => {
                             vertical: 'top',
                             horizontal: 'right',
                           }}
-                          badgeContent={<StarIcon sx={{ color: 'yellow' }} />}
+                          badgeContent={<StarIcon sx={{ color: '#FFD400' }} />}
                         >
                           <Avatar
                             alt="Remy Sharp"
                             sx={{
-                              border: '2px solid yellow',
+                              border: '2px solid #FFD400',
                               bgcolor: 'black',
                             }}
                           >

@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import AppLayout from '../components/AppLayout';
 import PostForm from '../components/PostForm';
 import PostCard from '../components/PostCard';
 import { loadMyInfo } from '../actions/user';
-import { loadPosts, loadPopularPosts } from '../actions/post';
+import { loadPosts, loadPopularPosts, loadStartPosts } from '../actions/post';
 import wrapper from '../store/configureStore';
 
 import { useRouter } from 'next/router';
@@ -14,11 +14,14 @@ const Home = () => {
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
   const { asPath } = useRouter();
+	const router = useRouter();
+	const { id } = router.query;
   const { mainPosts, hasMorePosts, loadPostsLoading } = useSelector(
     (state) => state.post
   );
 
   const post = useSelector((state) => state.post);
+	
 
   useEffect(() => {
     function onScroll() {
@@ -38,6 +41,7 @@ const Home = () => {
       }
     }
     window.addEventListener('scroll', onScroll);
+  console.log('scroll')
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
@@ -64,7 +68,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     axios.defaults.headers.Cookie = '';
 
     await context.store.dispatch(
-      loadPosts({
+      loadStartPosts({
         category: context.params.id,
       })
     );

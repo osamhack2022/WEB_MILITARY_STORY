@@ -443,6 +443,12 @@ const postSlice = createSlice({
         if (!post) {
           post = state.singlePost;
         }
+				if(!post){
+					post = _find(state.myPosts, { id: action.payload.PostId });
+				}
+				if(!post){
+					post = _find(state.followingsPosts, { id: action.payload.PostId })
+				}
         post.content = action.payload.content;
       })
       .addCase(updatePost.rejected, (state, action) => {

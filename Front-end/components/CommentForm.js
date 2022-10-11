@@ -32,7 +32,7 @@ const WhiteAvatar = styled(Avatar)(({ theme }) => ({
   height: 35,
   fontSize: 15,
   backgroundColor: 'black',
-  border: '2px solid yellow',
+  border: '2px solid #FFD400',
   marginRight: 5,
 }));
 
@@ -78,7 +78,7 @@ const CommentForm = ({ post }) => {
         <Badge
           overlap="circular"
           anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-          badgeContent={<StarIcon sx={{ color: 'yellow' }} />}
+          badgeContent={<StarIcon sx={{ color: '#FFD400' }} />}
         >
           <WhiteAvatar>{me?.nickname[0]}</WhiteAvatar>
         </Badge>

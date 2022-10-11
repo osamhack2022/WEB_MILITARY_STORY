@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
@@ -15,10 +15,11 @@ const Post = () => {
   const { singlePost } = useSelector((state) => state.post);
   const dispatch = useDispatch();
 
+	
   useEffect(() => {
     dispatch(loadMyInfo());
   }, [router.asPath]);
-
+	
   return (
     <AppLayout>
       <div>

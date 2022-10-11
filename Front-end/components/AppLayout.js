@@ -71,7 +71,7 @@ const Margin = styled('div')(({ theme }) => ({
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
-  border: '3px solid #ddd',
+  border: '2px solid #2F9658',
   backgroundColor: alpha(theme.palette.common.black, 0),
   '&:hover': {
     backgroundColor: alpha(theme.palette.common.black, 0),
@@ -114,7 +114,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const InfoDiv = styled('div')(({ theme }) => ({
   borderRadius: '5px',
-  // border:"2px solid #ddd",
   height: '90%',
   width: '90%',
 }));
@@ -247,7 +246,7 @@ function Home({ children }) {
             {me && (
               <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                 <IconButton sx={{ flexGrow: 1 }} onClick={goProfile}>
-                  <AccountBoxIcon color="black" />
+                  <AccountBoxIcon sx ={{ color: "#237060" }} />
                 </IconButton>
               </Box>
             )}
@@ -286,8 +285,9 @@ function Home({ children }) {
               ))}
             </Grid>
           )}
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={3}>
+          <Grid container spacing={1}>
+						<Grid md={2}/>
+            <Grid item xs={12} md={2}>
               <LeftDiv>
                 {me ? <UserProfile /> : <LoginForm />}
                 {me && (
@@ -297,10 +297,10 @@ function Home({ children }) {
                 )}
               </LeftDiv>
             </Grid>
-            <Grid item xs={12} md={6} sx={{ marginTop: -1.5 }}>
+            <Grid item xs={12} md={4} sx={{ marginTop: -1.5 }}>
               {children}
             </Grid>
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} md={2}>
               <form onSubmit={onSubmit}>
                 <Search>
                   <SearchIconWrapper>
@@ -316,6 +316,7 @@ function Home({ children }) {
               </form>
               <PopularPosts />
             </Grid>
+						<Grid md={2}/>
           </Grid>
         </Box>
         <Box component="nav">

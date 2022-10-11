@@ -23,7 +23,7 @@ import Badge from "@mui/material/Badge";
 import StarIcon from "@mui/icons-material/Star";
 
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -90,10 +90,10 @@ const MyComments = ({ comments, post }) => {
 							overlap="circular"
 							anchorOrigin={{ vertical: 'top', horizontal: 'right'}}
 							badgeContent={
-								<StarIcon sx={{ color: 'yellow'}}/>
+								<StarIcon sx={{ color: '#FFD400'}}/>
 							}
 						>
-							<Avatar sx={{ bgcolor: '#000', border:"2px solid yellow" }}>{post.User.nickname[0]}</Avatar>
+							<Avatar sx={{ bgcolor: '#000', border:"2px solid #FFD400" }}>{post.User.nickname[0]}</Avatar>
 						</Badge>
 					</a>
 				</Link>)
@@ -196,13 +196,13 @@ const MyComments = ({ comments, post }) => {
           <StarBorderIcon />
         )}
         <span style={{ marginRight: 6 }}>{post.Scrappers.length}</span>
-        {liked ? <FavoriteIcon style={{ color: 'red' }} /> : <FavoriteIcon />}
+        {liked ? <FavoriteBorderOutlinedIcon style={{ color: 'red' }} /> : <FavoriteBorderOutlinedIcon />}
         {post.Likers.length}
         <ExpandMore
           onClick={() => Router.push(`/post/${post.id}`)}
           aria-label="show more"
         >
-          <CommentIcon />
+          <CommentIcon sx={{ color:"#A0DE98"}} />
         </ExpandMore>
         <span
           style={{ fontSize: 13, marginRight: '5%' }}
@@ -222,10 +222,10 @@ const MyComments = ({ comments, post }) => {
 											overlap="circular"
 											anchorOrigin={{ vertical: 'top', horizontal: 'right'}}
 											badgeContent={
-												<StarIcon sx={{ color: 'yellow'}}/>
+												<StarIcon sx={{ color: '#FFD400'}}/>
 											}
 										>
-										 <Avatar alt="me" sx={{backgroundColor:"black", border:'2px solid yellow'}}>나</Avatar>
+										 <Avatar alt="me" sx={{backgroundColor:"black", border:'2px solid #FFD400'}}>나</Avatar>
 									 </Badge>}
 									{(me.followers<2) && <Avatar alt="me">나</Avatar>}
                 </a>

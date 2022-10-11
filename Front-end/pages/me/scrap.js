@@ -19,7 +19,7 @@ const Scrap = () => {
   const dispatch = useDispatch();
   const { asPath } = useRouter();
   const { me } = useSelector((state) => state.user);
-
+	
   const { mainPosts, hasMorePosts, loadPostsLoading } = useSelector(
     (state) => state.post
   );
