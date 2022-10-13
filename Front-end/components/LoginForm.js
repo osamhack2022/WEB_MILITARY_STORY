@@ -16,7 +16,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 const StyledInput = styled.input`
   width: 100%;
   outline: none;
-  border: 1px solid #dddddd;
+  border: 1px solid #2F9658;
   box-sizing: border-box;
   color: #333;
   padding-left: 0.5rem;
@@ -59,7 +59,7 @@ const LoginForm = () => {
 
   return (
     <form>
-      <Card sx={{ width: '80%' }}>
+      <Card sx={{ width: '80%', border: '2px solid #2F9658' }}>
         <Box component="div" sx={{ p: 2 }}>
           <div>
             <span>
@@ -97,17 +97,15 @@ const LoginForm = () => {
               <Button
                 type="primary"
                 onClick={onSubmitForm}
-                sx={{ color: 'black' }}
+                sx={{ color: 'black', border:"1px solid #2F9658" }}
               >
                 로그인
               </Button>
             )}
-            <Link href="/signup">
-              <a style={{textDecoration: 'none', color:'black'}}>
-                <Button sx={{ color: 'black' }}>회원가입</Button>
-              </a>
-            </Link>
           </CardActions>
+					<CardActions>
+            <Link href="/signup"><a style={{ textDecoration:'none', color:'#2196f3' }}>Military Story 가입하기!</a></Link>
+					</CardActions>
         </div>
       </Card>
     </form>

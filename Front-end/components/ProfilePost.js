@@ -53,6 +53,9 @@ const theme = createTheme({
 
 const StyledButton = styled(Button)(({ theme }) => ({
   width: '100%',
+	display:'flex',
+	justifyContent:'flex-start',
+	paddingLeft: 18
 }));
 
 export default function ProfilePost() {

@@ -310,7 +310,10 @@ const postSlice = createSlice({
 					post = _find(state.myPosts, { id: action.payload.PostId})
 				}
 				if(!post){
-					post = _find(state.hotPosts, {id: action.payload.PostsId})
+					post = _find(state.hotPosts, {id: action.payload.PostId})
+				}
+				if(!post){
+					post = _find(state.followingsPosts, {id: action.payload.PostId})
 				}
         post.Comments.unshift(action.payload);
       })
@@ -346,6 +349,7 @@ const postSlice = createSlice({
           _remove(state.indexPosts, { id: action.payload.PostId });
           _remove(state.singlePost, { id: action.payload.PostId });
           _remove(state.popularPosts, { id: action.payload.PostId });
+					_remove(state.followingsPosts, {id: action.payload.PostId});
           _remove(state.myPosts, { id: action.payload.PostId });
         }
       })
@@ -366,7 +370,16 @@ const postSlice = createSlice({
         if (!post) {
           post = state.singlePost;
         }
-        post.Likers.push({ id: action.payload.UserId });
+				if(!post) {
+					post = _find(state.myPosts, {id: action.payload.PostId});
+				}
+				if(!post) {
+					post = _find(state.followingsPosts, {id: action.payload.PostId})
+				}
+				if(!post) {
+					post = _find(state.hotPosts, {id : action.payload.PostId});
+				}
+				post.Likers.push({ id: action.payload.UserId });
       })
       .addCase(likePost.rejected, (state, action) => {
         state.likePostLoading = false;
@@ -387,6 +400,21 @@ const postSlice = createSlice({
         if (!post) {
           post = state.singlePost;
         }
+				if(!post){
+					post = _find(state.hotPosts.concat(state.indexPosts), {
+						id: action.payload.PostId
+					})
+				}
+				if(!post){
+					post = _find(state.myPosts.concat(state.indexPosts), {
+						id: action.payload.PostId
+					})
+				}
+				if(!post){
+					post = _find(state.followingsPosts.concat(state.indexPosts), {
+						id:action.payload.PostId
+					})
+				}
         post.Scrappers.push({ id: action.payload.UserId });
       })
       .addCase(scrapPost.rejected, (state, action) => {
@@ -406,6 +434,9 @@ const postSlice = createSlice({
         if (!post) {
           post = state.singlePost;
         }
+				if(!post) {
+					post = _find(state.hotPosts, {id: action.payload.PostId})
+				}
         _remove(post.Likers, { id: action.payload.UserId });
       })
       .addCase(unlikePost.rejected, (state, action) => {
@@ -424,6 +455,15 @@ const postSlice = createSlice({
         if (!post) {
           post = state.singlePost;
         }
+				if(!post){
+					post = _find(state.myPosts, { id: action.payload.PostId });
+				}
+				if(!post){
+					post = _find(state.hotPosts, { id: action.payload.PostId });
+				}
+				if(!post){
+					post = _find(state.followingsPosts, { id: action.payload.PostId });
+				}
         _remove(post.Scrappers, { id: action.payload.UserId });
       })
       .addCase(unScrapPost.rejected, (state, action) => {
@@ -448,6 +488,9 @@ const postSlice = createSlice({
 				}
 				if(!post){
 					post = _find(state.followingsPosts, { id: action.payload.PostId })
+				}
+				if(!post){
+					post = _find(state.hotPosts, {id: action.payload.PostId})
 				}
         post.content = action.payload.content;
       })

@@ -97,7 +97,7 @@ const Signup = () => {
         <title>회원가입 | Military Story</title>
       </Head>
       <form>
-        <Paper sx={{ padding: '3%' }}>
+        <Paper sx={{ padding: '3%', border:'2px solid #2F9658', marginTop:1.5 }}>
           <br />
           <h2 htmlFor="sign-up">Military Story 회원가입</h2>
           <Grid container spacing={2}>
