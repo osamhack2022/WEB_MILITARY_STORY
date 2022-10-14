@@ -22,7 +22,7 @@ const StyledDiv = styled.div`
   margin-top: 20px;
   flex-wrap: wrap;
   margin-bottom: 20px;
-  border: 2px solid #ddd;
+  border: 2px solid #2F9658;
   padding: 20px;
 `;
 
@@ -43,14 +43,18 @@ function MyVacation({ sendEditVacation }) {
 
   return (
     <StyledDiv>
-      <div style={{ color: '#777', fontSize: '25px', marginBottom: 10 }}>
+      <div style={{ color: '#1B3B1A', fontSize: '25px', marginBottom: 10 }}>
         총 휴가 :{' '}
         {me.annual + me.reward + me.compensation + me.consolation + me.petition}
       </div>
       <VacaAccordion category="0" editVa={sendEditVacation} />
+			<br />
       <VacaAccordion category="1" editVa={sendEditVacation} />
+			<br />
       <VacaAccordion category="2" editVa={sendEditVacation} />
+			<br />
       <VacaAccordion category="3" editVa={sendEditVacation} />
+			<br />
       <VacaAccordion category="4" editVa={sendEditVacation} />
     </StyledDiv>
   );

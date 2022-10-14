@@ -17,7 +17,7 @@ const StyledDiv = styled.div`
   margintop: 20px;
   flexwrap: wrap;
   marginbottom: 20px;
-  border: 2px solid #ddd;
+  border: 2px solid #2F9658;
   padding: 20px;
 `;
 
@@ -103,7 +103,7 @@ function MyChart({ onEdit, edit, setEdit }) {
   return (
     <form style={{ marginTop: '13px' }}>
       <StyledDiv>
-        <div style={{ color: '#777', alignItems: 'center', fontSize: '25px' }}>
+        <div style={{ color: '#1B3B1A', alignItems: 'center', fontSize: '25px' }}>
           나의 군생활
         </div>
         <div style={{ color: '#777' }}>

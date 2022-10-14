@@ -93,6 +93,7 @@ const StyledInput = styled.input`
 
 const BoardTagarea = styled.textarea`
   width: 100%;
+	height: 70px;
   outline: none;
   padding: 10px;
   border: 1px solid #fff;
@@ -260,7 +261,7 @@ const PostForm = () => {
           <hr />
           <BoardTagarea
             name="boardContent"
-            placeholder="글의 내용을 작성해주세요"
+            placeholder="글의 내용을 작성해주세요.&#13;&#10;암, 합구호나 훈련 일정, 훈련 내용 등 군사기밀에 대한 내용은 절대 작성하지 않아야 합니다.&#13;&#10;이를 위반할 경우 국가 기밀 보호법에 따라 처벌될 수 있습니다."
             ref={tagRef}
             value={tag}
             onChange={onChangeTag}

@@ -14,7 +14,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   marginLeft: 40,
   color: 'black',
   '& .MuiInputBase-input': {
-    borderBottom: '1px solid grey',
+    borderBottom: '1px solid #1B3B1A',
     padding: theme.spacing(1, 1, 1, 0),
     paddingLeft: `calc(1em+ ${theme.spacing(10)})`,
     transition: theme.transitions.create('width'),
@@ -61,7 +61,7 @@ const NicknameEditForm = () => {
         display: 'flex',
         flexWrap: 'wrap',
         marginBottom: '20px',
-        border: '2px solid #ddd',
+        border: '2px solid #2F9658',
         padding: '20px',
         paddingRight: '50px',
         marginTop: '13px',
@@ -77,7 +77,7 @@ const NicknameEditForm = () => {
           />
         </Grid>
         <Grid item xs={1}>
-          <Button onClick={onSubmit}>수정</Button>
+          <Button onClick={onSubmit} sx={{ color:'#1B3B1A', border: '2px solid #2F9658' }}>수정</Button>
         </Grid>
       </Grid>
     </FormGroup>

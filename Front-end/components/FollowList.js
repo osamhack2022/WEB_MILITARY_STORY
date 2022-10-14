@@ -71,7 +71,7 @@ const FollowList = ({ header, data, onClickMore, loading }) => {
         sx={{
           width: '100%',
           bgcolor: 'background.paper',
-          border: '2px solid #dddddd',
+          border: '2px solid #2F9658',
           borderRadius: 2,
           marginBottom: '20px',
         }}
@@ -83,7 +83,7 @@ const FollowList = ({ header, data, onClickMore, loading }) => {
               <Grid item xs={3} key={v.id} sx={{ height: '50%'}}>
                 <Item
                   sx={{
-                    border: '2px solid #dddddd',
+                    border: '2px solid #1B3B1A',
                     display: 'flex',
                     justifyContent: 'center',
 										height: '50%'
@@ -92,10 +92,10 @@ const FollowList = ({ header, data, onClickMore, loading }) => {
                   <Link href={`/user/${v.id}`}>
                     <a style={{ textDecoration: 'none', color:'black'}}>
                       <div style={{ display: 'flex' }}>
-                        <Avatar>{v.nickname[0]}</Avatar>
+                        <Avatar sx={{fontSize:'15px'}}>{v.nickname[0]}</Avatar>
                         <span
                           style={{
-                            fontSize: '20px',
+                            fontSize: '12px',
                             marginTop: 6,
                             marginLeft: 7,
                           }}
@@ -125,7 +125,7 @@ const FollowList = ({ header, data, onClickMore, loading }) => {
               {loading ? (
                 <LoadingButton>더보기</LoadingButton>
               ) : (
-                <Button onClick={onClickMore}>더보기</Button>
+                <Button sx={{ border: '1px solid #1B3B1A'}} onClick={onClickMore}>더보기</Button>
               )}
             </ItemMore>
           </Grid>

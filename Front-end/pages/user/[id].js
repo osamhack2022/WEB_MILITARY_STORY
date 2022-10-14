@@ -121,7 +121,7 @@ const User = () => {
             sx={{
               width: '100%',
               backgroundColor: '#fefefe',
-              border: '3px solid #ddd',
+              border: '2px solid #1B3B1A',
               marginTop: 1.5,
             }}
           >
