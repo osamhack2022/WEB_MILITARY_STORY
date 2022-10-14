@@ -85,7 +85,7 @@ const MyComments = ({ comments, post }) => {
        	 	href={{ pathname: '/user', query: { id: post.User.id } }}
         	as={`/user/${post.User.id}`}
       	>
-        	<a>
+        	<a style={{textDecoration: 'none', color:"white"}}>
 						<Badge 
 							overlap="circular"
 							anchorOrigin={{ vertical: 'top', horizontal: 'right'}}
@@ -104,7 +104,7 @@ const MyComments = ({ comments, post }) => {
        	 	href={{ pathname: '/user', query: { id: post.User.id } }}
         	as={`/user/${post.User.id}`}
       	>
-        	<a>
+        	<a style={{textDecoration: 'none', color:"white"}} >
           	<Avatar sx={{ bgcolor: '#ddd' }}>{post.User.nickname[0]}</Avatar>
         	</a>
       	</Link>
@@ -171,11 +171,11 @@ const MyComments = ({ comments, post }) => {
         title={post.User.nickname}
         subheader={moment(post.createdAt).fromNow()}
       />
-      <CardMedia>
-        {post.Images.length > 0 && <PostImages images={post.Images} />}
-      </CardMedia>
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
+        {post.Images.length > 0 && <PostImages images={post.Images} />}
+      </CardContent>
+      <CardContent>
+        <Typography variant="body2" component='pre' color="text.secondary">
           <pre style={{ maxWidth: '100%' }}>
             <PostCardContent
               postId={post.id}
@@ -216,7 +216,7 @@ const MyComments = ({ comments, post }) => {
                 href={{ pathname: '/user', query: { id: id } }}
                 as={`/user/${id}`}
               >
-                <a>
+                <a style={{ textDecoration: 'none', color: 'white'}}>
                   {(me.followers>=2) && 
 										<Badge 
 											overlap="circular"

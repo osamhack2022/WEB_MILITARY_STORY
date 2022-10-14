@@ -218,7 +218,7 @@ PostCardContent.propTypes = {
   postId: PropTypes.number.isRequired,
   postContent: PropTypes.string.isRequired,
   editMode: PropTypes.bool,
-  onToggleChangePost: PropTypes.func.isRequired,
+  onToggleChangePost: PropTypes.func,
 };
 
 PostCardContent.defaultProps = {

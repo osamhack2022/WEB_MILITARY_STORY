@@ -286,7 +286,7 @@ function Home({ children }) {
             </Grid>
           )}
           <Grid container spacing={1}>
-						<Grid md={2}/>
+						<Grid md={2} />
             <Grid item xs={12} md={2}>
               <LeftDiv>
                 {me ? <UserProfile /> : <LoginForm />}
