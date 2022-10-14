@@ -24,10 +24,10 @@ const Followings = () => {
   const { me } = useSelector((state) => state.user);
 
   const post = useSelector((state) => state.post);
-	
-	useEffect(()=>{
-		dispatch(loadMyInfo())
-	},[])
+
+  useEffect(() => {
+    dispatch(loadMyInfo());
+  }, []);
 
   useEffect(() => {
     dispatch(loadMyInfo());

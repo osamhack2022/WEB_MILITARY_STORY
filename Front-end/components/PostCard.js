@@ -91,7 +91,6 @@ const PostCard = ({ post, isEdited, setIsEdited }) => {
     Router.push(`/post/${post.id}`).then();
   }, []);
 
-
   const onLike = useCallback(() => {
     if (!id) {
       alert('로그인이 필요합니다.');
@@ -171,7 +170,7 @@ const PostCard = ({ post, isEdited, setIsEdited }) => {
             href={{ pathname: '/user', query: { id: post.User.id } }}
             as={`/user/${post.User.id}`}
           >
-            <a style={{ textDecoration: 'none', color: 'white'}}>
+            <a style={{ textDecoration: 'none', color: 'white' }}>
               <Badge
                 overlap="circular"
                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -193,7 +192,7 @@ const PostCard = ({ post, isEdited, setIsEdited }) => {
             href={{ pathname: '/user', query: { id: post.User.id } }}
             as={`/user/${post.User.id}`}
           >
-            <a style={{ textDecoration: 'none', color: 'white'}}>
+            <a style={{ textDecoration: 'none', color: 'white' }}>
               <Avatar sx={{ bgcolor: '#ddd' }}>{post.User.nickname[0]}</Avatar>
             </a>
           </Link>
@@ -216,7 +215,14 @@ const PostCard = ({ post, isEdited, setIsEdited }) => {
   const scrapped = post.Scrappers.find((v) => v.id === id);
 
   return (
-    <Card sx={{ width: '100%', marginBottom: '5%', marginTop: '1%', border: '1px solid #1B3B1A' }}>
+    <Card
+      sx={{
+        width: '100%',
+        marginBottom: '5%',
+        marginTop: '1%',
+        border: '1px solid #1B3B1A',
+      }}
+    >
       <CardHeader
         avatar={avatar()}
         action={
@@ -224,7 +230,7 @@ const PostCard = ({ post, isEdited, setIsEdited }) => {
             {me && !post.private_mode && <FollowButton post={post} />}
             <>
               <IconButton onClick={handleClick}>
-                <MoreVertIcon sx={{ color:"1B3B1A"}}/>
+                <MoreVertIcon sx={{ color: '1B3B1A' }} />
               </IconButton>
               <Popover
                 id="more-icon"
@@ -251,25 +257,30 @@ const PostCard = ({ post, isEdited, setIsEdited }) => {
         title={name()}
         subheader={moment(post.createdAt).fromNow()}
       />
-			<Divider sx={{ marginTop: 0, bgcolor:"#1B3B1A" }} variant = "middle"/>
+      <Divider sx={{ marginTop: 0, bgcolor: '#1B3B1A' }} variant="middle" />
       <CardContent>
         {post.Images[0] && <PostImages id={post.id} images={post.Images} />}
       </CardContent>
-      <CardContent sx={{ marginTop: -5}}>
-        <Typography variant="body2" component="pre" color="text.secondary" sx = {{ width:"100%" }} >
+      <CardContent sx={{ marginTop: -5 }}>
+        <Typography
+          variant="body2"
+          component="pre"
+          color="text.secondary"
+          sx={{ width: '100%' }}
+        >
           <PostCardContent
             postId={post.id}
             postContent={post.content}
             editMode={editMode}
             onToggleChangePost={onToggleChangePost}
-						isEdited={isEdited}
-						setIsEdited={setIsEdited}
+            isEdited={isEdited}
+            setIsEdited={setIsEdited}
           />
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton onClick={() => Router.push(`/post/${post.id}`)}>
-          <ZoomInIcon sx={{ color: "#005000" }}/>
+          <ZoomInIcon sx={{ color: '#005000' }} />
         </IconButton>
         {scrapped ? (
           <IconButton aria-label="scrap" onClick={onUnScrap}>
@@ -283,7 +294,7 @@ const PostCard = ({ post, isEdited, setIsEdited }) => {
         {post.Scrappers.length}
         {liked ? (
           <IconButton aria-label="like" onClick={onUnlike}>
-						<FavoriteBorderOutlinedIcon style = {{ color:'red' }} />
+            <FavoriteBorderOutlinedIcon style={{ color: 'red' }} />
           </IconButton>
         ) : (
           <IconButton aria-label="unlike" onClick={onLike}>
@@ -297,7 +308,7 @@ const PostCard = ({ post, isEdited, setIsEdited }) => {
           aria-expanded={expanded}
           aria-label="show more"
         >
-          <CommentIcon sx={{ color:"#A0DE98" }}/>
+          <CommentIcon sx={{ color: '#A0DE98' }} />
         </ExpandMore>
         <span
           style={{ fontSize: 13, marginRight: '5%' }}
@@ -324,7 +335,7 @@ const PostCard = ({ post, isEdited, setIsEdited }) => {
                       href={{ pathname: '/user', query: { id: el.User.id } }}
                       as={`/user/${el.User.id}`}
                     >
-                      <a style={{ textDecoration: 'none', color:'white'}}>
+                      <a style={{ textDecoration: 'none', color: 'white' }}>
                         <Badge
                           overlap="circular"
                           anchorOrigin={{
@@ -351,7 +362,7 @@ const PostCard = ({ post, isEdited, setIsEdited }) => {
                       href={{ pathname: '/user', query: { id: el.User.id } }}
                       as={`/user/${el.User.id}`}
                     >
-                      <a style={{ color:'white', textDecoration: 'none'}}>
+                      <a style={{ color: 'white', textDecoration: 'none' }}>
                         <Avatar alt="Remy Sharp">{el.User.nickname[0]}</Avatar>
                       </a>
                     </Link>
@@ -362,7 +373,7 @@ const PostCard = ({ post, isEdited, setIsEdited }) => {
                     primary={el.User.nickname}
                     secondary={
                       <React.Fragment>
-                        <pre style={{ marginTop : 0}}>{el.content}</pre>
+                        <pre style={{ marginTop: 0 }}>{el.content}</pre>
                       </React.Fragment>
                     }
                   />
@@ -372,7 +383,7 @@ const PostCard = ({ post, isEdited, setIsEdited }) => {
                     primary={'익명' + el.anonymous}
                     secondary={
                       <React.Fragment>
-                        <pre style={{ marginTop: 0}}>{el.content}</pre>
+                        <pre style={{ marginTop: 0 }}>{el.content}</pre>
                       </React.Fragment>
                     }
                   />

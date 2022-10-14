@@ -30,9 +30,9 @@ const StyledSpan = styled.div`
 
 const StyledDiv = styled.div`
   margin-top: 13px;
-  border: 2px solid #2F9658;
+  border: 2px solid #2f9658;
   background-color: #fefefe;
-	border-radius: 3px;
+  border-radius: 3px;
 `;
 
 const theme = createTheme({
@@ -53,9 +53,9 @@ const theme = createTheme({
 
 const StyledButton = styled(Button)(({ theme }) => ({
   width: '100%',
-	display:'flex',
-	justifyContent:'flex-start',
-	paddingLeft: 18
+  display: 'flex',
+  justifyContent: 'flex-start',
+  paddingLeft: 18,
 }));
 
 export default function ProfilePost() {
@@ -69,21 +69,21 @@ export default function ProfilePost() {
           <StyledSpan>나의 게시물</StyledSpan>
         </StyledButton>
       </Link>
-      <Divider variant="middle" sx = {{ bgcolor: "#2F9658"}}/>
+      <Divider variant="middle" sx={{ bgcolor: '#2F9658' }} />
       <Link href={'/me/comment'}>
         <StyledButton>
           <ChatBubbleOutlineIcon sx={{ color: '#A0DE98' }} />{' '}
           <StyledSpan>댓글 단 게시물</StyledSpan>
         </StyledButton>
       </Link>
-      <Divider variant="middle" sx = {{ bgcolor: "#2F9658"}}/>
+      <Divider variant="middle" sx={{ bgcolor: '#2F9658' }} />
       <Link href={'/me/scrap'}>
         <StyledButton>
           <StarBorderIcon sx={{ color: '#FCE285' }} />{' '}
           <StyledSpan>나의 스크랩</StyledSpan>
         </StyledButton>
       </Link>
-      <Divider variant="middle" sx = {{ bgcolor: "#2F9658"}}/>
+      <Divider variant="middle" sx={{ bgcolor: '#2F9658' }} />
       <Link href={'/me/following'}>
         <StyledButton>
           <Groups2OutlinedIcon sx={{ color: 'orange' }} />

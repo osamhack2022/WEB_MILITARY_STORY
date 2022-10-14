@@ -14,14 +14,13 @@ const Home = () => {
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
   const { asPath } = useRouter();
-	const router = useRouter();
-	const { id } = router.query;
+  const router = useRouter();
+  const { id } = router.query;
   const { mainPosts, hasMorePosts, loadPostsLoading } = useSelector(
     (state) => state.post
   );
 
   const post = useSelector((state) => state.post);
-	
 
   useEffect(() => {
     function onScroll() {
@@ -41,7 +40,7 @@ const Home = () => {
       }
     }
     window.addEventListener('scroll', onScroll);
-  console.log('scroll')
+    console.log('scroll');
     return () => {
       window.removeEventListener('scroll', onScroll);
     };

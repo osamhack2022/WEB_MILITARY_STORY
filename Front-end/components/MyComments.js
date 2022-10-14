@@ -18,9 +18,9 @@ import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Badge from "@mui/material/Badge";
+import Badge from '@mui/material/Badge';
 
-import StarIcon from "@mui/icons-material/Star";
+import StarIcon from '@mui/icons-material/Star';
 
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
@@ -73,44 +73,42 @@ const MyComments = ({ comments, post }) => {
   const onZoomPost = useCallback(() => {
     Router.push(`/post/${post.id}`).then();
   }, []);
-	
-	const avatar = () =>{
-		if(post.private_mode) {
-			return(
-          	<Avatar sx={{ bgcolor: '#ddd' }}>?</Avatar>)
-		}
-		else if(post.User.followers>=2){
-			return (
-				<Link
-       	 	href={{ pathname: '/user', query: { id: post.User.id } }}
-        	as={`/user/${post.User.id}`}
-      	>
-        	<a style={{textDecoration: 'none', color:"white"}}>
-						<Badge 
-							overlap="circular"
-							anchorOrigin={{ vertical: 'top', horizontal: 'right'}}
-							badgeContent={
-								<StarIcon sx={{ color: '#FFD400'}}/>
-							}
-						>
-							<Avatar sx={{ bgcolor: '#000', border:"2px solid #FFD400" }}>{post.User.nickname[0]}</Avatar>
-						</Badge>
-					</a>
-				</Link>)
-		}
-		else{
-			return(
-				<Link
-       	 	href={{ pathname: '/user', query: { id: post.User.id } }}
-        	as={`/user/${post.User.id}`}
-      	>
-        	<a style={{textDecoration: 'none', color:"white"}} >
-          	<Avatar sx={{ bgcolor: '#ddd' }}>{post.User.nickname[0]}</Avatar>
-        	</a>
-      	</Link>
-		)
-		}
-	}
+
+  const avatar = () => {
+    if (post.private_mode) {
+      return <Avatar sx={{ bgcolor: '#ddd' }}>?</Avatar>;
+    } else if (post.User.followers >= 2) {
+      return (
+        <Link
+          href={{ pathname: '/user', query: { id: post.User.id } }}
+          as={`/user/${post.User.id}`}
+        >
+          <a style={{ textDecoration: 'none', color: 'white' }}>
+            <Badge
+              overlap="circular"
+              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+              badgeContent={<StarIcon sx={{ color: '#FFD400' }} />}
+            >
+              <Avatar sx={{ bgcolor: '#000', border: '2px solid #FFD400' }}>
+                {post.User.nickname[0]}
+              </Avatar>
+            </Badge>
+          </a>
+        </Link>
+      );
+    } else {
+      return (
+        <Link
+          href={{ pathname: '/user', query: { id: post.User.id } }}
+          as={`/user/${post.User.id}`}
+        >
+          <a style={{ textDecoration: 'none', color: 'white' }}>
+            <Avatar sx={{ bgcolor: '#ddd' }}>{post.User.nickname[0]}</Avatar>
+          </a>
+        </Link>
+      );
+    }
+  };
 
   const onLike = useCallback(() => {
     if (!id) {
@@ -165,9 +163,7 @@ const MyComments = ({ comments, post }) => {
   return (
     <Card sx={{ width: '100%', marginBottom: '5%' }}>
       <CardHeader
-        avatar={
-          avatar()
-        }
+        avatar={avatar()}
         title={post.User.nickname}
         subheader={moment(post.createdAt).fromNow()}
       />
@@ -175,7 +171,7 @@ const MyComments = ({ comments, post }) => {
         {post.Images.length > 0 && <PostImages images={post.Images} />}
       </CardContent>
       <CardContent>
-        <Typography variant="body2" component='pre' color="text.secondary">
+        <Typography variant="body2" component="pre" color="text.secondary">
           <pre style={{ maxWidth: '100%' }}>
             <PostCardContent
               postId={post.id}
@@ -196,13 +192,17 @@ const MyComments = ({ comments, post }) => {
           <StarBorderIcon />
         )}
         <span style={{ marginRight: 6 }}>{post.Scrappers.length}</span>
-        {liked ? <FavoriteBorderOutlinedIcon style={{ color: 'red' }} /> : <FavoriteBorderOutlinedIcon />}
+        {liked ? (
+          <FavoriteBorderOutlinedIcon style={{ color: 'red' }} />
+        ) : (
+          <FavoriteBorderOutlinedIcon />
+        )}
         {post.Likers.length}
         <ExpandMore
           onClick={() => Router.push(`/post/${post.id}`)}
           aria-label="show more"
         >
-          <CommentIcon sx={{ color:"#A0DE98"}} />
+          <CommentIcon sx={{ color: '#A0DE98' }} />
         </ExpandMore>
         <span
           style={{ fontSize: 13, marginRight: '5%' }}
@@ -216,18 +216,25 @@ const MyComments = ({ comments, post }) => {
                 href={{ pathname: '/user', query: { id: id } }}
                 as={`/user/${id}`}
               >
-                <a style={{ textDecoration: 'none', color: 'white'}}>
-                  {(me.followers>=2) && 
-										<Badge 
-											overlap="circular"
-											anchorOrigin={{ vertical: 'top', horizontal: 'right'}}
-											badgeContent={
-												<StarIcon sx={{ color: '#FFD400'}}/>
-											}
-										>
-										 <Avatar alt="me" sx={{backgroundColor:"black", border:'2px solid #FFD400'}}>나</Avatar>
-									 </Badge>}
-									{(me.followers<2) && <Avatar alt="me">나</Avatar>}
+                <a style={{ textDecoration: 'none', color: 'white' }}>
+                  {me.followers >= 2 && (
+                    <Badge
+                      overlap="circular"
+                      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                      badgeContent={<StarIcon sx={{ color: '#FFD400' }} />}
+                    >
+                      <Avatar
+                        alt="me"
+                        sx={{
+                          backgroundColor: 'black',
+                          border: '2px solid #FFD400',
+                        }}
+                      >
+                        나
+                      </Avatar>
+                    </Badge>
+                  )}
+                  {me.followers < 2 && <Avatar alt="me">나</Avatar>}
                 </a>
               </Link>
             </ListItemAvatar>

@@ -32,8 +32,6 @@ const Home = () => {
   const { asPath } = useRouter();
   const { mainPosts, hasMorePosts, loadPostsLoading, popularPosts } =
     useSelector((state) => state.post);
-	
-
 
   const post = useSelector((state) => state.post);
 

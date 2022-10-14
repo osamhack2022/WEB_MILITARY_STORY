@@ -29,8 +29,8 @@ import {
   loadStartIndexPosts,
   loadStartUserPosts,
   loadStartUserScraps,
-	loadStartFollowingsPosts,
-	loadFollowingsPosts
+  loadStartFollowingsPosts,
+  loadFollowingsPosts,
 } from '../actions/post';
 
 // 기본 state
@@ -41,7 +41,7 @@ export const initialState = {
   hotPosts: [],
   userComments: [],
   myPosts: [],
-	followingsPosts:[],
+  followingsPosts: [],
   hasMorePosts: true,
   singlePost: null,
   imagePaths: [],
@@ -306,15 +306,15 @@ const postSlice = createSlice({
         if (!post) {
           post = state.singlePost;
         }
-				if(!post) {
-					post = _find(state.myPosts, { id: action.payload.PostId})
-				}
-				if(!post){
-					post = _find(state.hotPosts, {id: action.payload.PostId})
-				}
-				if(!post){
-					post = _find(state.followingsPosts, {id: action.payload.PostId})
-				}
+        if (!post) {
+          post = _find(state.myPosts, { id: action.payload.PostId });
+        }
+        if (!post) {
+          post = _find(state.hotPosts, { id: action.payload.PostId });
+        }
+        if (!post) {
+          post = _find(state.followingsPosts, { id: action.payload.PostId });
+        }
         post.Comments.unshift(action.payload);
       })
       .addCase(addComment.rejected, (state, action) => {
@@ -349,7 +349,7 @@ const postSlice = createSlice({
           _remove(state.indexPosts, { id: action.payload.PostId });
           _remove(state.singlePost, { id: action.payload.PostId });
           _remove(state.popularPosts, { id: action.payload.PostId });
-					_remove(state.followingsPosts, {id: action.payload.PostId});
+          _remove(state.followingsPosts, { id: action.payload.PostId });
           _remove(state.myPosts, { id: action.payload.PostId });
         }
       })
@@ -370,16 +370,16 @@ const postSlice = createSlice({
         if (!post) {
           post = state.singlePost;
         }
-				if(!post) {
-					post = _find(state.myPosts, {id: action.payload.PostId});
-				}
-				if(!post) {
-					post = _find(state.followingsPosts, {id: action.payload.PostId})
-				}
-				if(!post) {
-					post = _find(state.hotPosts, {id : action.payload.PostId});
-				}
-				post.Likers.push({ id: action.payload.UserId });
+        if (!post) {
+          post = _find(state.myPosts, { id: action.payload.PostId });
+        }
+        if (!post) {
+          post = _find(state.followingsPosts, { id: action.payload.PostId });
+        }
+        if (!post) {
+          post = _find(state.hotPosts, { id: action.payload.PostId });
+        }
+        post.Likers.push({ id: action.payload.UserId });
       })
       .addCase(likePost.rejected, (state, action) => {
         state.likePostLoading = false;
@@ -400,21 +400,21 @@ const postSlice = createSlice({
         if (!post) {
           post = state.singlePost;
         }
-				if(!post){
-					post = _find(state.hotPosts.concat(state.indexPosts), {
-						id: action.payload.PostId
-					})
-				}
-				if(!post){
-					post = _find(state.myPosts.concat(state.indexPosts), {
-						id: action.payload.PostId
-					})
-				}
-				if(!post){
-					post = _find(state.followingsPosts.concat(state.indexPosts), {
-						id:action.payload.PostId
-					})
-				}
+        if (!post) {
+          post = _find(state.hotPosts.concat(state.indexPosts), {
+            id: action.payload.PostId,
+          });
+        }
+        if (!post) {
+          post = _find(state.myPosts.concat(state.indexPosts), {
+            id: action.payload.PostId,
+          });
+        }
+        if (!post) {
+          post = _find(state.followingsPosts.concat(state.indexPosts), {
+            id: action.payload.PostId,
+          });
+        }
         post.Scrappers.push({ id: action.payload.UserId });
       })
       .addCase(scrapPost.rejected, (state, action) => {
@@ -434,9 +434,9 @@ const postSlice = createSlice({
         if (!post) {
           post = state.singlePost;
         }
-				if(!post) {
-					post = _find(state.hotPosts, {id: action.payload.PostId})
-				}
+        if (!post) {
+          post = _find(state.hotPosts, { id: action.payload.PostId });
+        }
         _remove(post.Likers, { id: action.payload.UserId });
       })
       .addCase(unlikePost.rejected, (state, action) => {
@@ -455,15 +455,15 @@ const postSlice = createSlice({
         if (!post) {
           post = state.singlePost;
         }
-				if(!post){
-					post = _find(state.myPosts, { id: action.payload.PostId });
-				}
-				if(!post){
-					post = _find(state.hotPosts, { id: action.payload.PostId });
-				}
-				if(!post){
-					post = _find(state.followingsPosts, { id: action.payload.PostId });
-				}
+        if (!post) {
+          post = _find(state.myPosts, { id: action.payload.PostId });
+        }
+        if (!post) {
+          post = _find(state.hotPosts, { id: action.payload.PostId });
+        }
+        if (!post) {
+          post = _find(state.followingsPosts, { id: action.payload.PostId });
+        }
         _remove(post.Scrappers, { id: action.payload.UserId });
       })
       .addCase(unScrapPost.rejected, (state, action) => {
@@ -483,15 +483,15 @@ const postSlice = createSlice({
         if (!post) {
           post = state.singlePost;
         }
-				if(!post){
-					post = _find(state.myPosts, { id: action.payload.PostId });
-				}
-				if(!post){
-					post = _find(state.followingsPosts, { id: action.payload.PostId })
-				}
-				if(!post){
-					post = _find(state.hotPosts, {id: action.payload.PostId})
-				}
+        if (!post) {
+          post = _find(state.myPosts, { id: action.payload.PostId });
+        }
+        if (!post) {
+          post = _find(state.followingsPosts, { id: action.payload.PostId });
+        }
+        if (!post) {
+          post = _find(state.hotPosts, { id: action.payload.PostId });
+        }
         post.content = action.payload.content;
       })
       .addCase(updatePost.rejected, (state, action) => {
@@ -558,21 +558,21 @@ const postSlice = createSlice({
         state.loadPostsLoading = false;
         state.loadPostsError = action.error.message;
       })
-			.addCase(loadFollowingsPosts.pending, (state) => {
-				state.loadPostsLoading = true;
-      	state.loadPostsDone = false;
+      .addCase(loadFollowingsPosts.pending, (state) => {
+        state.loadPostsLoading = true;
+        state.loadPostsDone = false;
         state.loadPostsError = null;
-			})
-			.addCase(loadFollowingsPosts.fulfilled, (state, action) => {
-				state.loadPostsLoading = false;
+      })
+      .addCase(loadFollowingsPosts.fulfilled, (state, action) => {
+        state.loadPostsLoading = false;
         state.loadPostsDone = true;
         state.followingsPosts = _concat(state.followingsPosts, action.payload);
         state.hasMorePosts = action.payload.length === 10;
-			})
-			.addCase(loadFollowingsPosts.rejected, (state, action) => {
-				state.loadPostsLoading = false;
+      })
+      .addCase(loadFollowingsPosts.rejected, (state, action) => {
+        state.loadPostsLoading = false;
         state.loadPostsError = action.error.message;
-			})
+      })
       .addDefaultCase((state) => state),
 });
 

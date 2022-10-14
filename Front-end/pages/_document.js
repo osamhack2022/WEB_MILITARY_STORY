@@ -28,10 +28,10 @@ export default class MyDocument extends Document {
       sheet.seal();
     }
   }
-	
-	render(){
-		return(
-		<Html>
+
+  render() {
+    return (
+      <Html>
         <Head>
           <link
             href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css"
@@ -43,6 +43,7 @@ export default class MyDocument extends Document {
           <Main />
           <NextScript />
         </body>
-      </Html>)
-	}
+      </Html>
+    );
+  }
 }

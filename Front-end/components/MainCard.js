@@ -36,8 +36,8 @@ const StyledSpan = styled.span`
 
 const StyledDiv = styled.div`
   margin-top: 13px;
-  border: 2px solid #2F9658;
-	border-radius: 3px;
+  border: 2px solid #2f9658;
+  border-radius: 3px;
   background-color: #fefefe;
 `;
 
@@ -85,7 +85,7 @@ const MainCard = ({ index, posts }) => {
           </a>
         </Link>
       </PaddingDiv>
-      <Divider variant = "middle" sx={{bgcolor:"#2F9658"}}/>
+      <Divider variant="middle" sx={{ bgcolor: '#2F9658' }} />
       {indexPost?.map((el, idx) => (
         <div key={el.id}>
           <Link href={`/post/${el.id}`}>
@@ -102,8 +102,10 @@ const MainCard = ({ index, posts }) => {
               <p style={{ fontSize: 3 }}>{moment(el.createdAt).fromNow()}</p>
             </Button>
           </Link>
-          {idx!==2 && <Divider variant="middle" sx={{ bgcolor: "#2F9658" }}/>}
-        </div> 
+          {idx !== 2 && (
+            <Divider variant="middle" sx={{ bgcolor: '#2F9658' }} />
+          )}
+        </div>
       ))}
     </StyledDiv>
   );

@@ -19,7 +19,7 @@ import ProTypes from 'prop-types';
 import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { removeFollow, unfollow } from '../actions/user';
+import { removeFollow, unfollow, loadMyInfo } from '../actions/user';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -42,12 +42,8 @@ const FollowList = ({ header, data, onClickMore, loading }) => {
   const [mydata, setMydata] = useState([]);
 
   useEffect(() => {
-    if (header === '팔로잉') {
-      setMydata(Followings);
-    } else {
-      setMydata(Followers);
-    }
-  }, [header]);
+    setMydata(data);
+  }, [data]);
 
   const onCancel = (userId) => () => {
     if (header === '팔로잉') {
@@ -63,6 +59,7 @@ const FollowList = ({ header, data, onClickMore, loading }) => {
         })
       );
     }
+    dispatch(loadMyInfo());
   };
 
   return (
@@ -79,20 +76,22 @@ const FollowList = ({ header, data, onClickMore, loading }) => {
       >
         <ListItem>
           <Grid container spacing={2}>
-            {data?.map((v, idx) => (
-              <Grid item xs={3} key={v.id} sx={{ height: '50%'}}>
+            {mydata?.map((v, idx) => (
+              <Grid item xs={3} key={v.id} sx={{ height: '50%' }}>
                 <Item
                   sx={{
                     border: '2px solid #1B3B1A',
                     display: 'flex',
                     justifyContent: 'center',
-										height: '50%'
+                    height: '50%',
                   }}
                 >
                   <Link href={`/user/${v.id}`}>
-                    <a style={{ textDecoration: 'none', color:'black'}}>
+                    <a style={{ textDecoration: 'none', color: 'black' }}>
                       <div style={{ display: 'flex' }}>
-                        <Avatar sx={{fontSize:'15px'}}>{v.nickname[0]}</Avatar>
+                        <Avatar sx={{ fontSize: '15px' }}>
+                          {v.nickname[0]}
+                        </Avatar>
                         <span
                           style={{
                             fontSize: '12px',
@@ -125,7 +124,12 @@ const FollowList = ({ header, data, onClickMore, loading }) => {
               {loading ? (
                 <LoadingButton>더보기</LoadingButton>
               ) : (
-                <Button sx={{ border: '1px solid #1B3B1A'}} onClick={onClickMore}>더보기</Button>
+                <Button
+                  sx={{ border: '1px solid #1B3B1A' }}
+                  onClick={onClickMore}
+                >
+                  더보기
+                </Button>
               )}
             </ItemMore>
           </Grid>

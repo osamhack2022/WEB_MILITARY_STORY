@@ -40,11 +40,15 @@ const FollowButton = ({ post }) => {
   return (
     <>
       {followLoading || unfollowLoading ? (
-        <LoadingButton loading variant="outlined" sx={{border:"1px solid #2F9658"}}>
+        <LoadingButton
+          loading
+          variant="outlined"
+          sx={{ border: '1px solid #2F9658' }}
+        >
           Submit
         </LoadingButton>
       ) : (
-        <Button onClick={onClickButton} sx={{border:"1px solid #2F9658"}}>
+        <Button onClick={onClickButton} sx={{ border: '1px solid #2F9658' }}>
           {isFollowing ? '언팔로우' : '팔로우'}
         </Button>
       )}

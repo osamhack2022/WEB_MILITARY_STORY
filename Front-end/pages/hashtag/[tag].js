@@ -19,11 +19,10 @@ const Hashtag = () => {
   const { mainPosts, hasMorePosts, loadPostsLoading } = useSelector(
     (state) => state.post
   );
-	
+
   useEffect(() => {
     dispatch(loadMyInfo());
   }, [router.asPath]);
-	
 
   useEffect(() => {
     const onScroll = () => {
@@ -51,7 +50,7 @@ const Hashtag = () => {
   return (
     <AppLayout>
       {mainPosts.map((c) => (
-        <PostCard key={c.id} post={c}  />
+        <PostCard key={c.id} post={c} />
       ))}
     </AppLayout>
   );

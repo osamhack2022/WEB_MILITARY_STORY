@@ -77,7 +77,12 @@ const NicknameEditForm = () => {
           />
         </Grid>
         <Grid item xs={1}>
-          <Button onClick={onSubmit} sx={{ color:'#1B3B1A', border: '2px solid #2F9658' }}>수정</Button>
+          <Button
+            onClick={onSubmit}
+            sx={{ color: '#1B3B1A', border: '2px solid #2F9658' }}
+          >
+            수정
+          </Button>
         </Grid>
       </Grid>
     </FormGroup>

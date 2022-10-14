@@ -14,7 +14,6 @@ const PostImages = ({ id, images }) => {
   const handleChange = (cur, prev) => {
     setIndex(cur);
   };
-	
 
   if (images.length > 0) {
     return (

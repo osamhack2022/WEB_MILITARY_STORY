@@ -102,7 +102,6 @@ const PostCardContent = ({
     (state) => state.post
   );
   const textAreaRef = useRef(null);
-	
 
   useEffect(() => {
     if (textAreaRef.current) {
@@ -153,8 +152,8 @@ const PostCardContent = ({
     }
     setDistribute(result_arr);
     setSplitedContent(splited_arr);
-		setTitle(postContent.split('\n$').shift())
-		setText(postContent.split('\n$').slice(1).join('\n'))
+    setTitle(postContent.split('\n$').shift());
+    setText(postContent.split('\n$').slice(1).join('\n'));
   }, [postContent]);
 
   return (
@@ -183,30 +182,34 @@ const PostCardContent = ({
         splitedContent?.map((el, idx) => {
           if (distribute[idx] === 3) {
             return (
-              <BigSpan key={el+idx}>
+              <BigSpan key={el + idx}>
                 <strong>
                   <Link href={`/hashtag/${el.slice(1)}`} key={idx}>
-                    <a style={{ textDecoration: 'none', color: "#2196f3"}}>{el}</a>
+                    <a style={{ textDecoration: 'none', color: '#2196f3' }}>
+                      {el}
+                    </a>
                   </Link>
                 </strong>
               </BigSpan>
             );
           } else if (distribute[idx] === 2) {
             return (
-              <BigSpan key={el+idx}>
+              <BigSpan key={el + idx}>
                 <strong>{el}</strong>
               </BigSpan>
             );
           } else if (distribute[idx] === 1) {
             return (
-              <span key={el+idx}>
+              <span key={el + idx}>
                 <Link href={`/hashtag/${el.slice(1)}`} key={idx}>
-                  <a style={{ textDecoration: 'none', color:'#2196f3'}}>{el}</a>
+                  <a style={{ textDecoration: 'none', color: '#2196f3' }}>
+                    {el}
+                  </a>
                 </Link>
               </span>
             );
           } else {
-            return <span key={el+idx}>{el}</span>;
+            return <span key={el + idx}>{el}</span>;
           }
         })
       )}

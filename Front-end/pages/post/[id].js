@@ -15,11 +15,10 @@ const Post = () => {
   const { singlePost } = useSelector((state) => state.post);
   const dispatch = useDispatch();
 
-	
   useEffect(() => {
     dispatch(loadMyInfo());
   }, [router.asPath]);
-	
+
   return (
     <AppLayout>
       <div>

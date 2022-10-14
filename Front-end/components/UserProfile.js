@@ -30,7 +30,7 @@ const UserProfile = () => {
     if (me.Followers.length >= 2) {
       return (
         <Link href={`/user/${me.id}`}>
-          <a style={{ textDecoration: 'none'}}>
+          <a style={{ textDecoration: 'none' }}>
             <Badge
               overlap="circular"
               anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -49,7 +49,7 @@ const UserProfile = () => {
     } else {
       return (
         <Link href={`/user/${me.id}`}>
-          <a style={{textDecoration: 'none'}}>
+          <a style={{ textDecoration: 'none' }}>
             <Avatar sx={{ bgcolor: 'grey' }} aria-label="recipe">
               {me.nickname[0]}
             </Avatar>
@@ -89,16 +89,16 @@ const UserProfile = () => {
         }
         title={
           <Link href={`/user/${me.id}`}>
-            <a style={{ textDecoration: 'none'}}>
+            <a style={{ textDecoration: 'none' }}>
               <span style={{ color: 'black' }}>{me.nickname}</span>
             </a>
           </Link>
         }
       />
 
-      <Divider variant="middle" sx ={{ bgcolor : "#1B3B1A" }} />
+      <Divider variant="middle" sx={{ bgcolor: '#1B3B1A' }} />
       <CardActions disableSpacing>
-        <Grid container sx={{alignItems: 'center'}}>
+        <Grid container sx={{ alignItems: 'center' }}>
           <Grid item xs={4}>
             <Button
               sx={{ marginLeft: '15%', border: '2px solid #1B3B1A' }}

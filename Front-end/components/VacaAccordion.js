@@ -104,13 +104,13 @@ const VacaAccordion = ({ category, editVa }) => {
   }, [records]);
 
   return (
-    <Accordion sx={{ border: '2px solid #1B3B1A'}}>
+    <Accordion sx={{ border: '2px solid #1B3B1A' }}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel2a-content"
         id="compensation"
       >
-        <Typography sx={{ color:"#1B3B1A"}}>
+        <Typography sx={{ color: '#1B3B1A' }}>
           {kind[category]} : {showNum()}
         </Typography>
       </AccordionSummary>
@@ -120,7 +120,11 @@ const VacaAccordion = ({ category, editVa }) => {
             {el.num_of_days}일 : {el.reason}
           </div>
         ))}
-        {edit === false && <Button onClick={() => setEdit(true)} sx={{ color : '#1B3B1A'}}>추가</Button>}
+        {edit === false && (
+          <Button onClick={() => setEdit(true)} sx={{ color: '#1B3B1A' }}>
+            추가
+          </Button>
+        )}
         {edit === true && (
           <Grid container spacing={2}>
             <Grid item md={4.5}>
