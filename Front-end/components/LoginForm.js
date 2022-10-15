@@ -105,7 +105,7 @@ const LoginForm = () => {
           </CardActions>
           <CardActions>
             <Link href="/signup">
-              <a style={{ textDecoration: 'none', color: '#2196f3' }}>
+              <a style={{ textDecoration: 'none', color: '#2196f3', fontSize:'13px' }}>
                 Military Story 가입하기!
               </a>
             </Link>
