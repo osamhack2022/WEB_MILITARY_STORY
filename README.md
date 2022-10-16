@@ -56,7 +56,7 @@
 
 ## 팀원
 + 김용 : gnncjegrgr, skystar234556@gmail.com, 프론트엔드 페이지 구성 및 기능 개발, 백엔드 개발
-+ 유호인 : hoinhoin, follow3448@naver.com, 프론트엔드 컴포넌트 디자인 및 
++ 유호인 : hoinhoin, follow3448@naver.com, 프론트엔드 컴포넌트 디자인
 
 ## copyleft / End User License
 + [MIT](https://github.com/osamhack2022/WEB_MILITARY_STORY/blob/master/License)
