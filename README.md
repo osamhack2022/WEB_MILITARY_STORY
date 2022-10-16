@@ -30,13 +30,15 @@
 ## 기술 스택
 
 #### frontend
-next js : 프론트 엔드 서버 구축
-redux : global state 관리
++ next.js
++ redux toolkit
++ material ui(mui)
++ 기타 npm 모듈
 
 #### backend 
-node js : ver 16
-express js : 백엔드 서버 구축
-mysql : 데이터베이스 구축
++ node js : v16.17.0
++ express js
++ mysql
  
 ## 실행 방법
 
