@@ -45,7 +45,7 @@ const User = () => {
     if (userInfo.followers >= 2) {
       return (
         <Link href={`/user/${info.id}`}>
-          <a>
+          <a style={{ textDecoration: 'none' }}>
             <Badge
               overlap="circular"
               anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -64,7 +64,7 @@ const User = () => {
     } else {
       return (
         <Link href={`/user/${info.id}`}>
-          <a>
+          <a style={{ textDecoration: 'none'}} >
             <Avatar sx={{ bgcolor: 'grey' }} aria-label="recipe">
               {info.nickname[0]}
             </Avatar>
@@ -129,7 +129,7 @@ const User = () => {
               avatar={avatar()}
               title={
                 <Link href={`/user/${info.id}`}>
-                  <a>
+                  <a style={{ textDecoration: 'none' }}>
                     <span style={{ color: 'black' }}>{info.nickname}</span>
                   </a>
                 </Link>

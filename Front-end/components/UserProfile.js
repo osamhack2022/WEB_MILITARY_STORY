@@ -24,6 +24,7 @@ const UserProfile = () => {
 
   const onLogout = useCallback(() => {
     dispatch(logout());
+		Router.push('/').then();
   }, []);
 
   const returnAvatar = () => {

@@ -315,6 +315,9 @@ const postSlice = createSlice({
         if (!post) {
           post = _find(state.followingsPosts, { id: action.payload.PostId });
         }
+				if(!post) {
+					post = _find(state.popularPosts, {id: action.payload.PostId});
+				}
         post.Comments.unshift(action.payload);
       })
       .addCase(addComment.rejected, (state, action) => {

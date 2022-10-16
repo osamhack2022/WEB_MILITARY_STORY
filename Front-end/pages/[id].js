@@ -48,7 +48,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(loadMyInfo());
-  }, []);
+  }, [asPath]);
 
   return (
     <AppLayout>

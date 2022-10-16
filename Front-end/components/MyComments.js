@@ -73,6 +73,10 @@ const MyComments = ({ comments, post }) => {
   const onZoomPost = useCallback(() => {
     Router.push(`/post/${post.id}`).then();
   }, []);
+	
+	useEffect(()=>{
+		console.log(me)
+	}, [me])
 
   const avatar = () => {
     if (post.private_mode) {
@@ -161,18 +165,19 @@ const MyComments = ({ comments, post }) => {
   const scrapped = post.Scrappers.find((v) => v.id === id);
 
   return (
-    <Card sx={{ width: '100%', marginBottom: '5%' }}>
+    <Card sx={{ width: '100%', marginBottom: '5%', border: '1px solid #1B3B1A' }}>
       <CardHeader
         avatar={avatar()}
         title={post.User.nickname}
         subheader={moment(post.createdAt).fromNow()}
       />
+			<Divider sx={{ marginTop: 0, bgcolor: '#1B3B1A' }} variant="middle" />
       <CardContent>
         {post.Images.length > 0 && <PostImages images={post.Images} />}
       </CardContent>
       <CardContent>
         <Typography variant="body2" component="pre" color="text.secondary">
-          <pre style={{ maxWidth: '100%' }}>
+          <pre style={{ maxWidth: '100%', marginTop:0 }}>
             <PostCardContent
               postId={post.id}
               postContent={post.content}
@@ -217,7 +222,7 @@ const MyComments = ({ comments, post }) => {
                 as={`/user/${id}`}
               >
                 <a style={{ textDecoration: 'none', color: 'white' }}>
-                  {me.followers >= 2 && (
+                  {me?.followers >= 2 && (
                     <Badge
                       overlap="circular"
                       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -234,7 +239,7 @@ const MyComments = ({ comments, post }) => {
                       </Avatar>
                     </Badge>
                   )}
-                  {me.followers < 2 && <Avatar alt="me">나</Avatar>}
+                  {me?.followers < 2 && <Avatar alt="me">나</Avatar>}
                 </a>
               </Link>
             </ListItemAvatar>
