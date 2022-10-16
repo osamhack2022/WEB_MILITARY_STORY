@@ -40,13 +40,14 @@ mysql : 데이터베이스 구축
  
 ## 실행 방법
 
-### frontend
+### 각각의 개발문서
 + [frontend 개발문서](https://github.com/osamhack2022/WEB_MILITARY_STORY/blob/master/Front-end/README.md)
 + [backend 개발문서](https://github.com/osamhack2022/WEB_MILITARY_STORY/blob/master/Back-end/README.md)
 + [lambda 개발문서](https://github.com/osamhack2022/WEB_MILITARY_STORY/blob/master/lambda/README.md)
 
 ## communications
-슬랙을 통한 협업
+슬랙, 카카오톡을 통한 협업
+
 
 ## 팀원
 김용 : gnncjegrgr, skystar234556@gmail.com
