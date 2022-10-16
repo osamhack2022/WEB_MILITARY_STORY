@@ -43,41 +43,41 @@ npm run dev
 >>> 해시태그 키워드 관련 게시물을 보는 페이지(게시글 내의 해시태그를 클릭하거나 직접 해시태그를 검색하면 이 페이지로 이동합니다.)
 
 > ### components
->> AppLayout.js
+>> #### AppLayout.js
 >> 웹 전체적인 구조를 짜는 component
->> CommentForm.js
+>> #### CommentForm.js
 >> 댓글 작성 폼 component
->> FollowButton.js
+>> #### FollowButton.js
 >> 각 게시물의 팔로우 버튼 component
->> FollowList.js
+>> #### FollowList.js
 >> 프로필 페이지의 팔로잉, 팔로워 리스트를 볼 수 있는 component
->> LoginForm.js
+>> #### LoginForm.js
 >> 로그인 폼 component
->> MainCard.js
+>> #### MainCard.js
 >> 메인화면에서 각 게시판 미리보기(최신 3개의 게시물의 제목이 보이도록)component
->> MyChart.js
+>> #### MyChart.js
 >> 나의 남은 군생활을 도넛차트로 보여주는 component
->> MyComment.js
+>> #### MyComment.js
 >> 내가 댓글 단 게시물을 보는 페이지에서 게시글을 나타내주는 component
->> MyVacation.js
+>> #### MyVacation.js
 >> 나의 휴가를 보여주는 component
->> NicknameEditForm.js
+>> #### NicknameEditForm.js
 >> 닉네임 수정 폼 component
->> PopularPosts.js
+>> #### PopularPosts.js
 >> 인기 많은 게시글 미리보기를 보여주는 component
->> PostCard.js
+>> #### PostCard.js
 >> 게시글을 보여주는 component
->> PostCardContent.js
+>> #### PostCardContent.js
 >> 게시글 내용을 보여주는 component(PostCard.js에 속함)
->> PostForm.js
+>> #### PostForm.js
 >> 게시글 작성 폼 component
->> PostImage.js
+>> #### PostImage.js
 >> 게시글 이미지 component(PostCard.js에 속함)
->> ProfilePost.js
+>> #### ProfilePost.js
 >> 페이지에서 왼쪽 UserProfile component밑에 나의 스크랩, 나의 게시글 등 보여주는 component
->> UserProfile.js
+>> #### UserProfile.js
 >> 로그아웃, 내 정보 등 보여주는 component
->> VacaAccordion.js
+>> #### VacaAccordion.js
 >> 연가, 포상 휴가 등 다양한 휴가를 기록할 수 있도록 하는 component(MyVacation.js에 속함)
 > ### actions
 >> #### post.js 
