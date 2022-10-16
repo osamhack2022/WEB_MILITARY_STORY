@@ -1,8 +1,8 @@
 # Front-end 개발문서
 
 ## 실행방법
-npm install --force
-npm run dev
+##### npm install --force
+##### npm run dev
 
 ## 코드 설명
 
