@@ -38,6 +38,12 @@ node js : ver 16
 express js : 백엔드 서버 구축
 mysql : 데이터베이스 구축
  
+## 실행 방법
+
+### frontend
++ [frontend 개발문서](https://github.com/osamhack2022/WEB_MILITARY_STORY/blob/master/Front-end/README.md)
++ [backend 개발문서](https://github.com/osamhack2022/WEB_MILITARY_STORY/blob/master/Back-end/README.md)
++ [lambda 개발문서](https://github.com/osamhack2022/WEB_MILITARY_STORY/blob/master/lambda/README.md)
 
 ## communications
 슬랙을 통한 협업
