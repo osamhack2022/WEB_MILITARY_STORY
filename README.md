@@ -40,7 +40,10 @@
 + express js
 + mysql
  
-## 실행 방법
+## 컴퓨터 구성 / 필수 조건 안내
++ ECMAScript 6 지원 브라우저 사용
++ 권장: Google Chrome 버전 77 이상
++ Internet Explorer 미사용 추천
 
 ### 각각의 개발문서
 + [frontend 개발문서](https://github.com/osamhack2022/WEB_MILITARY_STORY/blob/master/Front-end/README.md)
