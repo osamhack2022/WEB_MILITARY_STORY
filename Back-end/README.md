@@ -91,6 +91,13 @@
 |FollowingId|INTEGER|팔로잉 된 사용자의 Id|NOT NULL, FOREIGN_KEY|
 |FollwerId|INTEGER|팔로잉 한 사용자의 Id |NOT NULL, FOREIGN_KEY| 
 
+### Like
+#### User와 Post간의 Liked, Liker 관계를 나타냅니다.
+|이름|타입|설명|비고|
+|---|----|----|---|
+|PostId|INTEGER|좋아요 된 게시글의 Id.|NOT NULL, FOREIGN_KEY|
+|UserId|INTEGER|좋아요 한 사용자의 Id.|NOT NULL, FOREIGN+KEY|
+
 ### Scrap
 #### User와 Post간의 Scrapper Scrapped 관계를 나타냅니다.
 |이름|타입|설명|비고|
@@ -105,12 +112,6 @@
 |HashtagId|INTEGER|게시글에 속한 해시태그의 Id.|NOT NULL, FOREIGN_KEY|
 |PostId|INTEGER|해시태그에 속한 게시글의 Id.|NOT NULL, FOREIGN_KEY|
 
-### Like
-#### User와 Post간의 Liked, Liker 관계를 나타냅니다.
-|이름|타입|설명|비고|
-|---|----|----|---|
-|PostId|INTEGER|좋아요 된 게시글의 Id.|NOT NULL, FOREIGN_KEY|
-|UserId|INTEGER|좋아요 한 사용자의 Id.|NOT NULL, FOREIGN+KEY|
 
 ## 코드 설명
 ### '/'
