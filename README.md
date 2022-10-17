@@ -59,5 +59,5 @@
 + 유호인 : hoinhoin, follow3448@naver.com, 프론트엔드 컴포넌트 디자인
 
 ## copyleft / End User License
-+ [MIT](https://github.com/osamhack2022/WEB_MILITARY_STORY/blob/master/License)
++ [MIT](https://github.com/osamhack2022/WEB_MILITARY_STORY/blob/master/License.md)
 
