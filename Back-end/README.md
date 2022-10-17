@@ -120,6 +120,18 @@
 ### 'routes'
 > #### hashtag.js
 > 해시태그와 관련된 게시글을 모두 가져옵니다.
+> ### GET /hashtag/:hashtag
+> #### req.query
+> |query|타입|설명|비고|
+> |-----|----|---|----|
+> |lastId|INTEGER|Military Story 사이트에서 화면에 보이는 게시글 중에 가장 밑에 있는 게시글의 Id를 넘겨받습니다.(Post Id가 클수록 최신 글이라는 것을 이용해 최신순 나열을 구현했습니다.)|NULLABLE|
+> |hashtag|STRING|해시태그와 관련된 글을 받기 위해 해시태그를 넘겨받습니다.|NOT NULL|
+> 
+> #### res
+> |이름|타입|설명|비고|
+> |---|----|----|----|
+> |posts|Array(post))|Post(model)의 배열 형태입니다.|X|
+> 
 > #### middlewares.js
 > 로그인했는지 안 했는지 체크해줍니다.
 > ### post.js
